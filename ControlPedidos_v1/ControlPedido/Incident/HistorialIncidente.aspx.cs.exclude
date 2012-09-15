@@ -1,0 +1,127 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using ML.CAU.UIC;
+using MC.ControlPedido.Logica;
+using MC.ControlPedido.Model;
+using ML.Seguridad.Entidades;
+using ML.Seguridad.Logica;
+using ML.Comun.Entidades;
+using ML.Comun.Logica;
+
+public partial class Incident_HistorialIncidente : UIPage
+{
+
+    #region Inicio
+
+    protected override void OnLoad(EventArgs e)
+    {
+        //Cargamos eventos en los botones de paginación
+        //this.gvBandeja.RowDataBound += new GridViewRowEventHandler(gvBandeja_RowDataBound);
+        //imgbtnStart.Click += new ImageClickEventHandler(imgbtnStart_Click);
+        //imgbtnNext.Click += new ImageClickEventHandler(imgbtnNext_Click);
+        //imgbtnBack.Click += new ImageClickEventHandler(imgbtnBack_Click);
+        //imgbtnEnd.Click += new ImageClickEventHandler(imgbtnEnd_Click);
+
+        if (IsPostBack == false)
+        {
+
+            string param = Request.Params["id"];
+            this.hidCodigoIncidente.Value = param;
+            this.btnCerrar.Attributes.Add("onclick", "return CloseThisWindow();");
+            ListarIncidente();
+        }
+    }
+
+    #endregion
+
+    #region Metodos
+
+    /// <summary>
+    /// Metodo que lista las incidencias
+    /// <FechaCrea>06-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void ListarIncidente()
+    {
+        try
+        {
+            Incidente objIncidente = new Incidente();
+            objIncidente.CodigoIncidente = int.Parse(this.hidCodigoIncidente.Value);
+            objIncidente.NumeroIncidente = string.Empty;
+            objIncidente.FechaIncidente = ML.Comun.Entidades.Util.ParseDateTime(string.Empty);
+            objIncidente.Estado = 0;
+            objIncidente.Situacion = 0;
+            objIncidente.Area.Id = 0;
+            objIncidente.Sede.Id = 0;
+            objIncidente.UsuarioContacto.Id = ML.Comun.Entidades.Util.ParseGuid(string.Empty);
+
+            DataTable dtData = IncidenteBLL.Instance.ListarIncidenteHistorial(objIncidente);
+            //this.gvBandeja.DataSource = dtData;
+            //this.gvBandeja.DataBind();
+
+            if (dtData.Rows.Count > 0)
+            {
+                this.lblID.Text = Convert.ToString(dtData.Rows[0]["N_CODINC"]);
+                this.lblNroIncidente.Text = Convert.ToString(dtData.Rows[0]["V_NUMINC"]);
+                this.lblFecha.Text = ((DateTime)(dtData.Rows[0]["D_FECINC"])).ToShortDateString();
+                this.lblEstado.Text = Convert.ToString(dtData.Rows[0]["DESESTADO"]);
+                this.lblTitulo.Text = Convert.ToString(dtData.Rows[0]["V_TITULO"]);
+                this.lblDescripcion.Text = Convert.ToString(dtData.Rows[0]["V_DESINC"]);
+                this.lblNroSolicitud.Text = Convert.ToString(dtData.Rows[0]["V_NUMSOL"]);
+                this.lblSituacion.Text = Convert.ToString(dtData.Rows[0]["DESSITUACION"]);
+                this.lblTipoIncidente.Text = Convert.ToString(dtData.Rows[0]["V_NOMTIPINC"]);
+                this.lblElementoAfectado.Text = Convert.ToString(dtData.Rows[0]["V_NOMELM"]);
+                this.lblImpacto.Text = Convert.ToString(dtData.Rows[0]["V_DESIMP"]);
+                this.lblPrioridad.Text = Convert.ToString(dtData.Rows[0]["V_DESPRIO"]);
+                this.lblOrigen.Text = Convert.ToString(dtData.Rows[0]["DESORIGEN"]);
+                this.lblNombreContacto.Text = Convert.ToString(dtData.Rows[0]["V_NOMCONTA"]);
+                this.lblTelefonoContacto.Text = Convert.ToString(dtData.Rows[0]["V_TELCONTA"]);
+                this.lblSubCategoria.Text = Convert.ToString(dtData.Rows[0]["V_NOMSUBCAT"]);
+                this.lblCategoria.Text = Convert.ToString(dtData.Rows[0]["V_NOMCAT"]);
+                this.lblPlataforma.Text = Convert.ToString(dtData.Rows[0]["V_NOMPLATF"]);
+                this.lblAsignado.Text = Convert.ToString(dtData.Rows[0]["NOMASESOR"]);
+                this.lblSede.Text = Convert.ToString(dtData.Rows[0]["V_NOMSEDE"]);
+                this.lblArea.Text = Convert.ToString(dtData.Rows[0]["V_NOMAREA"]);
+                this.lblUsuarioContacto.Text = Convert.ToString(dtData.Rows[0]["SOLICITANTE"]);
+                this.lblFechaDerivado.Text = Convert.ToString(dtData.Rows[0]["D_FECDERIVA"]);
+                this.lblFechaAsignado.Text = Convert.ToString(dtData.Rows[0]["D_FECASIGNA"]);
+                this.lblAtendidopor.Text = Convert.ToString(dtData.Rows[0]["ATENDIDOPOR"]);
+                this.lblFechaAtendido.Text = Convert.ToString(dtData.Rows[0]["D_FECATEN"]);
+                this.lblUsuarioCrea.Text = Convert.ToString(dtData.Rows[0]["CREADOPOR"]);
+                this.lblSolucionado.Text = Convert.ToString(dtData.Rows[0]["DESCSOLUCION"]);
+                this.lblConclusion.Text = Convert.ToString(dtData.Rows[0]["V_CONCLUSIO"]);
+            }
+
+            dtData.Dispose();
+            Atencion objAtencion = new Atencion();
+            objAtencion.CodigoIncidente = objIncidente.CodigoIncidente;
+            dtData = IncidenteBLL.Instance.ListarAtencion(objAtencion);
+            this.gvBandeja.DataSource = dtData;
+            this.gvBandeja.DataBind();
+
+            objIncidente.Dispose();
+            //Invoca al metodo para paginar la grilla
+            //Paginar(dtData, this.gvBandeja, this.litNumeroRegistros, this.litPagina);
+
+        }
+        catch (Exception ex)
+        {
+
+            //CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    #endregion
+    
+    #region Eventos
+
+    #endregion
+
+}

@@ -1,0 +1,292 @@
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="BandejaIncidente.aspx.cs"
+    Inherits="Incident_BandejaIncidente" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="AjaxToolKit" %>
+<asp:Content ID="Content1" runat="server" ContentPlaceHolderID="MainContent">
+    <link href="../Styles/Base.css" rel="stylesheet" type="text/css" />
+    <script language="javascript" type="text/javascript">
+        function VistaSolicitud(id) {
+
+            /*alert(id);*/
+            modalConsulta = $('<iframe  src="../Request/VistaSolicitud.aspx?id="' + id + ' frameborder=0 marginheight=0 marginwidth=0 scrolling=no  AllowTransparency />').dialog({
+                title: '',
+                width: 940,
+                height: 600,
+                modal: true,
+                resizable: false,
+                zIndex: 10,
+                draggable: false
+            }).width(930).height(580);
+        }
+
+        function goSolicitudFicha(id) {
+            // alert(file);
+            height = '600px';
+            width = '800px';
+            url = "../Request/VistaSolicitud.aspx?id=" + id;
+            xpos = (window.screen.width / 2) - (width / 2);
+            ypos = (window.screen.height / 2) - (height / 2);
+            name = ''
+
+            window.showModalDialog(url, name, 'dialogHeight:' + height + ',dialogWidth:' + width + ',toolbar=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,modal=yes,center=yes,top=' + ypos + ',left=' + xpos);
+            return false;
+        }
+
+        function goHistorialIncidencia(id) {
+            // alert(file);
+            height = '700';
+            width = '800';
+            url = "../Incident/HistorialIncidente.aspx?id=" + id;
+            xpos = 0; //(window.screen.width / 2) - (width / 2);
+            ypos = 0; // (window.screen.height / 2) - (height / 2);
+            name = ''
+
+            window.open(url, name, 'width=' + width + ',height=' + height + ',toolbar=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,modal=yes,top=' + ypos + ',left=' + xpos);
+            return false;
+        }
+    </script>
+    <asp:UpdatePanel ID="upBandeja" runat="server" EnableViewState="true" UpdateMode="Conditional">
+        <ContentTemplate>
+            <h2>
+                Bandeja de Incidentes
+            </h2>
+            <table width="100%">
+                <tr>
+                    <td>
+                        <table width="100%" class="table-border-bottom">
+                            <tr>
+                                <td>
+                                    Sede
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlSede" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlSede_SelectedIndexChanged">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    Área
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlArea" runat="server">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    Reportado por
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlSolicitante" runat="server">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    ID
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtNroIncidencia" runat="server" Width="100px"></asp:TextBox>
+                                </td>
+                                <td>
+                                    Fecha
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtFecha" runat="server" Width="70px"></asp:TextBox>
+                                    <act:CalendarExtender ID="txtFecha_CalendarExtender" runat="server" TargetControlID="txtFecha"
+                                        PopupButtonID="imbFecha" Enabled="true" Format="dd/MM/yyyy">
+                                    </act:CalendarExtender>
+                                    <asp:ImageButton ID="imbFecha" runat="server" ImageUrl="~/images/icons/calendar.gif" />
+                                </td>
+                                <td>
+                                    Estado
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlEstado" runat="server">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    Situación
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlSituacion" runat="server">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="boton" BackColor="#D5D8DF"
+                                        OnClick="btnBuscar_Click" />
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="10">
+                                    <hr />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        <asp:Button ID="btnNuevo0" runat="server" CssClass="boton" 
+                            OnClick="btnNuevo_Click" Text="Nuevo" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <asp:GridView ID="gvBandeja" SkinID="Principal" runat="server" AutoGenerateColumns="False"
+                                BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px"
+                                CellPadding="4" Font-Size="Small" ShowFooter="false" Width="100%" EmptyDataText="No se encontraron registros."
+                                ShowHeaderWhenEmpty="true" AllowPaging="True">
+                                <HeaderStyle CssClass="GrdHeader" />
+                                <AlternatingRowStyle CssClass="GrdAlternativeItem" />
+                                <Columns>
+                                    <asp:BoundField DataField="V_NUMINC" HeaderText="Nro. Incidencia" HeaderStyle-CssClass="GrdHeader">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="D_FECINC" HeaderText="Fecha" HeaderStyle-CssClass="GrdHeader">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:TemplateField HeaderText="Opciones" ItemStyle-HorizontalAlign="Center">
+                                        <EditItemTemplate>
+                                        </EditItemTemplate>
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                        <ItemTemplate>
+                                            <div>
+                                                <asp:ImageButton ID="imbDelete" runat="server" ImageUrl="~/images/icons/page_white_delete.png"
+                                                    CommandArgument='<%# Eval("N_CODINC") %>' ToolTip="Eliminar Incidente" OnClick="imbDelete_Click" />
+                                                <asp:ImageButton ID="imbEdit" runat="server" ImageUrl="~/images/icons/page_white_edit.png"
+                                                    CommandArgument='<%# Eval("N_CODINC") %>' OnClick="imbEdit_Click" ToolTip="Modificar Incidente" />
+                                            </div>
+                                        </ItemTemplate>
+                                        <ItemStyle HorizontalAlign="Center" />
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="DESSITUACION" HeaderText="Situación" HeaderStyle-CssClass="GrdHeader">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:TemplateField HeaderText="Opciones" ItemStyle-HorizontalAlign="Center">
+                                        <EditItemTemplate>
+                                        </EditItemTemplate>
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                        <ItemTemplate>
+                                            <div>
+                                                <asp:ImageButton ID="imbAbrir" runat="server" ImageUrl="~/images/icons/book_open.png"
+                                                    CommandArgument='<%# Eval("N_CODINC") %>' ToolTip="Abrir incidente" OnClick="imbAbrir_Click" />
+                                                <asp:ImageButton ID="imbCerrar" runat="server" ImageUrl="~/images/icons/bin_closed.png"
+                                                    CommandArgument='<%# Eval("N_CODINC") %>' ToolTip="Cerrar incidente" OnClick="imbCerrar_Click"
+                                                    Style="width: 16px" />
+                                            </div>
+                                        </ItemTemplate>
+                                        <ItemStyle HorizontalAlign="Center" />
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="V_TITULO" HeaderText="Título" HeaderStyle-CssClass="GrdHeader">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="V_DESIMP" HeaderText="Impacto" HeaderStyle-CssClass="GrdHeader">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="V_DESPRIO" HeaderText="Prioridad" HeaderStyle-CssClass="GrdHeader">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="DESESTADO" HeaderText="Estado" HeaderStyle-CssClass="GrdHeader">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="V_NOMPLATF" HeaderText="Derivado a" HeaderStyle-CssClass="GrdHeader">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="NOMASESOR" HeaderText="Asignado a" HeaderStyle-CssClass="GrdHeader">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:TemplateField HeaderText="Operaciones" ItemStyle-HorizontalAlign="Center">
+                                        <EditItemTemplate>
+                                        </EditItemTemplate>
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                        <ItemTemplate>
+                                            <div>
+                                                <asp:ImageButton ID="imbDerivar" runat="server" ImageUrl="~/images/icons/user_go.png"
+                                                    CommandArgument='<%# Eval("N_CODINC") %>' OnClick="imbDerivar_Click" ToolTip="Derivar Incidente" />
+                                                <asp:ImageButton ID="imbAtender" runat="server" ImageUrl="~/images/icons/agregar_uno_off.gif"
+                                                    CommandArgument='<%# Eval("N_CODINC") %>' OnClick="btnAtender_Click" ToolTip="Atender Incidente" />
+                                                <asp:ImageButton ID="imbSendEmail" runat="server" ImageUrl="~/images/icons/email_go.png"
+                                                    CommandArgument='<%# Eval("V_NUMINC") %>' CommandName='<%# Eval("N_CODASE") %>'
+                                                    ToolTip="Enviar correo al Asesor TI" OnClick="imbSendEmail_Click" Style="width: 16px" />
+                                                <asp:ImageButton ID="btnVerSolicitud" runat="server" CommandArgument='<%# Eval("N_CODSOL") %>'
+                                                    ImageUrl="~/images/icons/solicitud_16.png" ToolTip="Ver solicitud de gestión de cambio" />
+                                                <asp:ImageButton ID="btnVerAdjunto" runat="server" CommandArgument='<%# Eval("N_CODSOL") %>'
+                                                    ImageUrl="~/images/icons/page_white_acrobat.png" 
+                                                    ToolTip="Ver documento adjunto" CommandName='<%# Eval("V_ARCHIVO") %>' />
+                                                <asp:ImageButton ID="btnHistorial" runat="server" 
+                                                    CommandArgument='<%# Eval("N_CODINC") %>' 
+                                                    ImageUrl="~/images/icons/calendar2.gif" ToolTip="Ver Historial" />
+                                            </div>
+                                        </ItemTemplate>
+                                        <ItemStyle HorizontalAlign="Center" />
+                                    </asp:TemplateField>
+                                </Columns>
+                                <HeaderStyle Font-Size="Small" />
+                                <PagerSettings Visible="False" />
+                            </asp:GridView>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table border="0" width="100%">
+                            <tr>
+                                <td style="width: 75%">
+                                    <b>
+                                        <asp:Literal ID="litNumeroRegistros" runat="server"></asp:Literal>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <table border="0" style="text-align: right">
+                                        <tr>
+                                            <td align="right">
+                                                <b>
+                                                    <asp:Literal ID="litPagina" runat="server"></asp:Literal>
+                                                </b>
+                                            </td>
+                                            <td>
+                                                <asp:ImageButton runat="server" ID="imgbtnStart" ImageUrl="~/images/icons/icono_inicio_off.jpg"
+                                                    onmouseout="cambia(this,'../images/icons/icono_inicio_off.jpg');" onmouseover="cambia(this,'../images/icons/icono_inicio_on.jpg');"
+                                                    ToolTip="ir a la página inicial" />
+                                            </td>
+                                            <td>
+                                                <asp:ImageButton runat="server" ID="imgbtnNext" ImageUrl="~/images/icons/icono_siguiente_off.jpg"
+                                                    onmouseout="cambia(this,'../images/icons/icono_siguiente_off.jpg');" onmouseover="cambia(this,'../images/icons/icono_siguiente_on.jpg');"
+                                                    ToolTip="ir a la página siguiente" />
+                                            </td>
+                                            <td>
+                                                <asp:ImageButton runat="server" ID="imgbtnBack" ImageUrl="~/images/icons/icono_anterior_off.jpg"
+                                                    onmouseout="cambia(this,'../images/icons/icono_anterior_off.jpg');" onmouseover="cambia(this,'../images/icons/icono_anterior_on.jpg');"
+                                                    ToolTip="ir a la página anterior" />
+                                            </td>
+                                            <td>
+                                                <asp:ImageButton runat="server" ID="imgbtnEnd" ImageUrl="~/images/icons/icono_final_off.jpg"
+                                                    onmouseout="cambia(this,'../images/icons/icono_final_off.jpg');" onmouseover="cambia(this,'../images/icons/icono_final_on.jpg');"
+                                                    ToolTip="ir a la página final" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+</asp:Content>

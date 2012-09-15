@@ -1,0 +1,790 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using ML.CAU.UIC;
+using MC.ControlPedido.Logica;
+using MC.ControlPedido.Model;
+using ML.Seguridad.Entidades;
+using ML.Seguridad.Logica;
+using ML.Comun.Entidades;
+using ML.Comun.Logica;
+
+public partial class Incident_RegistrarIncidente : UIPage
+{
+    #region Inicio
+
+    protected override void OnLoad(EventArgs e)
+    {
+        if (IsPostBack == false)
+        {
+            this.txtDescripcion.Attributes.Add("onkeypress", "return textboxMultilineMaxNumber(this,4000)");
+
+            CargarTipoIncidente();
+            CargarCategoria();
+            CargarSubcategoria();
+            CargarElementoAfectado();
+            CargarImpacto();
+            CargarPrioridad();
+            CargarPlataforma();
+            CargarUsuario();
+            CargarAsesor();
+
+            //Configura la pantalla para un usuario Interno
+            this.rbInterno.Checked = true;
+            rbInterno_CheckedChanged(null, null);
+
+            this.lblFechaIncidente.Text = DateTime.Now.ToShortDateString();
+            //this.imbBuscarSol.Attributes.Add("onclick", "return BusquedaEquipo_callDialog();");
+
+            string param = Request.Params["param"];
+            string sc = Request.Params["sc"];
+
+            this.hidCodigoIncidencia.Value = param;
+            this.hidCodigoSolicitud.Value = sc;
+
+
+            if (param.CompareTo("new") != 0)
+            {
+                this.hidOrigen.Value = "in";
+                CargarIncidente();
+            }
+            else
+            {
+
+                if (sc.Length > 0)
+                {
+                    //Se carga detalle de la solicitud de cambio
+                    CargarSolicitud();
+                    this.hidOrigen.Value = "sc";
+                    this.rbInterno.Enabled = false;
+                    this.rbExterno.Enabled = false;
+                    this.ddlPersona.Enabled = false;
+                    this.txtTitulo.Enabled = false;
+                }
+                else
+                {
+                    this.hidOrigen.Value = "in";
+                }
+
+                this.TabPanel2.Visible = false;
+                this.lblEstado.Text = "Nuevo";
+
+                //Por defecto no se muestra el Asesor TI
+                this.ddlAsesor.SelectedValue = "0";
+                this.ddlAsesor.Visible = false;
+                this.chkSendEmail.Visible = false;
+                this.lblAsignadoa.Visible = false;
+
+            }
+
+        }
+    }
+
+    #endregion
+
+    #region Metodos
+
+    /// <summary>
+    /// Metodo que carga la solicitud de gestion de cambio
+    /// </summary>
+    private void CargarSolicitud()
+    {
+        try
+        {
+
+            SolicitudCambio objSolicitudCambio = new SolicitudCambio();
+            objSolicitudCambio.CodigoSolicitud = int.Parse(this.hidCodigoSolicitud.Value);
+            objSolicitudCambio.NumeroSolicitud = string.Empty;
+            objSolicitudCambio.FechaSolicitud = ML.Comun.Entidades.Util.ParseDateTime(string.Empty);
+
+            DataTable dtData;
+            dtData = SolicitudCambioBLL.Instance.ListarSolicitudCambio(objSolicitudCambio);
+
+            if (dtData.Rows.Count > 0)
+            {
+                this.txtNroSolicitud.Text = Convert.ToString(dtData.Rows[0]["V_NUMSOL"]);
+                this.txtTitulo.Text = Convert.ToString(dtData.Rows[0]["V_TITULO"]);
+                this.hidIdSede.Value = Convert.ToString(dtData.Rows[0]["N_CODSEDE"]);
+                this.lblNomSede.Text = Convert.ToString(dtData.Rows[0]["SEDE"]);
+
+                this.hidIdArea.Value = Convert.ToString(dtData.Rows[0]["N_CODAREA"]);
+                this.lblNomArea.Text = Convert.ToString(dtData.Rows[0]["AREA"]);
+
+                this.ddlPersona.SelectedValue = Convert.ToString(dtData.Rows[0]["N_USUCREA"]);
+                this.txtDescripcion.Text = Convert.ToString(dtData.Rows[0]["V_DESCRIP"]);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Método para cargar Incidente
+    /// </summary>
+    private void CargarIncidente()
+    {
+
+        try
+        {
+
+            Incidente objIncidente = new Incidente();
+            objIncidente.CodigoIncidente = int.Parse(this.hidCodigoIncidencia.Value);
+            objIncidente.NumeroIncidente = string.Empty;
+            objIncidente.FechaIncidente = ML.Comun.Entidades.Util.ParseDateTime(string.Empty);
+            objIncidente.Estado = 0;
+            objIncidente.Situacion = 0;
+            objIncidente.Area.Id = 0;
+            objIncidente.Sede.Id = 0;
+
+            DataTable dtData = IncidenteBLL.Instance.ListarIncidente(objIncidente);
+
+            if (dtData.Rows.Count > 0)
+            {
+                this.lblNumeroIncidente.Text = Convert.ToString(dtData.Rows[0]["V_NUMINC"]);
+                this.txtNroSolicitud.Text = Convert.ToString(dtData.Rows[0]["V_NUMSOL"]);
+
+                this.lblFechaIncidente.Text = Convert.ToString(dtData.Rows[0]["D_FECINC"]);
+                this.lblEstado.Text = Convert.ToString(dtData.Rows[0]["DESESTADO"]);
+                this.txtTitulo.Text = Convert.ToString(dtData.Rows[0]["V_TITULO"]);
+                this.txtDescripcion.Text = Convert.ToString(dtData.Rows[0]["V_DESINC"]);
+
+                this.rbInterno.Checked = Convert.ToString(dtData.Rows[0]["V_FLGORIGEN"]).CompareTo("I") == 0 ? true : false;
+                this.rbExterno.Checked = Convert.ToString(dtData.Rows[0]["V_FLGORIGEN"]).CompareTo("E") == 0 ? true : false;
+
+                this.txtNombreContacto.Text = Convert.ToString(dtData.Rows[0]["V_NOMCONTA"]);
+                this.txtTelefonoContacto.Text = Convert.ToString(dtData.Rows[0]["V_TELCONTA"]);
+
+                this.ddlTipoIncidente.SelectedValue = Convert.ToString(dtData.Rows[0]["N_CODTIPINC"]);
+
+                this.ddlElemento.SelectedValue = Convert.ToString(dtData.Rows[0]["N_CODELM"]);
+                this.ddlSeveridad.SelectedValue = Convert.ToString(dtData.Rows[0]["N_CODIMP"]);
+                this.ddlPrioridad.SelectedValue = Convert.ToString(dtData.Rows[0]["N_CODPRIO"]);
+                this.ddlCategoria.SelectedValue = Convert.ToString(dtData.Rows[0]["N_CODCAT"]);
+
+                CargarSubcategoria();
+                this.ddlSubCategoria.SelectedValue = Convert.ToString(dtData.Rows[0]["N_CODSUBCAT"]);
+                this.ddlDerivar.SelectedValue = Convert.ToString(dtData.Rows[0]["N_CODPLATAF"]);
+                ddlDerivar_SelectedIndexChanged(null, null);
+
+                this.ddlAsesor.SelectedValue = Convert.ToString(dtData.Rows[0]["N_CODASE"]);
+                this.hidIdSede.Value = Convert.ToString(dtData.Rows[0]["N_CODSEDE"]);
+                this.lblNomSede.Text = Convert.ToString(dtData.Rows[0]["V_NOMSEDE"]);
+                this.hidIdArea.Value = Convert.ToString(dtData.Rows[0]["N_CODAREA"]);
+                this.lblNomArea.Text = Convert.ToString(dtData.Rows[0]["V_NOMAREA"]);
+
+                this.ddlPersona.SelectedValue = Convert.ToString(dtData.Rows[0]["N_USUCONT"]);
+            }
+
+            rbInterno_CheckedChanged(null, null);
+            rbExterno_CheckedChanged(null, null);
+
+            objIncidente.Dispose();
+            objIncidente = null;
+
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar tipo de incidentes
+    /// <FechaCrea>28-02-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarTipoIncidente()
+    {
+        Bind(this.ddlTipoIncidente, _tipoIncidenteBLL.ListarTipoIncidente(), "N_CODTIPINC", "V_NOMTIPINC");
+        this.ddlTipoIncidente.Items.Insert(0, new ListItem("-Seleccione-", "0"));
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar categoria de incidente
+    /// <FechaCrea>28-02-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarCategoria()
+    {
+        Bind(this.ddlCategoria, _categoriaBLL.ListarCategoria(), "N_CODCAT", "V_NOMCAT");
+        this.ddlCategoria.Items.Insert(0, new ListItem("-Seleccione-", "0"));
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar subcategoria de incidente
+    /// <FechaCrea>28-02-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarSubcategoria()
+    {
+        Categoria objCategoria = new Categoria();
+
+        objCategoria.CodigoCategoria = int.Parse(this.ddlCategoria.SelectedValue);
+        Bind(this.ddlSubCategoria, _subCategoriaBLL.ListarSubCategoria(objCategoria), "N_CODSUBCAT", "V_NOMSUBCAT");
+        this.ddlSubCategoria.Items.Insert(0, new ListItem("-Seleccione-", "0"));
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar elementos afectados
+    /// <FechaCrea>28-02-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarElementoAfectado()
+    {
+        Bind(this.ddlElemento, _elementoBLL.ListarElementoAfectado(), "N_CODELM", "V_NOMELM");
+        this.ddlElemento.Items.Insert(0, new ListItem("-Ninguno-", "0"));
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar elementos afectados
+    /// <FechaCrea>28-02-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarImpacto()
+    {
+        Bind(this.ddlSeveridad, _impactoBLL.ListarNivelImpacto(), "N_CODIMP", "V_DESIMP");
+        this.ddlSeveridad.Items.Insert(0, new ListItem("-Seleccione-", "0"));
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar prioridad
+    /// <FechaCrea>28-02-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarPrioridad()
+    {
+        Bind(this.ddlPrioridad, _prioridadBLL.ListarPrioridad(), "N_CODPRIO", "V_DESPRIO");
+        this.ddlPrioridad.Items.Insert(0, new ListItem("-Seleccione-", "0"));
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar plataforma
+    /// <FechaCrea>28-02-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarPlataforma()
+    {
+        Bind(this.ddlDerivar, _plataformaBLL.Listar(), "CodigoPlataforma", "NombrePlataforma");
+        this.ddlDerivar.Items.Insert(0, new ListItem("-Seleccione-", "0"));
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar usuarios del sistema
+    /// <FechaCrea>03-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns> 
+    private void CargarUsuario()
+    {
+        try
+        {
+            //Carga lista de usuarios Autorizado
+            Bind(this.ddlPersona, UsuarioLN.Listar(0, 0, _auditoria.AppId), "Id", "NombreCompleto");
+            this.ddlPersona.Items.Insert(0, new ListItem("-Seleccione-", "0"));
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar usuarios del sistema
+    /// <FechaCrea>13-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns> 
+    private void CargarDatosUsuario()
+    {
+        try
+        {
+            if (this.ddlPersona.SelectedValue.CompareTo("0") == 0)
+            {
+                this.hidIdArea.Value = "0";
+                this.hidIdSede.Value = "0";
+                this.lblNomArea.Text = string.Empty;
+                this.lblNomSede.Text = string.Empty;
+                return;
+            }
+
+            //Carga lista de usuarios Autorizado            
+            UsuarioList objUsuarioList;
+            objUsuarioList = UsuarioLN.Listar(0, 0, _auditoria.AppId);
+
+            for (int i = 0; i < objUsuarioList.Count - 1; i++)
+            {
+                if (objUsuarioList[i].Id == ML.Comun.Entidades.Util.ParseGuid(this.ddlPersona.SelectedValue))
+                {
+                    this.hidIdArea.Value = objUsuarioList[i].IdArea.ToString();
+                    this.hidIdSede.Value = objUsuarioList[i].IdSede.ToString();
+                    this.lblNomArea.Text = objUsuarioList[i].NombreArea;
+                    this.lblNomSede.Text = objUsuarioList[i].NombreSede;
+                }
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar asesores del sistema
+    /// <FechaCrea>03-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns> 
+    private void CargarAsesor()
+    {
+        try
+        {
+            //Carga lista de usuarios Asesores
+            Bind(this.ddlAsesor, UsuarioLN.Listar(0, 0, _auditoria.AppId), "Id", "NombreCompleto");
+            this.ddlAsesor.Items.Insert(0, new ListItem("-Ninguno-", "0"));
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+
+    }
+
+    /// <summary>
+    /// Método para validar los campos ingresados
+    /// </summary>
+    private void Validar()
+    {
+        try
+        {
+            if (this.txtTitulo.Text.Length == 0)
+            {
+                this.txtTitulo.Focus();
+                throw new Exception("Debe ingresar Título de incidencia y/o requerimiento");
+            }
+
+            if (rbInterno.Checked == true)
+            {
+
+                if (this.ddlPersona.SelectedValue.CompareTo("0") == 0)
+                {
+                    this.ddlPersona.Focus();
+                    throw new Exception("Debe seleccionar Persona contacto");
+                }
+            }
+            else
+            {
+                if (this.txtNombreContacto.Text.Length == 0)
+                {
+                    this.txtNombreContacto.Focus();
+                    throw new Exception("Debe ingresar nombre de contacto");
+                }
+
+                if (this.txtTelefonoContacto.Text.Length == 0)
+                {
+                    this.txtTelefonoContacto.Focus();
+                    throw new Exception("Debe ingresar teléfono de contacto");
+                }
+            }
+
+            if (this.ddlTipoIncidente.SelectedValue.CompareTo("0") == 0)
+            {
+                this.ddlTipoIncidente.Focus();
+                throw new Exception("Debe seleccionar tipo de incidente");
+            }
+
+            if (this.ddlCategoria.SelectedValue.CompareTo("0") == 0)
+            {
+                this.ddlCategoria.Focus();
+                throw new Exception("Debe seleccionar categoría");
+            }
+
+            if (this.ddlSubCategoria.SelectedValue.CompareTo("0") == 0)
+            {
+                this.ddlSubCategoria.Focus();
+                throw new Exception("Debe seleccionar Sub.categoría");
+            }
+
+            if (this.txtDescripcion.Text.Length == 0)
+            {
+                this.txtDescripcion.Focus();
+                throw new Exception("Debe ingresar descripción");
+            }
+
+            //if (this.ddlElemento.SelectedValue.CompareTo("0") == 0)
+            //{
+            //    this.ddlElemento.Focus();
+            //    throw new Exception("Debe seleccionar elemento afectado");
+            //}
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    /// <summary>
+    /// Metodo que permite guardar las incidencias
+    /// <FechaCrea>02-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>
+    private void GuardarIncidente()
+    {
+        try
+        {
+            Validar();
+
+            using (Incidente objIncidente = new Incidente())
+            {
+                objIncidente.CodigoIncidente = 0;
+                objIncidente.NumeroIncidente = string.Empty;
+
+                objIncidente.FechaIncidente = DateTime.Parse(DateTime.Now.ToShortDateString());
+                objIncidente.Estado = UIConstante.EstadoIncidente.Nuevo;
+                objIncidente.Titulo = this.txtTitulo.Text;
+                objIncidente.DescripcionIncidente = this.txtDescripcion.Text;
+                objIncidente.SolicitudCambio.CodigoSolicitud = this.hidCodigoSolicitud.Value.Length > 0 ? int.Parse(this.hidCodigoSolicitud.Value) : 0;
+                objIncidente.Situacion = UIConstante.SituacionIncidente.Abierto;
+                objIncidente.TipoIncidente.CodigoTipoIncidente = int.Parse(this.ddlTipoIncidente.SelectedValue);
+                objIncidente.Elemento.CodigoElemento = int.Parse(this.ddlElemento.SelectedValue);
+                objIncidente.UsuarioCrea = _auditoria.Usuario.Id;
+                objIncidente.Origen = this.rbInterno.Checked == true ? "I" : "E";
+                objIncidente.NombreContacto = this.txtNombreContacto.Text;
+                objIncidente.TelefonoContacto = this.txtTelefonoContacto.Text;
+                objIncidente.SubCategoria.CodigoSubCategoria = int.Parse(this.ddlSubCategoria.SelectedValue);
+                objIncidente.Email = string.Empty;
+                objIncidente.Categoria.CodigoCategoria = int.Parse(this.ddlCategoria.SelectedValue);
+
+                objIncidente.Sede.Id = this.hidIdSede.Value != "" ? int.Parse(this.hidIdSede.Value) : 0;
+                objIncidente.Area.Id = this.hidIdArea.Value != "" ? int.Parse(this.hidIdArea.Value) : 0;
+                objIncidente.Sede.Nombre = this.lblNomSede.Text;
+                objIncidente.Area.Nombre = this.lblNomArea.Text;
+                objIncidente.UsuarioContacto.Id = ML.Comun.Entidades.Util.ParseGuid(this.ddlPersona.SelectedValue);
+
+                if (this.hidCodigoIncidencia.Value.CompareTo("new") == 0)
+                {
+                    int intCodigo = IncidenteBLL.Instance.RegistrarIncidencia(objIncidente);
+                    this.hidCodigoIncidencia.Value = intCodigo.ToString();
+                    this.lblNumeroIncidente.Text = objIncidente.NumeroIncidente;
+
+                    this.btnGrabar.Visible = false;
+                    this.TabPanel2.Visible = true;
+
+                    //Si lo registra mediante una solicitud de cambio
+                    if (this.hidCodigoSolicitud.Value.Length > 0)
+                    {
+                        #region Envio de Mail
+
+                        Usuario objUsuarioDestino;
+                        objUsuarioDestino = General.getUsuario(ML.Comun.Entidades.Util.ParseGuid(this.ddlPersona.SelectedValue), _auditoria.AppId);
+
+                        if (objUsuarioDestino != null)
+                        {
+                            Correo objCorreo = new Correo();
+                            objCorreo.To = objUsuarioDestino.Correo; // Correo de Solicitante
+                            objCorreo.Subject = "Solicitud de Gestión de Cambios Nro: " + this.lblNumeroIncidente.Text + " Recibido";
+                            objCorreo.Body = "Su solicitud está siendo atendido.";
+                            objCorreo.Enviar();
+                            objCorreo = null;
+                        }
+
+                        #endregion
+                    }
+
+                    CScript.MessageBox(0, "Se ha guardado Incidencia Nro. " + objIncidente.NumeroIncidente, upBandeja);
+
+                    tabcontenedor.ActiveTabIndex = 2;
+                }
+                else
+                {
+                    objIncidente.CodigoIncidente = int.Parse(this.hidCodigoIncidencia.Value);
+                    objIncidente.NumeroIncidente = this.lblNumeroIncidente.Text;
+                    IncidenteBLL.Instance.ActualizarIncidencia(objIncidente);
+
+
+                    if (this.hidOrigen.Value.CompareTo("in") == 0)
+                    {
+                        Response.Redirect("BandejaIncidente.aspx", false);
+                    }
+                    else
+                    {
+                        Response.Redirect("../Request/Bandejasolicitudcau.aspx", false);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo que permite guardar las incidencias
+    /// <FechaCrea>05-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>
+    private void ActualizarSeguimientoIncidente()
+    {
+        try
+        {
+            //Valido antes de grabar
+            #region Validacion
+            if (this.ddlSeveridad.SelectedValue.CompareTo("0") == 0)
+            {
+                this.ddlSeveridad.Focus();
+                throw new Exception("Debe seleccionar nivel de impacto");
+            }
+
+            if (this.ddlPrioridad.SelectedValue.CompareTo("0") == 0)
+            {
+                this.ddlPrioridad.Focus();
+                throw new Exception("Debe seleccionar prioridad");
+            }
+
+            if (this.ddlDerivar.SelectedValue.CompareTo("0") == 0)
+            {
+                this.ddlDerivar.Focus();
+                throw new Exception("Debe seleccionar plataforma a derivar");
+            }
+
+            if (this.ddlAsesor.Visible == true)
+            {
+                if (this.ddlAsesor.SelectedValue.CompareTo("0") == 0)
+                {
+                    throw new Exception("Debe seleccionar asesor a asignar");
+                }
+            }
+            #endregion
+
+            using (Incidente objIncidente = new Incidente())
+            {
+                objIncidente.CodigoIncidente = int.Parse(this.hidCodigoIncidencia.Value);
+
+                objIncidente.Impacto.CodigoImpacto = int.Parse(this.ddlSeveridad.SelectedValue);
+                objIncidente.Prioridad.CodigoPrioridad = int.Parse(this.ddlPrioridad.SelectedValue);
+
+                objIncidente.FechaDerivacion = Util.ParseDateTime(DateTime.Now.ToShortDateString());
+                objIncidente.UsuarioDeriva.Id = _auditoria.Usuario.Id;
+                objIncidente.Plataforma.CodigoPlataforma = int.Parse(this.ddlDerivar.SelectedValue);
+
+                objIncidente.FechaAsigna = this.ddlAsesor.SelectedValue.CompareTo("0") != 0 ? ML.Comun.Entidades.Util.ParseDateTime(DateTime.Now.ToShortDateString()) : ML.Comun.Entidades.Util.ParseDateTime(string.Empty);
+                objIncidente.UsuarioAsigna.Id = this.ddlAsesor.SelectedValue.CompareTo("0") != 0 ? _auditoria.Usuario.Id : Guid.Empty;
+                objIncidente.Asesor.Id = Util.ParseGuid(this.ddlAsesor.SelectedValue);
+
+                //Actualizamos la tabla de usuario cada vez se asigna el Login
+                #region Buscamos Usuario Asesor para actualizar en el sistema
+                if (this.ddlAsesor.SelectedValue.CompareTo("0") != 0)
+                {
+                    UsuarioList objUsuarioList;
+                    objUsuarioList = UsuarioLN.Listar(0, 0, _auditoria.AppId);
+
+                    for (int i = 0; i < objUsuarioList.Count - 1; i++)
+                    {
+                        if (objUsuarioList[i].Id == ML.Comun.Entidades.Util.ParseGuid(this.ddlAsesor.SelectedValue))
+                        {
+                            objIncidente.Asesor = objUsuarioList[i];
+                            break;
+                        }
+                    }
+                }
+                #endregion
+
+                objIncidente.Estado = this.ddlAsesor.SelectedValue.CompareTo("0") == 0 ? UIConstante.EstadoIncidente.Derivado : UIConstante.EstadoIncidente.Asignado;
+
+                IncidenteBLL.Instance.ActualizarSeguimiento(objIncidente);
+
+                #region Envio de Mail
+
+                if (this.chkSendEmail.Checked == true)
+                {
+                    Usuario objUsuarioDestino;
+                    objUsuarioDestino = General.getUsuario(ML.Comun.Entidades.Util.ParseGuid(this.ddlAsesor.SelectedValue), _auditoria.AppId);
+
+                    if (objUsuarioDestino != null)
+                    {
+                        Correo objCorreo = new Correo();
+                        objCorreo.To = objUsuarioDestino.Correo; // Correo de Asesor TI
+                        objCorreo.Subject = "Incidencia Asignado Nro: " + this.lblNumeroIncidente.Text;
+                        objCorreo.Body = "Se ha asignado una incidencia para su atención.";
+                        objCorreo.Enviar();
+                        objCorreo = null;
+                    }
+                }
+
+                #endregion
+
+                if (this.hidOrigen.Value.CompareTo("in") == 0)
+                {
+                    Response.Redirect("BandejaIncidente.aspx", false);
+                }
+                else
+                {
+                    Response.Redirect("../Request/Bandejasolicitudcau.aspx", false);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+    #endregion
+
+    #region Eventos
+    protected void btnGrabar_Click(object sender, EventArgs e)
+    {
+        GuardarIncidente();
+    }
+    public void ProbarDialog_Click()
+    {
+        string s = "S";
+        Response.Write(s);
+    }
+    protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        CargarSubcategoria();
+    }
+    protected void rbInterno_CheckedChanged(object sender, EventArgs e)
+    {
+        if (rbInterno.Checked == true)
+        {
+            this.lblNombreContacto.Visible = false;
+            this.lblTelefonoContacto.Visible = false;
+
+            this.txtNombreContacto.Visible = false;
+            this.txtTelefonoContacto.Visible = false;
+
+            this.txtNombreContacto.Text = string.Empty;
+            this.txtTelefonoContacto.Text = string.Empty;
+
+            this.lblSede.Visible = true;
+            this.lblNomSede.Visible = true;
+            this.lblArea.Visible = true;
+            this.lblNomArea.Visible = true;
+            this.lblPersona.Visible = true;
+            this.ddlPersona.Visible = true;
+        }
+    }
+    protected void rbExterno_CheckedChanged(object sender, EventArgs e)
+    {
+        if (rbExterno.Checked == true)
+        {
+            this.lblNombreContacto.Visible = true;
+            this.lblTelefonoContacto.Visible = true;
+
+            this.txtNombreContacto.Visible = true;
+            this.txtTelefonoContacto.Visible = true;
+
+            this.lblSede.Visible = false;
+            this.lblNomSede.Visible = false;
+            this.lblNomSede.Text = "";
+
+            this.lblArea.Visible = false;
+            this.lblNomArea.Visible = false;
+            this.lblNomArea.Text = "";
+
+            this.lblPersona.Visible = false;
+            this.ddlPersona.Visible = false;
+            this.ddlPersona.SelectedValue = "0";
+        }
+    }
+    protected void btnGrabarSeguimiento_Click(object sender, EventArgs e)
+    {
+        ActualizarSeguimientoIncidente();
+    }
+    protected void btnRegresar_Click(object sender, EventArgs e)
+    {
+        if (this.hidOrigen.Value.CompareTo("in") == 0)
+        {
+            Response.Redirect("BandejaIncidente.aspx", false);
+        }
+        else
+        {
+            Response.Redirect("../Request/Bandejasolicitudcau.aspx", false);
+        }
+    }
+    protected void btnRegresar1_Click(object sender, EventArgs e)
+    {
+        if (this.hidOrigen.Value.CompareTo("in") == 0)
+        {
+            Response.Redirect("BandejaIncidente.aspx", false);
+        }
+        else
+        {
+            Response.Redirect("../Request/Bandejasolicitudcau.aspx", false);
+        }
+    }
+    protected void ddlPersona_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        CargarDatosUsuario();
+    }
+    protected void ddlDerivar_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            PlataformaList objPlataformaList;
+            IPlataformaBLL objPlataformaBLL = new PlataformaBLL();
+            objPlataformaList = objPlataformaBLL.Listar();
+
+            this.ddlAsesor.SelectedValue = "0";
+            this.ddlAsesor.Visible = false;
+            this.chkSendEmail.Visible = false;
+            this.lblAsignadoa.Visible = false;
+
+            foreach (Plataforma item in objPlataformaList)
+            {
+                if (item.CodigoPlataforma == int.Parse(this.ddlDerivar.SelectedValue))
+                {
+                    if (item.RequiereAsesor == 1)
+                    {
+                        this.ddlAsesor.Visible = true;
+                        this.chkSendEmail.Visible = true;
+                        this.lblAsignadoa.Visible = true;
+                        break;
+                    }
+                }
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    #endregion
+}

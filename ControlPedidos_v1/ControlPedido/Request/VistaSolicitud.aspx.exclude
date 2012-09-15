@@ -1,0 +1,118 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="VistaSolicitud.aspx.cs" Inherits="Request_VistaSolicitud" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>
+        <%=System.Web.Configuration.WebConfigurationManager.AppSettings["title"]%></title>
+    <link href="../Styles/Base.css" rel="stylesheet" type="text/css" />
+    <link href="../Styles/sd.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+
+        function CloseThisWindow() {
+            window.close();
+            return false;
+        } 
+
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <h2>
+            Solicitud de Gestión de Cambios
+        </h2>
+        <table width="100%" class="table-border-top_bottom-left-right" cellpadding="0" cellspacing="0"
+            border="1">
+            <tr>
+                <td class="etiqueta1" style="width: 20%; height: 30px">
+                    Nro. Solicitud
+                </td>
+                <td>
+                    <asp:Label ID="lblNroSolicitud" runat="server"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td class="etiqueta1" style="height: 30px">
+                    Fecha de solicitud
+                </td>
+                <td>
+                    <asp:Label ID="lblFecha" runat="server"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td class="etiqueta1" style="height: 30px">
+                    Sistema / Módulo
+                </td>
+                <td>
+                    <asp:Label ID="lblSistema" runat="server"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td class="etiqueta1" style="height: 30px">
+                    Tipo de solicitud
+                </td>
+                <td>
+                    <asp:Label ID="lblTipoSolicitud" runat="server"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td class="etiqueta1" style="height: 50px">
+                    Asunto
+                </td>
+                <td>
+                    <asp:Label ID="lblAsunto" runat="server"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td class="etiqueta1" style="height: 100px">
+                    Descripción
+                </td>
+                <td>
+                    <asp:Label ID="lblDescripcion" runat="server"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td class="etiqueta1" style="height: 100px">
+                    Motivo de solicitud
+                </td>
+                <td>
+                    <asp:Label ID="lblMotivo" runat="server"></asp:Label>
+                    &nbsp; &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="etiqueta1">
+                    <asp:Label ID="Observacion" runat="server" Text="Observación"></asp:Label>
+                </td>
+                <td style="height: 100px">
+                    <asp:Label ID="lblObservacion" runat="server"></asp:Label>
+                    &nbsp; &nbsp;
+                    <asp:HiddenField ID="hidCodigoSolicitud" runat="server" />
+                </td>
+            </tr>
+            <tr>
+                <td class="etiqueta1">
+                    Autorizado por&nbsp;
+                </td>
+                <td>
+                    <asp:Label ID="lblAutorizado" runat="server"></asp:Label>
+                </td>
+            </tr>
+        </table>
+        <table width="100%">
+            <tr>
+                <td align="center">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <asp:Button ID="btnCerrar" runat="server" Text="Cerrar" CssClass="boton" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    </form>
+</body>
+</html>

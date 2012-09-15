@@ -1,0 +1,67 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using ML.CAU.UIC;
+using MC.ControlPedido.Logica;
+using MC.ControlPedido.Model;
+using ML.Seguridad.Entidades;
+using ML.Seguridad.Logica;
+using ML.Comun.Entidades;
+using ML.Comun.Logica;
+
+public partial class Request_VistaSolicitud : System.Web.UI.Page
+{
+    #region Inicio
+    protected override void OnLoad(EventArgs e)
+    {
+        if (IsPostBack == false)
+        {
+            this.hidCodigoSolicitud.Value = Request.Params["id"];
+            this.btnCerrar.Attributes.Add("onclick", "return CloseThisWindow();");
+            CargarSolicitud();
+        }
+    }
+    #endregion
+
+    #region Metodos
+    /// <summary>
+    /// Metodo que carga la solicitud de gestion de cambio
+    /// </summary>
+    private void CargarSolicitud()
+    {
+        try
+        {
+
+            SolicitudCambio objSolicitudCambio = new SolicitudCambio();
+            objSolicitudCambio.CodigoSolicitud = int.Parse(this.hidCodigoSolicitud.Value);
+            objSolicitudCambio.NumeroSolicitud = string.Empty;
+            objSolicitudCambio.FechaSolicitud = ML.Comun.Entidades.Util.ParseDateTime(string.Empty);
+
+            DataTable dtData;
+            dtData = SolicitudCambioBLL.Instance.ListarSolicitudCambio(objSolicitudCambio);
+
+            if (dtData.Rows.Count > 0)
+            {
+                this.lblNroSolicitud.Text = Convert.ToString(dtData.Rows[0]["V_NUMSOL"]);
+                this.lblFecha.Text = Convert.ToString(dtData.Rows[0]["D_FECSOL"]);
+                this.lblSistema.Text = Convert.ToString(dtData.Rows[0]["V_TITULO"]);
+                this.lblAsunto.Text = Convert.ToString(dtData.Rows[0]["V_ASUNTO"]);
+                this.lblTipoSolicitud.Text = Convert.ToString(dtData.Rows[0]["V_NOMTIPSOL"]);
+                this.lblDescripcion.Text = Convert.ToString(dtData.Rows[0]["V_DESCRIP"]);
+                this.lblMotivo.Text = Convert.ToString(dtData.Rows[0]["V_MOTIVO"]);
+                this.lblAutorizado.Text = Convert.ToString(dtData.Rows[0]["V_USUAUTO"]);
+                this.lblObservacion.Text = Convert.ToString(dtData.Rows[0]["V_OBSERV"]);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            
+        }
+    }
+    #endregion
+}

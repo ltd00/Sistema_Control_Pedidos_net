@@ -1,0 +1,721 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using ML.CAU.UIC;
+using MC.ControlPedido.Logica;
+using MC.ControlPedido.Model;
+using ML.Seguridad.Entidades;
+using ML.Seguridad.Logica;
+using ML.Comun.Entidades;
+using ML.Comun.Logica;
+
+public partial class Incident_BandejaIncidente : UIPage
+{
+    #region Inicio
+    protected override void OnLoad(EventArgs e)
+    {
+        //Cargamos eventos en los botones de paginación
+        this.gvBandeja.RowDataBound += new GridViewRowEventHandler(gvBandeja_RowDataBound);
+        imgbtnStart.Click += new ImageClickEventHandler(imgbtnStart_Click);
+        imgbtnNext.Click += new ImageClickEventHandler(imgbtnNext_Click);
+        imgbtnBack.Click += new ImageClickEventHandler(imgbtnBack_Click);
+        imgbtnEnd.Click += new ImageClickEventHandler(imgbtnEnd_Click);
+
+        if (IsPostBack == false)
+        {
+            CargarEstado();
+            CargarSituacion();
+            CargarSede();
+            CargarArea();
+            CargarUsuario();
+            PaginacionEnabled(false);
+            ListarIncidente();
+
+        }
+    }
+
+    #endregion
+
+    #region Metodos
+
+    /// <summary>
+    /// Metodo para actualizar situacion de incidentes
+    /// </summary>
+    private void ActualizarSituacionIncidente(int vintCodigoIncidente, int vintSituacion)
+    {
+        try
+        {
+
+            Incidente objIncidente = new Incidente();
+            objIncidente.CodigoIncidente = vintCodigoIncidente;
+            objIncidente.UsuarioModifica = _auditoria.Usuario.Id;
+            objIncidente.Situacion = vintSituacion;
+
+            IncidenteBLL.Instance.ActualizarSituacionIncidente(objIncidente);
+            ListarIncidente();
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar sedes de la empresa
+    /// <FechaCrea>07-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarSede()
+    {
+        try
+        {
+
+            //Carga Sedes
+            //SedeLN objSedeLN = new SedeLN();
+            Bind(this.ddlSede, SedeLN.Listar(), "Id", "Nombre");
+            this.ddlSede.Items.Insert(0, new ListItem("-Todos-", "0"));
+            //BuscarValueDropDownList(this.ddlSede, _auditoria.Usuario.IdSede.ToString());
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar areas de la empresa
+    /// <FechaCrea>07-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarArea()
+    {
+        try
+        {
+
+            //Carga Areas
+            //AreaLN objAreaLN = new AreaLN();
+            Bind(this.ddlArea, AreaLN.Listar(int.Parse(this.ddlSede.SelectedValue)), "Id", "Nombre");
+            this.ddlArea.Items.Insert(0, new ListItem("-Todos-", "0"));
+            //BuscarValueDropDownList(this.ddlArea, _auditoria.Usuario.IdArea.ToString());
+
+            //objAreaLN = null;
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar usuarios del sistema
+    /// <FechaCrea>06-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarUsuario()
+    {
+        try
+        {
+            //UsuarioLN objUsuarioLN = new UsuarioLN();
+            //Bind(this.ddlSolicitante, UsuarioLN.Listar(string.Empty, _auditoria.AppId), "Id", "NombreCompleto");
+            //this.ddlSolicitante.Items.Insert(0, new ListItem("-Todos-", "0"));
+
+            Bind(this.ddlSolicitante, UsuarioLN.Listar(int.Parse(this.ddlSede.SelectedValue), 0, _auditoria.AppId), "Id", "NombreCompleto");
+            this.ddlSolicitante.Items.Insert(0, new ListItem("-Todos-", "0"));
+
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo que llena DropDownList con datos de situaciones de incidencias
+    /// </summary>
+    private void CargarSituacion()
+    {
+        this.ddlSituacion.Items.Clear();
+        //this.ddlSituacion.Items.Add(new ListItem("-Todos-", "0"));
+        this.ddlSituacion.Items.Add(new ListItem("Abierto", UIConstante.SituacionIncidente.Abierto.ToString()));
+        this.ddlSituacion.Items.Add(new ListItem("Cerrado", UIConstante.SituacionIncidente.Cerrado.ToString()));
+    }
+
+    /// <summary>
+    /// Metodo que llena DropDownList con datos de estados de incidencias
+    /// </summary>
+    private void CargarEstado()
+    {
+        this.ddlEstado.Items.Clear();
+        //this.ddlEstado.Items.Add(new ListItem("-Todos-", "0"));
+        this.ddlEstado.Items.Add(new ListItem("Nuevo", UIConstante.EstadoIncidente.Nuevo.ToString()));
+        this.ddlEstado.Items.Add(new ListItem("Derivado", UIConstante.EstadoIncidente.Derivado.ToString()));
+        this.ddlEstado.Items.Add(new ListItem("Asignado", UIConstante.EstadoIncidente.Asignado.ToString()));
+        this.ddlEstado.Items.Add(new ListItem("En Proceso", UIConstante.EstadoIncidente.EnProceso.ToString()));
+        this.ddlEstado.Items.Add(new ListItem("Atendido", UIConstante.EstadoIncidente.Atendido.ToString()));
+        //this.ddlEstado.Items.Add(new ListItem("Anulado", UIConstante.EstadoIncidente.Anulado.ToString()));
+    }
+
+    /// <summary>
+    /// Metodo que lista las incidencias
+    /// <FechaCrea>06-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void ListarIncidente()
+    {
+        try
+        {
+            Incidente objIncidente = new Incidente();
+            objIncidente.CodigoIncidente = 0;
+            objIncidente.NumeroIncidente = this.txtNroIncidencia.Text;
+            objIncidente.FechaIncidente = ML.Comun.Entidades.Util.ParseDateTime(this.txtFecha.Text);
+            objIncidente.Estado = int.Parse(this.ddlEstado.SelectedValue);
+            objIncidente.Situacion = int.Parse(this.ddlSituacion.SelectedValue);
+            objIncidente.Area.Id = int.Parse(this.ddlArea.SelectedValue);
+            objIncidente.Sede.Id = int.Parse(this.ddlSede.SelectedValue);
+            objIncidente.UsuarioContacto.Id = ML.Comun.Entidades.Util.ParseGuid(this.ddlSolicitante.SelectedValue);
+
+            DataTable dtData = IncidenteBLL.Instance.ListarIncidente(objIncidente);
+            this.gvBandeja.DataSource = dtData;
+            this.gvBandeja.DataBind();
+
+            //Invoca al metodo para paginar la grilla
+            Paginar(dtData, this.gvBandeja, this.litNumeroRegistros, this.litPagina);
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    #endregion
+
+    #region Eventos Paginado
+
+    void Inicializar()
+    {
+        try
+        {
+
+            this.imgbtnBack.Visible = false;
+            this.imgbtnStart.Visible = false;
+            this.imgbtnEnd.Visible = false;
+            this.imgbtnNext.Visible = false;
+
+            this.imgbtnBack.Enabled = false;
+            this.imgbtnStart.Enabled = false;
+            this.imgbtnEnd.Enabled = false;
+            this.imgbtnNext.Enabled = false;
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    void imgbtnEnd_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex < (this.gvBandeja.PageCount - 1))
+            {
+                this.gvBandeja.PageIndex = this.gvBandeja.PageCount - 1;
+                ListarIncidente();
+
+                this.imgbtnStart.Enabled = true;
+                this.imgbtnBack.Enabled = true;
+                this.imgbtnEnd.Enabled = false;
+                this.imgbtnNext.Enabled = false;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    void imgbtnBack_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex > 0)
+            {
+                this.gvBandeja.PageIndex = (this.gvBandeja.PageIndex - 1);
+                ListarIncidente();
+
+                if (this.gvBandeja.PageIndex > 0)
+                {
+                    this.imgbtnStart.Enabled = true;
+                    this.imgbtnBack.Enabled = true;
+                }
+                else
+                {
+                    this.imgbtnStart.Enabled = false;
+                    this.imgbtnBack.Enabled = false;
+                }
+
+                this.imgbtnEnd.Enabled = true;
+                this.imgbtnNext.Enabled = true;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    void imgbtnNext_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex < (this.gvBandeja.PageCount - 1))
+            {
+                this.gvBandeja.PageIndex = this.gvBandeja.PageIndex + 1;
+
+                ListarIncidente();
+
+                this.imgbtnStart.Enabled = true;
+                this.imgbtnBack.Enabled = true;
+
+                if (this.gvBandeja.PageIndex == (this.gvBandeja.PageCount - 1))
+                {
+                    this.imgbtnEnd.Enabled = false;
+                    this.imgbtnNext.Enabled = false;
+                }
+                else
+                {
+                    this.imgbtnEnd.Enabled = true;
+                    this.imgbtnNext.Enabled = true;
+                }
+
+            }
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    void imgbtnStart_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex > 0)
+            {
+                this.gvBandeja.PageIndex = 0;
+                ListarIncidente();
+
+                this.imgbtnStart.Enabled = false;
+                this.imgbtnBack.Enabled = false;
+                this.imgbtnNext.Enabled = true;
+                this.imgbtnEnd.Enabled = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    #endregion
+
+    #region paginacion
+    /// <summary>
+    /// Metodo que permite paginar un GridView
+    /// </summary>
+    /// <param name="dtData"></param>
+    /// <param name="gvLista"></param>
+    /// <param name="litRowCount"></param>
+    /// <param name="litPage"></param>
+    /// <returns></returns>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// <Creado por>Edgar Huarcaya C.</Creado>
+    /// <Fecha Crea>01 mar 2012</Fecha>
+    void Paginar(System.Data.DataTable dtData, System.Web.UI.WebControls.GridView gvLista, System.Web.UI.WebControls.Literal litRowCount, System.Web.UI.WebControls.Literal litPage)
+    {
+        try
+        {
+
+            Int16 pageSize = Int16.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["numeroRegistrosPorPagina"]);
+            if (dtData != null)
+            {
+                if (dtData.Rows.Count >= pageSize)
+                {
+                    //PaginacionVisible(true);
+                    this.imgbtnEnd.Enabled = true;
+                    this.imgbtnNext.Enabled = true;
+                }
+                else
+                {
+                    //Inicializar();
+                    //PaginacionVisible(false);
+                    PaginacionEnabled(false);
+                    litRowCount.Text = string.Format("Número de Registros encontrados : {0}", 0);
+                    litPage.Text = "Página: 0 de 0";
+                }
+
+                Int16 intPag;
+                try
+                {
+                    intPag = short.Parse(Math.Ceiling(Convert.ToDouble(dtData.Rows.Count) / pageSize).ToString());
+                    if (intPag == 0) intPag = 1;
+                }
+                catch (Exception e)
+                {
+                    intPag = 0;
+                }
+
+                litRowCount.Text = string.Format("Número de Registros encontrados : {0}", dtData.Rows.Count);
+                litPage.Text = "Página: " + Convert.ToString(this.gvBandeja.PageIndex + 1) + " de " + intPag.ToString();
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    /// <summary>
+    /// Metodo para paginacion en la grilla
+    /// </summary>
+    /// <param name="valor"></param>
+    void PaginacionVisible(bool valor)
+    {
+        try
+        {
+            imgbtnStart.Visible = valor;
+            imgbtnNext.Visible = valor;
+            imgbtnBack.Visible = valor;
+            imgbtnEnd.Visible = valor;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    /// <summary>
+    /// Metodo para paginacion en la grilla
+    /// </summary>
+    /// <param name="valor"></param>
+    void PaginacionEnabled(bool valor)
+    {
+        try
+        {
+            imgbtnStart.Enabled = valor;
+            imgbtnNext.Enabled = valor;
+            imgbtnBack.Enabled = valor;
+            imgbtnEnd.Enabled = valor;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    #endregion
+
+    #region Eventos
+    void gvBandeja_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        try
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DataRowView fila = (DataRowView)e.Row.DataItem;
+                ImageButton imbDelete = (ImageButton)e.Row.FindControl("imbDelete");
+                ImageButton imbEdit = (ImageButton)e.Row.FindControl("imbEdit");
+                ImageButton imbDerivar = (ImageButton)e.Row.FindControl("imbDerivar");
+                ImageButton imbAtender = (ImageButton)e.Row.FindControl("imbAtender");
+                ImageButton imbSendEmail = (ImageButton)e.Row.FindControl("imbSendEmail");
+
+                ImageButton btnVerSolicitud = (ImageButton)e.Row.FindControl("btnVerSolicitud");
+                ImageButton btnHistorial = (ImageButton)e.Row.FindControl("btnHistorial");
+
+                ImageButton imbAbrir = (ImageButton)e.Row.FindControl("imbAbrir");
+                ImageButton imbCerrar = (ImageButton)e.Row.FindControl("imbCerrar");
+                ImageButton btnVerAdjunto = (ImageButton)e.Row.FindControl("btnVerAdjunto");
+                
+                #region Situacion Abierto
+                if (fila["N_SITUACION"].ToString().CompareTo(UIConstante.SituacionIncidente.Abierto.ToString()) == 0)
+                {
+                    imbAbrir.ToolTip = "Opción deshabilitada. Situación Abierto.";
+                    imbCerrar.Attributes.Add("onclick", "return confirm('¿Está seguro de cerrar la incidencia?');");
+                }
+                #endregion
+
+                #region Situacion Cerrado
+                if (fila["N_SITUACION"].ToString().CompareTo(UIConstante.SituacionIncidente.Cerrado.ToString()) == 0)
+                {
+                    imbCerrar.ToolTip = "Opción deshabilitada. Situación Cerrado.";
+                    imbAbrir.Attributes.Add("onclick", "return confirm('¿Está seguro de abrir la incidencia?');");
+                }
+                #endregion
+
+                #region Documento Adjunto
+                if (btnVerAdjunto.CommandName.Length > 0)
+                {
+                    btnVerAdjunto.Attributes.Add("onclick", "return goAttach1('" + btnVerAdjunto.CommandName + "');");
+                }
+                else
+                {
+                    btnVerAdjunto.ToolTip = "No hay ningún documento adjunto";
+                }
+                #endregion
+
+                btnHistorial.Attributes.Add("onclick", "return goHistorialIncidencia('" + btnHistorial.CommandArgument + "');");
+
+                if (btnVerSolicitud.CommandArgument.Length > 0)
+                {
+                    btnVerSolicitud.Attributes.Add("onclick", "return goSolicitudFicha('" + btnVerSolicitud.CommandArgument + "');");
+                }
+                else
+                {
+                    btnVerSolicitud.Enabled = false;
+                    btnVerSolicitud.ToolTip = "Opción deshabilitada. No existe solicitud de gestión de cambio.";
+                }
+
+                #region Anulado
+                if (fila["N_ESTADO"].ToString().CompareTo(UIConstante.EstadoIncidente.Anulado.ToString()) == 0)
+                {
+                    imbDelete.ToolTip = "Opción deshabilitada. Registro inactivo.";
+                    imbDelete.Enabled = false;
+
+                    imbEdit.ToolTip = "Opción deshabilitada. Registro inactivo.";
+                    imbEdit.Enabled = false;
+
+                    imbDerivar.ToolTip = "Opción deshabilitada. Registro inactivo.";
+                    imbDerivar.Enabled = false;
+
+                    imbAtender.ToolTip = "Opción deshabilitada. Registro inactivo.";
+                    imbAtender.Enabled = false;
+
+                    imbSendEmail.ToolTip = "Opción deshabilitada. Registro inactivo.";
+                    imbSendEmail.Enabled = false;
+
+                    return;
+                }
+                #endregion
+
+                #region Nuevo
+                if (fila["N_ESTADO"].ToString().CompareTo(UIConstante.EstadoIncidente.Nuevo.ToString()) == 0)
+                {
+                    imbDelete.Attributes.Add("onclick", "return confirm('¿Está seguro de Anular incidente?');");
+
+                    imbSendEmail.ToolTip = "Opción deshabilitada. No hay ningún Asesor TI asignado.";
+                    imbSendEmail.Enabled = false;
+                }
+                #endregion
+
+                #region Derivado
+                if (fila["N_ESTADO"].ToString().CompareTo(UIConstante.EstadoIncidente.Derivado.ToString()) == 0)
+                {
+                    imbDelete.ToolTip = "Opción deshabilitada. Registro derivado.";
+                    imbDelete.Enabled = false;
+
+                    imbEdit.ToolTip = "Opción deshabilitada. Registro derivado.";
+                    imbEdit.Enabled = false;
+
+                    imbSendEmail.ToolTip = "Opción deshabilitada. No hay ningún Asesor TI asignado.";
+                    imbSendEmail.Enabled = false;
+
+                }
+                #endregion
+
+                #region Asigndo
+                if (fila["N_ESTADO"].ToString().CompareTo(UIConstante.EstadoIncidente.Asignado.ToString()) == 0)
+                {
+                    imbDelete.ToolTip = "Opción deshabilitada. Registro asignado.";
+                    imbDelete.Enabled = false;
+
+                    imbEdit.ToolTip = "Opción deshabilitada. Registro asignado.";
+                    imbEdit.Enabled = false;
+
+                    imbSendEmail.Enabled = true;
+                    imbSendEmail.ToolTip = "Enviar correo a Asesor TI";
+
+                }
+                #endregion
+
+                #region En Proceso
+                if (fila["N_ESTADO"].ToString().CompareTo(UIConstante.EstadoIncidente.EnProceso.ToString()) == 0)
+                {
+                    imbDelete.ToolTip = "Opción deshabilitada. Registro en proceso.";
+                    imbDelete.Enabled = false;
+
+                    imbEdit.ToolTip = "Opción deshabilitada. Registro en proceso.";
+                    imbEdit.Enabled = false;
+
+                    imbDerivar.ToolTip = "Opción deshabilitada. Registro en proceso.";
+                    imbDerivar.Enabled = false;
+
+                    imbAtender.ToolTip = "Opción deshabilitada. Registro en proceso.";
+                    imbAtender.Enabled = false;
+
+                    imbSendEmail.Enabled = true;
+                    imbSendEmail.ToolTip = "Enviar correo a Asesor TI";
+                }
+                #endregion
+
+                #region Atendido
+                if (fila["N_ESTADO"].ToString().CompareTo(UIConstante.EstadoIncidente.Atendido.ToString()) == 0)
+                {
+                    imbDelete.ToolTip = "Opción deshabilitada. Registro atendido.";
+                    imbDelete.Enabled = false;
+
+                    imbEdit.ToolTip = "Opción deshabilitada. Registro atendido.";
+                    imbEdit.Enabled = false;
+
+                    imbDerivar.ToolTip = "Opción deshabilitada. Registro atendido.";
+                    imbDerivar.Enabled = false;
+
+                    imbAtender.ToolTip = "Opción deshabilitada. Registro atendido.";
+                    imbAtender.Enabled = false;
+
+                    imbSendEmail.ToolTip = "Opción deshabilitada. Registro atendido.";
+                    imbSendEmail.Enabled = false;
+                }
+                #endregion
+
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    protected void btnNuevo_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("RegistrarIncidente.aspx?param=new&sc=", false);
+    }
+    protected void btnDerivar_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("RegistrarIncidente.aspx?cod=" + "120", false);
+    }
+    protected void imbEdit_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+
+            ImageButton imbEdit = (ImageButton)sender;
+            Response.Redirect("RegistrarIncidente.aspx?param=" + imbEdit.CommandArgument + "&sc=", false);
+
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+    protected void imbDerivar_Click(object sender, ImageClickEventArgs e)
+    {
+        ImageButton imbDerivar = (ImageButton)sender;
+        Response.Redirect("RegistrarIncidente.aspx?param=" + imbDerivar.CommandArgument, false);
+
+    }
+    protected void btnAtender_Click(object sender, ImageClickEventArgs e)
+    {
+        ImageButton btnAtender = (ImageButton)sender;
+        Response.Redirect("Resolucion.aspx?param=" + btnAtender.CommandArgument + "&source=cau", false);
+    }
+    protected void btnBuscar_Click(object sender, EventArgs e)
+    {
+        ListarIncidente();
+    }
+    protected void ddlSede_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        CargarArea();
+        CargarUsuario();
+    }
+    protected void imbDelete_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+
+            ImageButton imbDelete = (ImageButton)sender;
+
+            int intCodigoIncidente = int.Parse(imbDelete.CommandArgument);
+            Incidente objIncidente = new Incidente();
+            objIncidente.CodigoIncidente = intCodigoIncidente;
+            objIncidente.UsuarioModifica = _auditoria.Usuario.Id;
+            objIncidente.Estado = UIConstante.EstadoIncidente.Anulado;
+
+            IncidenteBLL.Instance.ActualizarEstadoIncidente(objIncidente);
+
+            objIncidente.Dispose();
+            objIncidente = null;
+
+            ListarIncidente();
+
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+    protected void imbSendEmail_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+
+            #region Envio de Mail
+
+            ImageButton imbSendEmail = (ImageButton)sender;
+
+            Usuario objUsuarioDestino;
+            objUsuarioDestino = General.getUsuario(ML.Comun.Entidades.Util.ParseGuid(imbSendEmail.CommandName), _auditoria.AppId);
+
+            if (objUsuarioDestino != null)
+            {
+                Correo objCorreo = new Correo();
+                objCorreo.To = objUsuarioDestino.Correo; // Correo de Asesor TI
+                objCorreo.Subject = "Incidencia Asignado Nro: " + imbSendEmail.CommandArgument;
+                objCorreo.Body = "Se ha asignado una incidencia para su atención.";
+                objCorreo.Enviar();
+                objCorreo = null;
+                CScript.MessageBox(0, "Correo enviado exitosamente.", upBandeja);
+            }
+
+            #endregion
+
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+    protected void imbAbrir_Click(object sender, ImageClickEventArgs e)
+    {
+        ImageButton imbAbrir = (ImageButton)sender;
+        ActualizarSituacionIncidente(int.Parse(imbAbrir.CommandArgument), UIConstante.SituacionIncidente.Abierto);
+    }
+    protected void imbCerrar_Click(object sender, ImageClickEventArgs e)
+    {
+        ImageButton imbCerrar = (ImageButton)sender;
+        ActualizarSituacionIncidente(int.Parse(imbCerrar.CommandArgument), UIConstante.SituacionIncidente.Cerrado);
+    }
+    #endregion
+}

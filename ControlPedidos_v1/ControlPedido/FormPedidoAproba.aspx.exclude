@@ -1,0 +1,431 @@
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="FormPedidoAproba.aspx.cs"
+    Inherits="FormPedidoAproba" %>
+
+<asp:Content ID="Content1" runat="server" ContentPlaceHolderID="MainContent">
+    <link href="../Styles/Base.css" rel="stylesheet" type="text/css" />
+    <script src="../Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script src="../Scripts/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+    <link href="../Styles/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
+    <script language="javascript" type="text/javascript">
+        function BusquedaEquipo_callDialog() {
+
+            modalEquipo = $('<iframe  src="About.aspx" frameborder=0 marginheight=0 marginwidth=0 scrolling=no  AllowTransparency />').dialog({
+                title: '',
+                width: 605,
+                height: 400,
+                modal: true,
+                resizable: false,
+                zIndex: 10,
+                draggable: false
+            }).width(600).height(380);
+
+        }
+
+        function BusquedaEquipo_callDialogIn(param) {
+
+            var xtitle;
+            xtitle = "Agregar observación";
+
+            //document.getElementById("ctl00_MainContent_hidCodigoSolicitud").Value = param;
+
+            //$("#ctl00_MainContent_hidCodigoSolicitud").val("150");
+            $("#ctl00_MainContent_hidCodigoSolicitud").val(param);
+
+            //$("#identificador").attr('value', 'valor para éste input');
+
+            var dlg = $("#dialog").dialog({
+                autoOpen: true,
+                title: xtitle,
+                width: 400,
+                height: 220,
+                modal: true,
+                draggable: true,
+                resizable: false,
+                zIndex: 10,
+                autoResize: true
+            });
+            dlg.parent().appendTo(jQuery("form:first"));
+        }
+    </script>
+    <asp:UpdatePanel ID="upBandeja" runat="server" EnableViewState="true" UpdateMode="Conditional">
+        <ContentTemplate>
+            <h2>
+                SEGUIMIENTO DE PEDIDOS</h2>
+            <table width="100%">
+                <tr>
+                    <td>
+                        <table width="100%" class="table-border-bottom">
+                            <tr>
+                                <td class="style1">
+                                    Nro. Pedido
+                                </td>
+                                <td class="style1">
+                                    <asp:TextBox ID="txtNroPedido" runat="server" Width="100px"></asp:TextBox>
+                                </td>
+                                <td class="style1">
+                                    Fecha
+                                </td>
+                                <td class="style1">
+                                    <asp:TextBox ID="txtFecha" runat="server" Width="70px"></asp:TextBox>
+                                    <act:CalendarExtender ID="txtFecha_CalendarExtender" runat="server" TargetControlID="txtFecha"
+                                        PopupButtonID="imbFecha" Enabled="true" Format="dd/MM/yyyy">
+                                    </act:CalendarExtender>
+                                    <asp:ImageButton ID="imbFecha" runat="server" ImageUrl="~/images/icons/calendar.gif" />
+                                </td>
+                                <td class="style1">
+                                    Estado
+                                </td>
+                                <td class="style1">
+                                    <asp:Label ID="lblEstado" runat="server" Text="Nuevo"></asp:Label>
+                                </td>
+                                <td class="style1">
+                                    &nbsp;
+                                </td>
+                                <td class="style1">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Área
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlArea" runat="server">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    Jefe de Área
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlJefeArea" runat="server">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    Tipo
+                                </td>
+                                <td>
+                                    <asp:RadioButton ID="rbPlanificado" runat="server" Checked="True" GroupName="TipoPedido"
+                                        Text="Planificado" />
+                                    &nbsp;<asp:RadioButton ID="rbEmergencia" runat="server" GroupName="TipoPedido" Text="Emergencia" />
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Artículo
+                                </td>
+                                <td colspan="3">
+                                    <asp:TextBox ID="txtArticulo" runat="server" Width="328px"></asp:TextBox>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                    <asp:Button ID="btnBuscar" runat="server" BackColor="#D5D8DF" CssClass="boton" OnClick="btnBuscar_Click"
+                                        Text="Buscar" />
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td valign="top">
+                                    &nbsp;
+                                    <asp:Button ID="btnActualizarEstado" runat="server" BackColor="#D5D8DF" CssClass="boton"
+                                        Text="Actualizar estado" Width="120px" OnClick="btnActualizarEstado_Click" />
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td colspan="2" valign="top">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                    <asp:HiddenField ID="hidFlujoProceso" runat="server" />
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <asp:GridView ID="gvBandeja" runat="server" AllowPaging="True" AutoGenerateColumns="False"
+                                BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px"
+                                CellPadding="4" EmptyDataText="No se encontraron registros." Font-Size="Small"
+                                ShowHeaderWhenEmpty="True" SkinID="Principal" Width="100%">
+                                <AlternatingRowStyle CssClass="GrdAlternativeItem" />
+                                <Columns>
+                                    <asp:TemplateField HeaderText="Sel">
+                                        <ItemTemplate>
+                                            <asp:CheckBox ID="chkSel" runat="server" />
+                                            <asp:HiddenField ID="hidEstado" runat="server" Value='<%# Bind("In60Estado") %>' />
+                                        </ItemTemplate>
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Nro. Pedido">
+                                        <EditItemTemplate>
+                                        </EditItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblIn60numped" runat="server" Text='<%# Bind("In60numped") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Item">
+                                        <EditItemTemplate>
+                                        </EditItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblItem" runat="server" Text='<%# Bind("In60Item") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="In60codart" HeaderStyle-CssClass="GrdHeader" HeaderText="Cod. Artículo">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="In60desart" HeaderStyle-CssClass="GrdHeader" HeaderText="Descripción de Artículo">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="In60unidad" HeaderStyle-CssClass="GrdHeader" HeaderText="Unidad Medida">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="In60cantidad" HeaderStyle-CssClass="GrdHeader" HeaderText="Cantidad">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="In60NroParte" HeaderStyle-CssClass="GrdHeader" HeaderText="Nro. Lote">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="In60Equipo" HeaderStyle-CssClass="GrdHeader" HeaderText="Equipo">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="In60Prioridad" HeaderStyle-CssClass="GrdHeader" HeaderText="Prioridad">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="In60Observacion" HeaderStyle-CssClass="GrdHeader" HeaderText="Observación">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="DesEstadoAnterior" HeaderStyle-CssClass="GrdHeader" HeaderText="Estado Anterior">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="DesEstadoActual" HeaderStyle-CssClass="GrdHeader" HeaderText="Estado Actual">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="In60cantidad" HeaderStyle-CssClass="GrdHeader" HeaderText="Cantidad">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="In60CantidadNueva" HeaderStyle-CssClass="GrdHeader" HeaderText="Nueva Cantidad">
+                                        <HeaderStyle CssClass="GrdHeader" />
+                                    </asp:BoundField>
+                                </Columns>
+                                <PagerSettings Visible="False" />
+                            </asp:GridView>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table border="0" width="100%">
+                            <tr>
+                                <td style="width: 75%">
+                                    <b>
+                                        <asp:Literal ID="litNumeroRegistros" runat="server"></asp:Literal>
+                                    </b>
+                                </td>
+                                <td align="right">
+<table border="0" style="text-align: right">
+                                        <tr>
+                                            <td align="right">
+                                                <b>
+                                                    <asp:Literal ID="litPagina" runat="server"></asp:Literal>
+                                                </b>
+                                            </td>
+                                            <td>
+                                                <asp:ImageButton runat="server" ID="imgbtnStart" ImageUrl="~/images/icons/icono_inicio_off.jpg"
+                                                    onmouseout="cambia(this,'images/icons/icono_inicio_off.jpg');" onmouseover="cambia(this,'images/icons/icono_inicio_on.jpg');"
+                                                    ToolTip="ir a la página inicial" />
+                                            </td>
+                                            <td>
+                                                <asp:ImageButton runat="server" ID="imgbtnNext" ImageUrl="~/images/icons/icono_siguiente_off.jpg"
+                                                    onmouseout="cambia(this,'images/icons/icono_siguiente_off.jpg');" onmouseover="cambia(this,'images/icons/icono_siguiente_on.jpg');"
+                                                    ToolTip="ir a la página siguiente" />
+                                            </td>
+                                            <td>
+                                                <asp:ImageButton runat="server" ID="imgbtnBack" ImageUrl="~/images/icons/icono_anterior_off.jpg"
+                                                    onmouseout="cambia(this,'images/icons/icono_anterior_off.jpg');" onmouseover="cambia(this,'images/icons/icono_anterior_on.jpg');"
+                                                    ToolTip="ir a la página anterior" />
+                                            </td>
+                                            <td>
+                                                <asp:ImageButton runat="server" ID="imgbtnEnd" ImageUrl="~/images/icons/icono_final_off.jpg"
+                                                    onmouseout="cambia(this,'images/icons/icono_final_off.jpg');" onmouseover="cambia(this,'images/icons/icono_final_on.jpg');"
+                                                    ToolTip="ir a la página final" />
+                                            </td>
+                                        </tr>
+                                    </table>                                    
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+    <asp:Button runat="server" ID="btnArticulo" Width="0" Height="0" />
+    <act:ModalPopupExtender ID="mpeArticulo" runat="server" BackgroundCssClass="BackgroundPopup"
+        PopupControlID="pnArticulo" DropShadow="False" TargetControlID="btnArticulo" />
+    <asp:Panel ID="pnArticulo" runat="server" CssClass="CajaDialogoGeneral" Width="400px"
+        Style="display: block">
+        <ajax:UpdatePanel ID="upArticulo" runat="server">
+            <ContentTemplate>
+                <div style="position: absolute; top: 5px; left: 560px;">
+                    <asp:ImageButton runat="server" ToolTip="cerrar ventana" ImageUrl="~/images/icons/close.png"
+                        ID="imbCerrarAtendido" />
+                </div>
+                <table width="100%" class="bg_fondo_tabla">
+                    <tr>
+                        <td colspan="6" class="TituloPopup" align="center">
+                            <asp:Literal ID="Literal1" runat="server" Text="Cambio de estado"></asp:Literal>
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Estado
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="ddlEstadoAprobacion" runat="server">
+                            </asp:DropDownList>
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 25%">
+                            Nueva cantidad
+                        </td>
+                        <td>
+                            <asp:TextBox ID="txtNuevaCantidad" runat="server"></asp:TextBox>
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            <asp:HiddenField ID="hidItem" runat="server" />
+                            <asp:HiddenField ID="hidNroPedido" runat="server" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 25%">
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                            <asp:HiddenField ID="hidEstadoActual" runat="server" />
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="6">
+                            <asp:Button ID="btnGuardarAtencion" runat="server" CssClass="boton" Text="Aceptar"
+                                OnClick="btnGuardarAtencion_Click" />
+                            &nbsp;<asp:Button ID="btnCancelarAtencion" runat="server" CssClass="boton" Text="Cancelar"
+                                OnClick="btnCancelarAtencion_Click1" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </ContentTemplate>
+            <Triggers>
+            </Triggers>
+        </ajax:UpdatePanel>
+    </asp:Panel>
+</asp:Content>

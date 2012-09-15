@@ -1,0 +1,648 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using ML.CAU.UIC;
+using MC.ControlPedido.Logica;
+using MC.ControlPedido.Model;
+using ML.Seguridad.Entidades;
+using ML.Seguridad.Logica;
+using ML.Comun.Entidades;
+using ML.Comun.Logica;
+
+public partial class Incident_Resolucion : UIPage
+{
+
+    #region Inicio
+
+    protected override void OnLoad(EventArgs e)
+    {
+        //Cargamos eventos en los botones de paginación
+        this.gvBandeja.RowDataBound += new GridViewRowEventHandler(gvBandeja_RowDataBound);
+        imgbtnStart.Click += new ImageClickEventHandler(imgbtnStart_Click);
+        imgbtnNext.Click += new ImageClickEventHandler(imgbtnNext_Click);
+        imgbtnBack.Click += new ImageClickEventHandler(imgbtnBack_Click);
+        imgbtnEnd.Click += new ImageClickEventHandler(imgbtnEnd_Click);
+
+        if (IsPostBack == false)
+        {
+            string Id = Request.Params["param"];
+            string Origen = Request.Params["source"];
+
+            this.hidIdIncidente.Value = Id;
+            this.hidOrigen.Value = Origen;
+            //this.btnAgregar.Attributes.Add("onclick", "return BusquedaEquipo_callDialogIn();");
+
+            CargarMetodoSolucion();
+            ListarIncidente();
+            
+            this.txtFechaAtencion.Text = DateTime.Now.ToShortDateString();
+            this.chkTerminado.Checked = true;
+        }
+    }
+
+    #endregion
+
+    #region Metodos
+
+    /// <summary>
+    /// Metodo que permite marcar como atendido la incidencia
+    /// </summary>
+    private void MarcarAtendido()
+    {
+        try
+        {
+
+            if (this.txtConclusion.Text.Length == 0)
+            {
+                throw new Exception("Ingrese la conclusiones.");
+            }
+
+            Incidente objIncidente = new Incidente();
+            objIncidente.CodigoIncidente = int.Parse(this.hidIdIncidente.Value);
+            objIncidente.UsuarioModifica = _auditoria.Usuario.Id;
+            objIncidente.Estado = UIConstante.EstadoIncidente.Atendido;
+            objIncidente.Solucionado = this.chkSolucionado.Checked == true ? 1 : 0;
+            objIncidente.Conclusion = this.txtConclusion.Text;
+
+            IncidenteBLL.Instance.ActualizarEstadoIncidente(objIncidente);
+            mpeMarcarAtendido.Hide();
+
+            if (this.hidOrigen.Value.CompareTo("ase") == 0)
+            {
+                Response.Redirect("BandejaIncidenteSolucion.aspx", false);
+            }
+            else
+            {
+                Response.Redirect("BandejaIncidente.aspx", false);
+            }
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+
+    }
+
+    /// <summary>
+    /// Metodo que lista de metodos de solucion
+    /// <FechaCrea>08-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarMetodoSolucion()
+    {
+        try
+        {
+            IMetodoSolucionBLL objMetodoSolucionBLL = new MetodoSolucionBLL();
+            Bind(this.ddlMedioComunicacion, objMetodoSolucionBLL.ListarMetodoSolucion(), "N_CODMET", "V_DESMET");
+
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+
+    }
+
+    /// <summary>
+    /// Metodo que lista las incidencias
+    /// <FechaCrea>08-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void ListarIncidente()
+    {
+        try
+        {
+            Incidente objIncidente = new Incidente();
+            objIncidente.CodigoIncidente = int.Parse(this.hidIdIncidente.Value);
+            objIncidente.NumeroIncidente = string.Empty;
+            objIncidente.FechaIncidente = ML.Comun.Entidades.Util.ParseDateTime(string.Empty);
+            objIncidente.Estado = 0;
+            objIncidente.Situacion = 0;
+            objIncidente.Area.Id = 0;
+            objIncidente.Sede.Id = 0;
+
+            DataTable dtData = IncidenteBLL.Instance.ListarIncidente(objIncidente);
+
+            if (dtData.Rows.Count > 0)
+            {
+                this.txtNroIncidencia.Text = Convert.ToString(dtData.Rows[0]["V_NUMINC"]);
+                this.hidSolicitud.Value = Convert.ToString(dtData.Rows[0]["N_CODSOL"]);
+                this.txtNroSolicitud.Text = Convert.ToString(dtData.Rows[0]["V_NUMSOL"]);
+
+                if (this.hidSolicitud.Value.Length > 0)
+                {
+                    this.btnVistaSolicitud.Attributes.Add("onclick", "return goSolicitudFicha('" + this.hidSolicitud.Value + "');");
+                }
+
+                this.txtFecha.Text = Convert.ToString(dtData.Rows[0]["D_FECINC"]);
+                this.txtEstado.Text = Convert.ToString(dtData.Rows[0]["DESESTADO"]);
+                this.txtTitulo.Text = Convert.ToString(dtData.Rows[0]["V_TITULO"]);
+                this.txtDescripcion.Text = Convert.ToString(dtData.Rows[0]["V_DESINC"]);
+                this.txtTipoIncidente.Text = Convert.ToString(dtData.Rows[0]["V_NOMTIPINC"]);
+
+                this.txtImpacto.Text = Convert.ToString(dtData.Rows[0]["V_DESIMP"]);
+                this.txtPrioridad.Text = Convert.ToString(dtData.Rows[0]["V_DESPRIO"]);
+                this.txtSubcategoria.Text = Convert.ToString(dtData.Rows[0]["V_NOMSUBCAT"]);
+                this.txtCategoria.Text = Convert.ToString(dtData.Rows[0]["V_NOMCAT"]);
+                this.txtPlataforma.Text = Convert.ToString(dtData.Rows[0]["V_NOMPLATF"]);
+                this.txtAsignado.Text = Convert.ToString(dtData.Rows[0]["NOMASESOR"]);
+                this.txtSede.Text = Convert.ToString(dtData.Rows[0]["V_NOMSEDE"]);
+                this.txtArea.Text = Convert.ToString(dtData.Rows[0]["V_NOMAREA"]);
+            }
+
+            //Invoca al metodo para paginar la grilla
+            ListarAtencion();
+
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo para listar las atenciones realizadas de una incidencia
+    /// </summary>
+    private void ListarAtencion()
+    {
+        try
+        {
+
+            Atencion objAtencion = new Atencion();
+            objAtencion.CodigoIncidente = int.Parse(this.hidIdIncidente.Value);
+
+            DataTable dtData;
+            dtData = IncidenteBLL.Instance.ListarAtencion(objAtencion);
+
+            this.gvBandeja.DataSource = dtData;
+            this.gvBandeja.DataBind();
+
+            objAtencion.Dispose();
+            objAtencion = null;
+
+            //Invoca al metodo para paginar la grilla
+            Paginar(dtData, this.gvBandeja, this.litNumeroRegistros, this.litPagina);
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo para cargar atencion asi modificar la información
+    /// </summary>
+    private void CargarAtencion()
+    {
+        try
+        {
+            Atencion objAtencion = new Atencion();
+            objAtencion.CodigoIncidente = 0; // int.Parse(this.hidIdIncidente.Value);
+            objAtencion.CodigoAtencion = int.Parse(this.hidCodigoAtencion.Value);
+
+            DataTable dtData;
+            dtData = IncidenteBLL.Instance.ListarAtencion(objAtencion);
+
+            if (dtData.Rows.Count > 0)
+            {
+                this.txtFechaAtencion.Text = Convert.ToString(dtData.Rows[0]["D_FECATEN"]);
+                this.txtDescripAtencion.Text = Convert.ToString(dtData.Rows[0]["V_DESCRIP"]);
+                this.ddlMedioComunicacion.SelectedValue = Convert.ToString(dtData.Rows[0]["N_CODMET"]);
+                if (Convert.ToString(dtData.Rows[0]["V_SOLUCION"]) == "S")
+                {
+                    this.chkTerminado.Checked = true;
+                }
+                else
+                {
+                    this.chkTerminado.Checked = false;
+                }
+
+            }
+
+            objAtencion.Dispose();
+            objAtencion = null;
+
+            //Invoca al metodo para paginar la grilla
+            Paginar(dtData, this.gvBandeja, this.litNumeroRegistros, this.litPagina);
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo para registrar las atenciones de incidencias
+    /// </summary>
+    private void RegistrarAtencion()
+    {
+        try
+        {
+            Atencion objAtencion = new Atencion();
+
+            objAtencion.CodigoAtencion = int.Parse(this.hidCodigoAtencion.Value);
+            objAtencion.FechaAtencion = DateTime.Parse(DateTime.Now.ToShortDateString());
+            objAtencion.DescripcionAtencion = this.txtDescripAtencion.Text;
+            objAtencion.Solucionado = this.chkTerminado.Checked == true ? "S" : "N";
+            objAtencion.CodigoIncidente = int.Parse(this.hidIdIncidente.Value);
+            objAtencion.Horas = 0;
+            objAtencion.UsuarioCrea = _auditoria.Usuario.Id;
+            objAtencion.MetodoSolucion.CodigoMetodo = int.Parse(this.ddlMedioComunicacion.SelectedValue);
+
+            this.txtDescripAtencion.Text = string.Empty;
+            objAtencion.Estado = UIConstante.EstadoAtencion.Activo;
+
+            int intCodigo = IncidenteBLL.Instance.RegistrarAtencion(objAtencion);
+
+            //Actualiza el Arhivo Adjunto
+            objAtencion.Adjunto = General.UpLoadFile(fuAdjunto, "AT" + intCodigo.ToString().Trim());
+            IncidenteBLL.Instance.ActualizarAtencion(objAtencion);
+
+            ListarAtencion();
+
+            //Si lo inserta primer registro de atención
+            if (this.gvBandeja.Rows.Count == 1)
+            {
+                Incidente objIncidente = new Incidente();
+                objIncidente.CodigoIncidente = int.Parse(this.hidIdIncidente.Value);
+                objIncidente.UsuarioModifica = _auditoria.Usuario.Id;
+                objIncidente.Estado = UIConstante.EstadoIncidente.EnProceso;
+
+                IncidenteBLL.Instance.ActualizarEstadoIncidente(objIncidente);
+            }
+
+            this.upBandeja.Update();
+            this.mpeEdicion.Hide();
+
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    #endregion
+
+    #region Eventos
+    void gvBandeja_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        try
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DataRowView fila = (DataRowView)e.Row.DataItem;
+                ImageButton imbDelete = (ImageButton)e.Row.FindControl("imbDelete");
+
+                imbDelete.Attributes.Add("onclick", "return confirm('¿Está seguro de eliminar la acción registrada?');");
+
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    protected void btnGuardar_Click(object sender, EventArgs e)
+    {
+        RegistrarAtencion();
+    }
+    protected void imbDelete_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            ImageButton imbDelete = (ImageButton)sender;
+            Atencion objAtencion = new Atencion();
+            objAtencion.CodigoAtencion = int.Parse(imbDelete.CommandArgument);
+            objAtencion.UsuarioModifica = _auditoria.Usuario.Id;
+            objAtencion.Estado = UIConstante.EstadoAtencion.Inactivo;
+
+            IncidenteBLL.Instance.EliminarAtencion(objAtencion);
+            ListarAtencion();
+
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+    protected void btnAtendido_Click(object sender, EventArgs e)
+    {
+
+        if (this.gvBandeja.Rows.Count == 0)
+        {
+            CScript.MessageBox(0, "Debe agregar al menos una acción en la lista de acciones realizados.", upBandeja);
+            return;
+        }
+
+        for (int i = 0; i < this.gvBandeja.Rows.Count; i++)
+        {
+            Label lblTerminado = (Label)this.gvBandeja.Rows[i].FindControl("lblTerminado");
+            if (lblTerminado.Text.CompareTo("No") == 0)
+            {
+                CScript.MessageBox(0, "Para indicar como atendido primero debe indicar como terminado las tareas.", upBandeja);
+                return;
+            }
+        }
+
+        txtConclusion.Text = string.Empty;
+        chkSolucionado.Checked = true;
+        mpeMarcarAtendido.Show();
+    }
+    protected void imbEdit_Click(object sender, ImageClickEventArgs e)
+    {
+        ImageButton imbEdit = (ImageButton)sender;
+        this.hidCodigoAtencion.Value = imbEdit.CommandArgument;
+        CargarAtencion();
+        this.mpeEdicion.Show();
+    }
+    protected void btnCancelar_Click(object sender, EventArgs e)
+    {
+        this.mpeEdicion.Hide();
+    }
+    protected void btnCancelar2_Click(object sender, EventArgs e)
+    {
+        mpeEdicion.Hide();
+    }
+    protected void btnCerrarEdicion_Click(object sender, ImageClickEventArgs e)
+    {
+        mpeEdicion.Hide();
+    }
+    protected void btnAgregar_Click(object sender, EventArgs e)
+    {
+        mpeEdicion.Show();
+        this.hidCodigoAtencion.Value = "0";
+        this.txtFechaAtencion.Text = DateTime.Now.ToShortDateString();
+        this.txtDescripAtencion.Text = string.Empty;
+        this.chkTerminado.Checked = false;
+    }
+    protected void btnGuardarAtencion_Click(object sender, EventArgs e)
+    {
+        MarcarAtendido();
+    }
+    protected void btnCancelarAtencion_Click(object sender, EventArgs e)
+    {
+        mpeMarcarAtendido.Hide();
+    }
+    protected void imbCerrarAtendido_Click(object sender, ImageClickEventArgs e)
+    {
+        mpeMarcarAtendido.Hide();
+    }
+    protected void btnSalir_Click(object sender, ImageClickEventArgs e)
+    {
+        if (this.hidOrigen.Value.CompareTo("ase") == 0)
+        {
+            Response.Redirect("BandejaIncidenteSolucion.aspx", false);
+        }
+        else
+        {
+            Response.Redirect("BandejaIncidente.aspx", false);
+        }
+    }
+
+    #endregion
+
+    #region Eventos Paginado
+
+    void Inicializar()
+    {
+        try
+        {
+
+            this.imgbtnBack.Visible = false;
+            this.imgbtnStart.Visible = false;
+            this.imgbtnEnd.Visible = false;
+            this.imgbtnNext.Visible = false;
+
+            this.imgbtnBack.Enabled = false;
+            this.imgbtnStart.Enabled = false;
+            this.imgbtnEnd.Enabled = false;
+            this.imgbtnNext.Enabled = false;
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    void imgbtnEnd_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex < (this.gvBandeja.PageCount - 1))
+            {
+                this.gvBandeja.PageIndex = this.gvBandeja.PageCount - 1;
+                ListarIncidente();
+
+                this.imgbtnStart.Enabled = true;
+                this.imgbtnBack.Enabled = true;
+                this.imgbtnEnd.Enabled = false;
+                this.imgbtnNext.Enabled = false;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    void imgbtnBack_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex > 0)
+            {
+                this.gvBandeja.PageIndex = (this.gvBandeja.PageIndex - 1);
+                ListarIncidente();
+
+                if (this.gvBandeja.PageIndex > 0)
+                {
+                    this.imgbtnStart.Enabled = true;
+                    this.imgbtnBack.Enabled = true;
+                }
+                else
+                {
+                    this.imgbtnStart.Enabled = false;
+                    this.imgbtnBack.Enabled = false;
+                }
+
+                this.imgbtnEnd.Enabled = true;
+                this.imgbtnNext.Enabled = true;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    void imgbtnNext_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex < (this.gvBandeja.PageCount - 1))
+            {
+                this.gvBandeja.PageIndex = this.gvBandeja.PageIndex + 1;
+
+                ListarIncidente();
+
+                this.imgbtnStart.Enabled = true;
+                this.imgbtnBack.Enabled = true;
+
+                if (this.gvBandeja.PageIndex == (this.gvBandeja.PageCount - 1))
+                {
+                    this.imgbtnEnd.Enabled = false;
+                    this.imgbtnNext.Enabled = false;
+                }
+                else
+                {
+                    this.imgbtnEnd.Enabled = true;
+                    this.imgbtnNext.Enabled = true;
+                }
+
+            }
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    void imgbtnStart_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex > 0)
+            {
+                this.gvBandeja.PageIndex = 0;
+                ListarIncidente();
+
+                this.imgbtnStart.Enabled = false;
+                this.imgbtnBack.Enabled = false;
+                this.imgbtnNext.Enabled = true;
+                this.imgbtnEnd.Enabled = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    #endregion
+
+    #region paginacion
+    /// <summary>
+    /// Metodo que permite paginar un GridView
+    /// </summary>
+    /// <param name="dtData"></param>
+    /// <param name="gvLista"></param>
+    /// <param name="litRowCount"></param>
+    /// <param name="litPage"></param>
+    /// <returns></returns>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// <Creado por>Edgar Huarcaya C.</Creado>
+    /// <Fecha Crea>01 mar 2012</Fecha>
+    void Paginar(System.Data.DataTable dtData, System.Web.UI.WebControls.GridView gvLista, System.Web.UI.WebControls.Literal litRowCount, System.Web.UI.WebControls.Literal litPage)
+    {
+        try
+        {
+
+            Int16 pageSize = Int16.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["numeroRegistrosPorPagina"]);
+            if (dtData != null)
+            {
+                if (dtData.Rows.Count >= pageSize)
+                {
+                    //PaginacionVisible(true);
+                    this.imgbtnEnd.Enabled = true;
+                    this.imgbtnNext.Enabled = true;
+                }
+                else
+                {
+                    //Inicializar();
+                    //PaginacionVisible(false);
+                    PaginacionEnabled(false);
+                    litRowCount.Text = string.Format("Número de Registros encontrados : {0}", 0);
+                    litPage.Text = "Página: 0 de 0";
+                }
+
+                Int16 intPag;
+                try
+                {
+                    intPag = short.Parse(Math.Ceiling(Convert.ToDouble(dtData.Rows.Count) / pageSize).ToString());
+                    if (intPag == 0) intPag = 1;
+                }
+                catch (Exception e)
+                {
+                    intPag = 0;
+                }
+
+                litRowCount.Text = string.Format("Número de Registros encontrados : {0}", dtData.Rows.Count);
+                litPage.Text = "Página: " + Convert.ToString(this.gvBandeja.PageIndex + 1) + " de " + intPag.ToString();
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    /// <summary>
+    /// Metodo para paginacion en la grilla
+    /// </summary>
+    /// <param name="valor"></param>
+    void PaginacionVisible(bool valor)
+    {
+        try
+        {
+            imgbtnStart.Visible = valor;
+            imgbtnNext.Visible = valor;
+            imgbtnBack.Visible = valor;
+            imgbtnEnd.Visible = valor;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    /// <summary>
+    /// Metodo para paginacion en la grilla
+    /// </summary>
+    /// <param name="valor"></param>
+    void PaginacionEnabled(bool valor)
+    {
+        try
+        {
+            imgbtnStart.Enabled = valor;
+            imgbtnNext.Enabled = valor;
+            imgbtnBack.Enabled = valor;
+            imgbtnEnd.Enabled = valor;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    #endregion
+
+}

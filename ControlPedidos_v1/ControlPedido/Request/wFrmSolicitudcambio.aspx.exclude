@@ -1,0 +1,157 @@
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="wFrmSolicitudcambio.aspx.cs"
+    Inherits="Request_wFrmSolicitudcambio" %>
+
+<asp:Content ID="Content1" runat="server" ContentPlaceHolderID="MainContent">
+    <link href="../Styles/Base.css" rel="stylesheet" type="text/css" />
+    <asp:UpdatePanel runat="server" ID="upBandeja" EnableViewState="true" UpdateMode="Conditional">
+        <ContentTemplate>
+            <h2>
+                Registro de Solicitud - Gestión de Cambios
+            </h2>
+            <table width="100%" class="bg_fondo_tabla">
+                <tr>
+                    <td style="width: 15%">
+                        Nro. Solicitud
+                    </td>
+                    <td>
+                        <asp:Label ID="lblNroSolicitud" runat="server"></asp:Label>
+                    </td>
+                    <td>
+                        Fecha
+                    </td>
+                    <td>
+                        <asp:Label ID="lblFecha" runat="server"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Sistema / Módulo
+                    </td>
+                    <td colspan="2">
+                        <asp:TextBox ID="txtSistema" runat="server" MaxLength="100" Width="95%"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredSistema" runat="server" ControlToValidate="txtSistema"
+                            ErrorMessage="Debe ingresar sistema / módulo" ForeColor="Red" ValidationGroup="Grabar">*</asp:RequiredFieldValidator>
+                    </td>
+                    <td>
+                        <asp:HiddenField ID="hidAccion" runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Asunto (*)
+                    </td>
+                    <td colspan="2">
+                        <asp:TextBox ID="txtAsunto" runat="server" MaxLength="100" Width="95%"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredAsunto" runat="server" ControlToValidate="txtAsunto"
+                            ErrorMessage="Debe ingresar Asunto" ForeColor="Red" ValidationGroup="Grabar">*</asp:RequiredFieldValidator>
+                        &nbsp;
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Tipo de solicitud (*)
+                    </td>
+                    <td>
+                        <asp:DropDownList ID="ddlTipoSolicitud" runat="server">
+                            <asp:ListItem>-Seleccione-</asp:ListItem>
+                            <asp:ListItem>Nuevos requerimientos</asp:ListItem>
+                            <asp:ListItem>Cierre de caja diario</asp:ListItem>
+                            <asp:ListItem>Otros</asp:ListItem>
+                        </asp:DropDownList>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Descripción (*)
+                    </td>
+                    <td colspan="3">
+                        <asp:TextBox ID="txtDescripcion" runat="server" Height="80px" TextMode="MultiLine"
+                            Width="99%" MaxLength="4000"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredDescripcion" runat="server" ControlToValidate="txtDescripcion"
+                            ErrorMessage="Debe ingresar descripción" ForeColor="Red" ValidationGroup="Grabar">*</asp:RequiredFieldValidator>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Motivo de solicitud (*)
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtMotivo" runat="server" Height="50px" TextMode="MultiLine" Width="95%"
+                            MaxLength="500"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredDescripcion0" runat="server" ControlToValidate="txtMotivo"
+                            ErrorMessage="Debe ingresar motivo de solicitud" ForeColor="Red" ValidationGroup="Grabar">*</asp:RequiredFieldValidator>
+                    </td>
+                    <td>
+                        <asp:Label ID="lblObservacion" runat="server" Text="Observación"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtObservacion" runat="server" Height="50px" TextMode="MultiLine"
+                            Width="95%" MaxLength="255"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Autorizado por</td>
+                    <td>
+                        <asp:TextBox ID="txtAutorizadoPor" runat="server" MaxLength="60" Width="250px"></asp:TextBox>
+                    </td>
+                    <td>
+                        &nbsp;</td>
+                    <td>
+                        &nbsp;
+                        <asp:HiddenField ID="hidCodigoSolicitud" runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        &nbsp;</td>
+                    <td>
+                        &nbsp;</td>
+                    <td>
+                    </td>
+                    <td>
+                        &nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                        &nbsp;</td>
+                    <td>
+                        <asp:Button ID="btnGrabar" runat="server" Text="Grabar" CssClass="boton" ValidationGroup="Grabar"
+                            OnClick="btnGrabar_Click" />
+                        &nbsp;<asp:Button ID="btnNuevo" runat="server" CssClass="boton" OnClick="btnNuevo_Click"
+                            Text="Nuevo" />
+                        &nbsp;<asp:Button ID="btnCancelar" runat="server" CssClass="boton" OnClick="btnCancelar_Click"
+                            Text="Regresar" />
+                        &nbsp;<asp:Button ID="btnImprimir" runat="server" CssClass="boton" Text="Imprimir" />
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <asp:ValidationSummary ID="ValidationSummary" runat="server" ShowMessageBox="True"
+                            ShowSummary="False" EnableClientScript="true" ValidationGroup="Grabar" />
+                    </td>
+                    <td>
+                        &nbsp;</td>
+                    <td>
+                        &nbsp;</td>
+                </tr>
+            </table>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+</asp:Content>

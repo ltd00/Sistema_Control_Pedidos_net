@@ -1,0 +1,281 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using ML.CAU.UIC;
+using MC.ControlPedido.Logica;
+using MC.ControlPedido.Model;
+using ML.Seguridad.Entidades;
+using ML.Seguridad.Logica;
+using ML.Comun.Logica;
+using ML.Comun.Entidades;
+ 
+public partial class Request_wFrmSolicitudcambio : UIPage
+{
+    #region Inicio
+
+    protected override void OnLoad(EventArgs e)
+    {
+        if (IsPostBack == false)
+        {
+            this.txtDescripcion.Attributes.Add("onkeypress", "return textboxMultilineMaxNumber(this,4000)");
+
+            this.lblFecha.Text = DateTime.Now.ToShortDateString();
+            CargarTipoSolicitud();
+
+            this.btnNuevo.Visible = false;
+            this.btnImprimir.Visible = false;
+            this.lblObservacion.Visible = false;
+            this.txtObservacion.Visible = false;
+
+            string param = Request.Params["param"];
+            this.hidCodigoSolicitud.Value = param;
+
+            if (param.CompareTo("new") != 0)
+            {
+                //Se carga detalle de la solicitud para modificar
+                this.lblObservacion.Visible = false;
+                this.txtObservacion.Visible = false;
+                CargarSolicitud();
+            }
+            else
+            { 
+                //Es nueva solicitud                
+            }
+        }
+    }
+
+    #endregion
+
+    #region Metodos
+
+    /// <summary>
+    /// Metodo que permite listar areas de la db de seguridad
+    /// </summary>
+    private void CargarArea()
+    {
+        AreaList objAreaList;
+        //AreaLN objAreaLN = new AreaLN();
+
+        objAreaList = AreaLN.Listar(_auditoria.Usuario.IdArea);
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar tipo de solicitud
+    /// <FechaCrea>28-02-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarTipoSolicitud()
+    {
+        try
+        {
+            ITipoSolicitudBLL objTipoIncidenteBLL = new TipoSolicitudBLL();
+            Bind(this.ddlTipoSolicitud, objTipoIncidenteBLL.ListarTipoSolicitud(), "N_CODTIPSOL", "V_NOMTIPSOL");
+            this.ddlTipoSolicitud.Items.Insert(0, new ListItem("-Seleccione-", "0"));
+            ((IDisposable)objTipoIncidenteBLL).Dispose();
+            objTipoIncidenteBLL = null;
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo para validar los campos ingresados
+    /// </summary>
+    private void Validar()
+    {
+        try
+        {
+            if (this.ddlTipoSolicitud.SelectedValue.CompareTo("0") == 0)
+            {
+                this.ddlTipoSolicitud.Focus();
+                throw new Exception("Seleccione tipo de solicitud");
+            }
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    /// <summary>
+    /// Metodo que carga la solicitud de gestion de cambio
+    /// </summary>
+    private void CargarSolicitud()
+    {
+        try
+        {
+
+            SolicitudCambio objSolicitudCambio = new SolicitudCambio();
+            objSolicitudCambio.CodigoSolicitud = int.Parse(this.hidCodigoSolicitud.Value);
+            objSolicitudCambio.NumeroSolicitud = string.Empty;
+            objSolicitudCambio.FechaSolicitud = ML.Comun.Entidades.Util.ParseDateTime(string.Empty);
+
+            DataTable dtData;
+            dtData = SolicitudCambioBLL.Instance.ListarSolicitudCambio(objSolicitudCambio);
+
+            if (dtData.Rows.Count > 0)
+            {
+                this.lblNroSolicitud.Text = Convert.ToString(dtData.Rows[0]["V_NUMSOL"]);
+                this.lblFecha.Text = Convert.ToString(dtData.Rows[0]["D_FECSOL"]);
+                this.txtSistema.Text = Convert.ToString(dtData.Rows[0]["V_TITULO"]);
+                this.txtAsunto.Text = Convert.ToString(dtData.Rows[0]["V_ASUNTO"]);
+                BuscarValueDropDownList(this.ddlTipoSolicitud, Convert.ToString(dtData.Rows[0]["N_CODTIPSOL"]));
+                this.txtDescripcion.Text = Convert.ToString(dtData.Rows[0]["V_DESCRIP"]);
+                this.txtMotivo.Text = Convert.ToString(dtData.Rows[0]["V_MOTIVO"]);
+                this.txtAutorizadoPor.Text = Convert.ToString(dtData.Rows[0]["V_USUAUTO"]);
+            }
+
+        }
+        catch (Exception ex)
+        {            
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo que permite registrar solicitud de cambio
+    /// <FechaCrea>28-02-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void RegistrarSolicitud()
+    {
+        ISolicitudCambioBLL objSolicitudCambioBLL = null;
+        try
+        {
+            Validar();
+
+            objSolicitudCambioBLL = new SolicitudCambioBLL();
+            SolicitudCambio objSolicitudCambio = new SolicitudCambio();
+
+            objSolicitudCambio.NumeroSolicitud = string.Empty;
+            objSolicitudCambio.FechaSolicitud = DateTime.Parse(DateTime.Now.ToShortDateString());
+            objSolicitudCambio.Sede.Id = _auditoria.Usuario.IdSede;
+            objSolicitudCambio.Sede.Nombre = _auditoria.Usuario.NombreSede;
+            objSolicitudCambio.Area.Id = _auditoria.Usuario.IdArea;
+            objSolicitudCambio.Area.Nombre = _auditoria.Usuario.NombreArea;
+
+            objSolicitudCambio.TipoSolicitud.CodigoTipoSolicitud = int.Parse(this.ddlTipoSolicitud.SelectedValue);
+            objSolicitudCambio.TituloSolicitud = this.txtSistema.Text.Trim();
+            objSolicitudCambio.AsuntoSolicitud = this.txtAsunto.Text.Trim();
+            objSolicitudCambio.Descripcion = this.txtDescripcion.Text.Trim();
+            objSolicitudCambio.Motivo = this.txtMotivo.Text.Trim();
+
+            objSolicitudCambio.ArchivoAdjunto = string.Empty;
+            objSolicitudCambio.Estado = UIConstante.EstadoSolicitud.Registrado;
+
+            objSolicitudCambio.UsuarioCrea = _auditoria.Usuario.Id;
+            objSolicitudCambio.NombreAutoriza = this.txtAutorizadoPor.Text;
+
+            int intCodigo = 0;
+            intCodigo = objSolicitudCambioBLL.RegistrarSolicitudCambio(objSolicitudCambio);
+
+            this.hidCodigoSolicitud.Value = intCodigo.ToString();
+            this.lblNroSolicitud.Text = objSolicitudCambio.NumeroSolicitud;
+
+            //Actualiza al arhivo adjunto
+            //objSolicitudCambio.ArchivoAdjunto = General.UpLoadFile(this.fuAdjunto, "SC" + Convert.ToString(intCodigo).Trim());
+            //objSolicitudCambioBLL.ActualizarArchivoAdjunto(objSolicitudCambio);
+
+            this.btnImprimir.Visible = true;
+            this.btnNuevo.Visible = true;
+            this.btnGrabar.Visible = false;
+
+            Response.Redirect("~/Request/BandejaSolicitudCambio.aspx", false);
+
+            //CScript.MessageBox(0, "Se ha registrado solicitud de cambio Nro. " + objSolicitudCambio.NumeroSolicitud, upBandeja);
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+        finally
+        {
+            if (objSolicitudCambioBLL != null) ((IDisposable)objSolicitudCambioBLL).Dispose();
+            objSolicitudCambioBLL = null;
+        }
+    }
+
+    /// <summary>
+    /// Metodo que permite actualizar solicitud de cambio
+    /// <FechaCrea>28-02-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void ActualizarSolicitud()
+    {
+        ISolicitudCambioBLL objSolicitudCambioBLL = null;
+        try
+        {
+            Validar();
+
+            objSolicitudCambioBLL = new SolicitudCambioBLL();
+            SolicitudCambio objSolicitudCambio = new SolicitudCambio();
+
+            objSolicitudCambio.CodigoSolicitud = int.Parse(this.hidCodigoSolicitud.Value);
+            objSolicitudCambio.Sede.Id = _auditoria.Usuario.IdSede;
+            objSolicitudCambio.Sede.Nombre = _auditoria.Usuario.NombreSede;
+            objSolicitudCambio.Area.Id = _auditoria.Usuario.IdArea;
+            objSolicitudCambio.Area.Nombre = _auditoria.Usuario.NombreArea;
+
+            objSolicitudCambio.TipoSolicitud.CodigoTipoSolicitud = int.Parse(this.ddlTipoSolicitud.SelectedValue);
+            objSolicitudCambio.TituloSolicitud = this.txtSistema.Text.Trim();
+            objSolicitudCambio.AsuntoSolicitud = this.txtAsunto.Text.Trim();
+            objSolicitudCambio.Descripcion = this.txtDescripcion.Text.Trim();
+            objSolicitudCambio.Motivo = this.txtMotivo.Text.Trim();
+
+            objSolicitudCambio.NombreAutoriza = this.txtAutorizadoPor.Text;
+
+            //objSolicitudCambio.ArchivoAdjunto = General.UpLoadFile(this.fuAdjunto, "SC" + this.hidCodigoSolicitud.Value);
+
+            //objSolicitudCambio.UsuarioModifica = _auditoria.Usuario.Id;
+            objSolicitudCambioBLL.ActualizarSolicitud(objSolicitudCambio);
+
+            Response.Redirect("~/Request/BandejaSolicitudCambio.aspx", false);
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+        finally
+        {
+            if (objSolicitudCambioBLL != null) ((IDisposable)objSolicitudCambioBLL).Dispose();
+            objSolicitudCambioBLL = null;
+        }
+    }
+
+    #endregion
+
+    #region Eventos de controles
+    protected void btnGrabar_Click(object sender, EventArgs e)
+    {
+        if (this.hidCodigoSolicitud.Value.CompareTo("new") == 0)
+        {
+            RegistrarSolicitud();
+        }
+        else {
+            ActualizarSolicitud();        
+        }               
+    }
+    protected void btnNuevo_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Request/wFrmSolicitudcambio.aspx?param=new", false);
+    }
+    protected void btnCancelar_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Request/BandejaSolicitudCambio.aspx", false);
+    }
+    #endregion
+}

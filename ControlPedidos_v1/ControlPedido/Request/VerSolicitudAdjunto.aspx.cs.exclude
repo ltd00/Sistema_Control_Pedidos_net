@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Request_VerSolicitudAdjunto : System.Web.UI.Page
+{
+    #region Inicio
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Response.Cache.SetExpires(DateTime.Now.AddSeconds(1));
+        Response.Cache.SetCacheability(HttpCacheability.Public);
+        Response.Cache.SetSlidingExpiration(true);
+        
+        if (IsPostBack == false)
+        {
+            string fileName = Request.Params["fileName"];
+
+            if (fileName.Length > 0)
+            {
+                fileName = System.Web.Configuration.WebConfigurationManager.AppSettings["carpetaArchivoLocal"] + fileName;
+
+                //Verifica si existe el archivo
+                if (System.IO.File.Exists(fileName))
+                {
+                    Response.Clear();
+                    Response.AddHeader("Content-Disposition", "attachment; filename=" + fileName);
+                    //Response.ContentType="application/msword";
+                    Response.WriteFile(fileName);
+                    Response.End();
+                }
+                else
+                {
+                    Response.Write("No existe ningún documento");
+                }
+            }
+        }
+    }
+    #endregion
+}

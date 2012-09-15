@@ -1,0 +1,662 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.ComponentModel;
+using System.Data;
+using ML.CAU.UIC;
+using MC.ControlPedido.Logica;
+using MC.ControlPedido.Model;
+using ML.Seguridad.Entidades;
+using ML.Seguridad.Logica;
+using ML.Comun.Entidades;
+using ML.Comun.Logica;
+
+public partial class Incident_BandejaIncidenteSolucion : UIPage
+{
+    #region Inicio
+
+    protected override void OnLoad(EventArgs e)
+    {
+        //Cargamos eventos en los botones de paginación
+        this.gvBandeja.RowDataBound += new GridViewRowEventHandler(gvBandeja_RowDataBound);
+        imgbtnStart.Click += new ImageClickEventHandler(imgbtnStart_Click);
+        imgbtnNext.Click += new ImageClickEventHandler(imgbtnNext_Click);
+        imgbtnBack.Click += new ImageClickEventHandler(imgbtnBack_Click);
+        imgbtnEnd.Click += new ImageClickEventHandler(imgbtnEnd_Click);
+
+        if (IsPostBack == false)
+        {
+            CargarEstado();
+            CargarSede();
+            CargarArea();
+            CargarTipoIncidente();
+            CargarUsuario();
+            PaginacionEnabled(false);
+            ListarIncidente();
+            CargarResumen();
+        }
+    }
+
+    #endregion
+
+    #region Metodos
+
+    /// <summary>
+    /// Metodo que permite cargar tipo de incidente
+    /// <FechaCrea>13-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarTipoIncidente()
+    {
+        try
+        {
+            TipoIncidenteBLL objTipoIncidenteBLL = new TipoIncidenteBLL();
+            Bind(this.ddlTipo, objTipoIncidenteBLL.ListarTipoIncidente(), "N_CODTIPINC", "V_NOMTIPINC");
+            this.ddlTipo.Items.Insert(0, new ListItem("-Todos-", "0"));
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar resumen de incidencias
+    /// <FechaCrea>13-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarResumen()
+    {
+        try
+        {
+            DataTable dtData;
+            Incidente objIncidente = new Incidente();
+            objIncidente.Asesor.Id = _auditoria.Usuario.Id;
+            dtData = IncidenteBLL.Instance.ListarIncidenteResumen(objIncidente);
+
+            if (dtData.Rows.Count > 0)
+            {
+                this.mnuEstado.Items[0].Text = "Derivados (" + Convert.ToString(dtData.Rows[0]["DERIVADO"]) + ")";
+                this.mnuEstado.Items[1].Text = "Asignados (" + Convert.ToString(dtData.Rows[0]["ASIGNADO"]) + ")";
+                this.mnuEstado.Items[2].Text = "En Proceso (" + Convert.ToString(dtData.Rows[0]["ENPROCESO"]) + ")";
+                this.mnuEstado.Items[3].Text = "Atendidos (" + Convert.ToString(dtData.Rows[0]["ATENDIDO"]) + ")";
+            }
+
+            objIncidente.Dispose();
+            objIncidente = null;
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar sedes de la empresa
+    /// <FechaCrea>07-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarSede()
+    {
+        try
+        {
+
+            //Carga Sedes
+            //SedeLN objSedeLN = new SedeLN();
+            Bind(this.ddlSede, SedeLN.Listar(), "Id", "Nombre");
+            this.ddlSede.Items.Insert(0, new ListItem("-Todos-", "0"));
+            //BuscarValueDropDownList(this.ddlSede, _auditoria.Usuario.IdSede.ToString());
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar areas de la empresa
+    /// <FechaCrea>07-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarArea()
+    {
+        try
+        {
+
+            //Carga Areas
+            //AreaLN objAreaLN = new AreaLN();
+            Bind(this.ddlArea, AreaLN.Listar(int.Parse(this.ddlSede.SelectedValue)), "Id", "Nombre");
+            this.ddlArea.Items.Insert(0, new ListItem("-Todos-", "0"));
+            //BuscarValueDropDownList(this.ddlArea, _auditoria.Usuario.IdArea.ToString());
+
+            //objAreaLN = null;
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+
+    }
+
+    /// <summary>
+    /// Metodo que permite cargar usuarios del sistema
+    /// <FechaCrea>06-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void CargarUsuario()
+    {
+        try
+        {
+            //UsuarioLN objUsuarioLN = new UsuarioLN();
+            //Bind(this.ddlSolicitante, UsuarioLN.Listar(string.Empty, _auditoria.AppId), "Id", "NombreCompleto");
+            //this.ddlSolicitante.Items.Insert(0, new ListItem("-Todos-", "0"));
+
+            Bind(this.ddlSolicitante, UsuarioLN.Listar(int.Parse(this.ddlSede.SelectedValue), 0, _auditoria.AppId), "Id", "NombreCompleto");
+            this.ddlSolicitante.Items.Insert(0, new ListItem("-Todos-", "0"));
+
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo que llena DropDownList con datos de estados de incidencias
+    /// </summary>
+    private void CargarEstado()
+    {
+        this.ddlEstado.Items.Clear();
+        //this.ddlEstado.Items.Add(new ListItem("-Todos-", "0"));
+        //this.ddlEstado.Items.Add(new ListItem("Nuevo", UIConstante.EstadoIncidente.Nuevo.ToString()));
+        this.ddlEstado.Items.Add(new ListItem("Asignado", UIConstante.EstadoIncidente.Asignado.ToString()));
+        this.ddlEstado.Items.Add(new ListItem("Derivado", UIConstante.EstadoIncidente.Derivado.ToString()));
+        this.ddlEstado.Items.Add(new ListItem("En Proceso", UIConstante.EstadoIncidente.EnProceso.ToString()));
+        this.ddlEstado.Items.Add(new ListItem("Atendido", UIConstante.EstadoIncidente.Atendido.ToString()));
+        //this.ddlEstado.Items.Add(new ListItem("Anulado", UIConstante.EstadoIncidente.Anulado.ToString()));
+    }
+
+    /// <summary>
+    /// Metodo que lista las incidencias
+    /// <FechaCrea>06-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void ListarIncidente()
+    {
+        try
+        {
+            Incidente objIncidente = new Incidente();
+            objIncidente.CodigoIncidente = 0;
+            objIncidente.NumeroIncidente = this.txtNroIncidencia.Text;
+            objIncidente.FechaIncidente = ML.Comun.Entidades.Util.ParseDateTime(this.txtFecha.Text);
+            objIncidente.Estado = int.Parse(this.ddlEstado.SelectedValue);
+            objIncidente.Situacion = UIConstante.SituacionIncidente.Abierto;
+            objIncidente.Area.Id = int.Parse(this.ddlArea.SelectedValue);
+            objIncidente.Sede.Id = int.Parse(this.ddlSede.SelectedValue);
+            objIncidente.Asesor.Id = _auditoria.Usuario.Id;
+            objIncidente.UsuarioContacto.Id = ML.Comun.Entidades.Util.ParseGuid(this.ddlSolicitante.SelectedValue);
+            objIncidente.TipoIncidente.CodigoTipoIncidente = int.Parse(this.ddlTipo.SelectedValue);
+
+            DataTable dtData = IncidenteBLL.Instance.ListarIncidenteAtencion(objIncidente);
+            this.gvBandeja.DataSource = dtData;
+            this.gvBandeja.DataBind();
+
+            //Invoca al metodo para paginar la grilla
+            Paginar(dtData, this.gvBandeja, this.litNumeroRegistros, this.litPagina);
+
+            //Carga resumen
+            CargarResumen();
+
+            if (Convert.ToUInt16(this.ddlEstado.SelectedValue) == UIConstante.EstadoIncidente.Derivado)
+            {
+                this.btnTomar.Visible = true;
+            }
+            else
+            {
+                this.btnTomar.Visible = false;
+            }
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    /// <summary>
+    /// Metodo que permite asignarse las incidencias a Atender
+    /// <FechaCrea>12-03-2012</FechaCrea>
+    /// <CreadoPor>Edgar Huarcaya C.</CreadoPor>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// </summary>
+    /// <returns></returns>    
+    private void Asignarse()
+    {
+        try
+        {
+            Incidente objIncidente = null;
+            IList<Incidente> objIncidentes = new BindingList<Incidente>();
+            for (int i = 0; i <= this.gvBandeja.Rows.Count - 1; i++)
+            {
+                if (((CheckBox)this.gvBandeja.Rows[i].FindControl("chkSel")).Checked == true)
+                {
+                    objIncidente = new Incidente();
+
+                    objIncidente.CodigoIncidente = int.Parse(((HiddenField)this.gvBandeja.Rows[i].FindControl("hidSel")).Value);
+                    objIncidente.Estado = UIConstante.EstadoIncidente.Asignado;
+                    objIncidente.UsuarioModifica = _auditoria.Usuario.Id;
+                    objIncidente.Asesor.Id = _auditoria.Usuario.Id;
+
+                    objIncidentes.Add(objIncidente);
+                    objIncidente = null;
+                }
+            }
+
+            IncidenteBLL.Instance.AsignarIncidencia(objIncidentes);
+            ListarIncidente();
+
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    #endregion
+
+    #region Eventos Paginado
+
+    void Inicializar()
+    {
+        try
+        {
+
+            this.imgbtnBack.Visible = false;
+            this.imgbtnStart.Visible = false;
+            this.imgbtnEnd.Visible = false;
+            this.imgbtnNext.Visible = false;
+
+            this.imgbtnBack.Enabled = false;
+            this.imgbtnStart.Enabled = false;
+            this.imgbtnEnd.Enabled = false;
+            this.imgbtnNext.Enabled = false;
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    void imgbtnEnd_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex < (this.gvBandeja.PageCount - 1))
+            {
+                this.gvBandeja.PageIndex = this.gvBandeja.PageCount - 1;
+                ListarIncidente();
+
+                this.imgbtnStart.Enabled = true;
+                this.imgbtnBack.Enabled = true;
+                this.imgbtnEnd.Enabled = false;
+                this.imgbtnNext.Enabled = false;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    void imgbtnBack_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex > 0)
+            {
+                this.gvBandeja.PageIndex = (this.gvBandeja.PageIndex - 1);
+                ListarIncidente();
+
+                if (this.gvBandeja.PageIndex > 0)
+                {
+                    this.imgbtnStart.Enabled = true;
+                    this.imgbtnBack.Enabled = true;
+                }
+                else
+                {
+                    this.imgbtnStart.Enabled = false;
+                    this.imgbtnBack.Enabled = false;
+                }
+
+                this.imgbtnEnd.Enabled = true;
+                this.imgbtnNext.Enabled = true;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    void imgbtnNext_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex < (this.gvBandeja.PageCount - 1))
+            {
+                this.gvBandeja.PageIndex = this.gvBandeja.PageIndex + 1;
+
+                ListarIncidente();
+
+                this.imgbtnStart.Enabled = true;
+                this.imgbtnBack.Enabled = true;
+
+                if (this.gvBandeja.PageIndex == (this.gvBandeja.PageCount - 1))
+                {
+                    this.imgbtnEnd.Enabled = false;
+                    this.imgbtnNext.Enabled = false;
+                }
+                else
+                {
+                    this.imgbtnEnd.Enabled = true;
+                    this.imgbtnNext.Enabled = true;
+                }
+
+            }
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    void imgbtnStart_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex > 0)
+            {
+                this.gvBandeja.PageIndex = 0;
+                ListarIncidente();
+
+                this.imgbtnStart.Enabled = false;
+                this.imgbtnBack.Enabled = false;
+                this.imgbtnNext.Enabled = true;
+                this.imgbtnEnd.Enabled = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    #endregion
+
+    #region paginacion
+    /// <summary>
+    /// Metodo que permite paginar un GridView
+    /// </summary>
+    /// <param name="dtData"></param>
+    /// <param name="gvLista"></param>
+    /// <param name="litRowCount"></param>
+    /// <param name="litPage"></param>
+    /// <returns></returns>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// <Creado por>Edgar Huarcaya C.</Creado>
+    /// <Fecha Crea>01 mar 2012</Fecha>
+    void Paginar(System.Data.DataTable dtData, System.Web.UI.WebControls.GridView gvLista, System.Web.UI.WebControls.Literal litRowCount, System.Web.UI.WebControls.Literal litPage)
+    {
+        try
+        {
+
+            Int16 pageSize = Int16.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["numeroRegistrosPorPagina"]);
+            if (dtData != null)
+            {
+                if (dtData.Rows.Count >= pageSize)
+                {
+                    //PaginacionVisible(true);
+                    this.imgbtnEnd.Enabled = true;
+                    this.imgbtnNext.Enabled = true;
+                }
+                else
+                {
+                    //Inicializar();
+                    //PaginacionVisible(false);
+                    PaginacionEnabled(false);
+                    litRowCount.Text = string.Format("Número de Registros encontrados : {0}", 0);
+                    litPage.Text = "Página: 0 de 0";
+                }
+
+                Int16 intPag;
+                try
+                {
+                    intPag = short.Parse(Math.Ceiling(Convert.ToDouble(dtData.Rows.Count) / pageSize).ToString());
+                    if (intPag == 0) intPag = 1;
+                }
+                catch (Exception)
+                {
+                    intPag = 0;
+                }
+
+                litRowCount.Text = string.Format("Número de Registros encontrados : {0}", dtData.Rows.Count);
+                litPage.Text = "Página: " + Convert.ToString(this.gvBandeja.PageIndex + 1) + " de " + intPag.ToString();
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    /// <summary>
+    /// Metodo para paginacion en la grilla
+    /// </summary>
+    /// <param name="valor"></param>
+    void PaginacionVisible(bool valor)
+    {
+        try
+        {
+            imgbtnStart.Visible = valor;
+            imgbtnNext.Visible = valor;
+            imgbtnBack.Visible = valor;
+            imgbtnEnd.Visible = valor;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    /// <summary>
+    /// Metodo para paginacion en la grilla
+    /// </summary>
+    /// <param name="valor"></param>
+    void PaginacionEnabled(bool valor)
+    {
+        try
+        {
+            imgbtnStart.Enabled = valor;
+            imgbtnNext.Enabled = valor;
+            imgbtnBack.Enabled = valor;
+            imgbtnEnd.Enabled = valor;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    #endregion
+
+    #region Eventos
+    void gvBandeja_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        try
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DataRowView fila = (DataRowView)e.Row.DataItem;
+                ImageButton btnAtender = (ImageButton)e.Row.FindControl("btnAtender");
+                CheckBox chkSel = (CheckBox)e.Row.FindControl("chkSel");
+                ImageButton btnVerSolicitud = (ImageButton)e.Row.FindControl("btnVerSolicitud");
+                ImageButton btnHistorial = (ImageButton)e.Row.FindControl("btnHistorial");
+                ImageButton btnVerAdjunto = (ImageButton)e.Row.FindControl("btnVerAdjunto");
+                Label lblPrioridad = (Label)e.Row.FindControl("lblPrioridad");
+                HiddenField hidIdPrioridad = (HiddenField)e.Row.FindControl("hidIdPrioridad");                
+
+                chkSel.Visible = false;
+                btnHistorial.Attributes.Add("onclick", "return goHistorialIncidencia('" + btnHistorial.CommandArgument + "');");
+
+                #region Prioridad
+                if (hidIdPrioridad.Value.CompareTo("1") == 0) lblPrioridad.ForeColor = System.Drawing.Color.Red;
+                if (hidIdPrioridad.Value.CompareTo("2") == 0) lblPrioridad.ForeColor = System.Drawing.Color.Green;
+                if (hidIdPrioridad.Value.CompareTo("3") == 0) lblPrioridad.ForeColor = System.Drawing.Color.Blue;
+                #endregion
+
+                #region Documento Adjunto
+                if (btnVerAdjunto.CommandName.Length > 0)
+                {
+                    btnVerAdjunto.Attributes.Add("onclick", "return goAttach1('" + btnVerAdjunto.CommandName + "');");
+                }
+                else
+                {
+                    btnVerAdjunto.ToolTip = "No hay ningún documento adjunto";
+                }
+                #endregion
+
+                if (btnVerSolicitud.CommandArgument.Length > 0)
+                {
+                    btnVerSolicitud.Attributes.Add("onclick", "return goSolicitudFicha('" + btnVerSolicitud.CommandArgument + "');");
+                }
+                else
+                {
+                    btnVerSolicitud.Enabled = false;
+                    btnVerSolicitud.ToolTip = "Opción deshabilitada. No existe solicitud de gestión de cambio.";
+                }
+
+                if (fila["N_SITUACION"].ToString().CompareTo(UIConstante.SituacionIncidente.Cerrado.ToString()) == 0)
+                {
+                    btnAtender.ToolTip = "Opción deshabilitada. Registro cerrado.";
+                    btnAtender.Enabled = false;                    
+                    chkSel.Visible = false;
+                }
+                else
+                {
+                    //Solo cuando la Situacion de Abierto
+
+                    #region Derivado
+                    if (fila["N_ESTADO"].ToString().CompareTo(UIConstante.EstadoIncidente.Derivado.ToString()) == 0)
+                    {
+
+                        btnAtender.ToolTip = "Opción deshabilitada. Registro no está asignado a ningún Asesor TI.";
+                        btnAtender.Enabled = false;
+
+                        chkSel.Visible = true;
+
+                        return;
+                    }
+                    #endregion
+
+                    #region En Proceso
+                    if (fila["N_ESTADO"].ToString().CompareTo(UIConstante.EstadoIncidente.EnProceso.ToString()) == 0)
+                    {
+
+                        chkSel.Visible = false;
+
+                        return;
+                    }
+                    #endregion
+
+                    #region Atendido
+                    if (fila["N_ESTADO"].ToString().CompareTo(UIConstante.EstadoIncidente.Atendido.ToString()) == 0)
+                    {
+
+                        //btnAtender.ToolTip = "Opción deshabilitada. Registro Atendido.";
+                        //btnAtender.Enabled = false;
+
+                        chkSel.Visible = false; 
+
+                        return;
+                    }
+                    #endregion
+
+                    #region Asignado
+                    if (fila["N_ESTADO"].ToString().CompareTo(UIConstante.EstadoIncidente.Asignado.ToString()) == 0)
+                    {
+
+                        chkSel.Visible = false;
+
+                        return;
+                    }
+                    #endregion
+                }
+
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    protected void btnAtender_Click(object sender, ImageClickEventArgs e)
+    {
+        ImageButton btnAtender = (ImageButton)sender;
+        Response.Redirect("Resolucion.aspx?param=" + btnAtender.CommandArgument + "&source=ase", false);
+    }
+    protected void btnBuscar_Click(object sender, EventArgs e)
+    {
+        ListarIncidente();
+    }
+    protected void btnTomar_Click(object sender, EventArgs e)
+    {
+        Asignarse();
+    }
+    protected void ddlSede_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        CargarArea();
+        CargarUsuario();
+    }
+    protected void mnuEstado_MenuItemClick(object sender, MenuEventArgs e)
+    {
+        try
+        {
+
+            string estado = e.Item.Value;
+            this.ddlEstado.SelectedValue = estado;
+            ListarIncidente();
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    #endregion
+}

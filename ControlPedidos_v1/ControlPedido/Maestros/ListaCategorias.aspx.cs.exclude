@@ -1,0 +1,463 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using ML.CAU.UIC;
+using MC.ControlPedido.Logica;
+using MC.ControlPedido.Model;
+using ML.Seguridad.Entidades;
+using ML.Seguridad.Logica;
+using ML.Comun.Entidades;
+using ML.Comun.Logica;
+using ML.CAU.Reportes;
+
+public partial class Maestros_ListaCategorias : UIPage
+{
+    #region Inicio
+
+    protected override void OnLoad(EventArgs e)
+    {
+        this.gvBandeja.RowDataBound += new GridViewRowEventHandler(gvBandeja_RowDataBound);
+
+        if (IsPostBack == false)
+        {
+            //CrearMenu();
+            ListarCategoria();
+        }
+    }
+
+    #endregion
+
+    #region Metodos
+
+    /// <summary>
+    /// Categoria de Incidencias
+    /// </summary>
+    private void ListarCategoria()
+    {
+        try
+        {
+
+            ICategoriaBLL objCategoriaBLL = new CategoriaBLL();
+            DataTable dtData = objCategoriaBLL.ListarCategoria();
+
+            this.gvBandeja.DataSource = dtData;
+            this.gvBandeja.DataBind();
+
+            //Invoca al metodo para paginar la grilla
+            Paginar(dtData, this.gvBandeja, this.litNumeroRegistros, this.litPagina);
+        }
+        catch (Exception)
+        {
+            
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Guarda Categoria de Incidencias
+    /// </summary>
+    private void GuardarCategoria()
+    {
+        try
+        {
+            Categoria objCategoria = new Categoria();
+            CategoriaBLL objCategoriaBLL = new CategoriaBLL();
+
+            if (this.txtCodigo.Text.Length == 0)
+            {
+                objCategoria.TipoOperacion = UIConstante.TipoOperacionBD.Alta;
+                objCategoria.CodigoCategoria = 0;
+            }
+            else 
+            {
+                objCategoria.TipoOperacion = UIConstante.TipoOperacionBD.Cambio;
+                objCategoria.CodigoCategoria = int.Parse(this.txtCodigo.Text);
+            }
+
+            objCategoria.NombreCategoria = this.txtDescripcion.Text;
+
+            //Guarda la categoria
+            objCategoriaBLL.ActualizarCategoria(objCategoria);
+
+            ListarCategoria();
+            mpeEdicion.Hide();
+            upBandeja.Update();
+
+        }
+        catch (Exception ex)
+        {
+
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+
+    #endregion
+
+    #region Opciones de Menu
+
+    /// <summary>
+    /// Metodo que crea las opciones de menu
+    /// </summary>
+    private void CrearMenu()
+    {
+        try
+        {
+            //Limpiamos el treeview
+            //tvCategoria.Nodes.Clear();
+            
+            DataTable dtData;
+            ICategoriaBLL objCategoriaBLL = new CategoriaBLL();
+
+            dtData = objCategoriaBLL.ListarCategoriaMenu();
+
+            //LLevamos al Objeto TreeMenu
+            List<TreeMenu> lstMenuItem = new List<TreeMenu>();
+
+            foreach (DataRow dw in dtData.Rows)
+            {
+                TreeMenu item = new TreeMenu();
+                item.Codigo = Convert.ToInt16(dw["CODIGO"]);
+                item.Padre = Convert.ToInt16(dw["PADRE"]);
+                item.Desc = Convert.ToString(dw["DESCRIPCION"]);
+                item.ID = Convert.ToInt16(dw["ID"]);
+
+                lstMenuItem.Add(item);
+                item = null;
+            }
+
+            //tvCategoria.Nodes.Add(new TreeNode("Categoría"));
+            //LlenarTreeView(0, lstMenuItem, tvCategoria.Nodes);      // 2000 es el código del padre de donde 
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Llena nodos de un TreeView
+    /// </summary>
+    /// <param name="CodPadre"></param>
+    /// <param name="NodoItems"></param>
+    /// <param name="Nodos"></param>
+    private void LlenarTreeView(int CodPadre, List<TreeMenu> NodoItems, TreeNodeCollection Nodos)
+    {
+        foreach (TreeMenu tm in NodoItems)
+        {
+            if (CodPadre == tm.Padre)
+            {
+                Nodos[Nodos.Count - 1].ChildNodes.Add(new TreeNode(tm.Desc, Convert.ToString(tm.Codigo), Convert.ToString(tm.ID)));
+                LlenarTreeView(tm.Codigo, NodoItems, Nodos[Nodos.Count - 1].ChildNodes);
+            }
+        }
+    }
+
+    #endregion
+
+    #region Eventos
+    void gvBandeja_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        try
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DataRowView fila = (DataRowView)e.Row.DataItem;
+                LinkButton lnkDetele = (LinkButton)e.Row.FindControl("lnkDetele");
+                lnkDetele.Attributes.Add("onclick", "return confirm('¿Está seguro de eliminar?');");
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    protected void btnCancelar_Click(object sender, EventArgs e)
+    {
+        mpeEdicion.Hide();
+    }
+    protected void btnNuevo_Click(object sender, EventArgs e)
+    {
+        this.txtCodigo.Text = string.Empty;
+        this.txtDescripcion.Text = string.Empty;
+        mpeEdicion.Show();
+    }
+    protected void btnCerrarEdicion_Click(object sender, ImageClickEventArgs e)
+    {
+        mpeEdicion.Hide();
+    }
+    protected void btnGuardar_Click(object sender, EventArgs e)
+    {
+        GuardarCategoria();
+    }
+    protected void lnkEdit_Click(object sender, EventArgs e)
+    {
+        LinkButton lnkEdit = (LinkButton)sender;
+        this.txtCodigo.Text = lnkEdit.CommandArgument;
+        this.txtDescripcion.Text = lnkEdit.CommandName;
+        mpeEdicion.Show();
+    }
+    protected void lnkDetele_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            LinkButton lnkDetele = (LinkButton)sender;
+            Categoria objCategoria = new Categoria();
+            CategoriaBLL objCategoriaBLL = new CategoriaBLL();
+
+            objCategoria.TipoOperacion = UIConstante.TipoOperacionBD.Baja;
+            objCategoria.CodigoCategoria = int.Parse(lnkDetele.CommandArgument);
+
+            //Guarda la categoria
+            objCategoriaBLL.ActualizarCategoria(objCategoria);
+
+            //Vuelve a listar las categorias
+            ListarCategoria();
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message, upBandeja);
+        }
+    }
+    protected void btnVerSubcategoria_Click(object sender, EventArgs e)
+    {
+        LinkButton btnVerSubcategoria = (LinkButton)sender;
+        Response.Redirect("ListaSubCategorias.aspx?id=" + btnVerSubcategoria.CommandArgument, false);
+    }
+    #endregion
+
+    #region Eventos Paginado
+
+    void Inicializar()
+    {
+        try
+        {
+
+            this.imgbtnBack.Visible = false;
+            this.imgbtnStart.Visible = false;
+            this.imgbtnEnd.Visible = false;
+            this.imgbtnNext.Visible = false;
+
+            this.imgbtnBack.Enabled = false;
+            this.imgbtnStart.Enabled = false;
+            this.imgbtnEnd.Enabled = false;
+            this.imgbtnNext.Enabled = false;
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    void imgbtnEnd_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex < (this.gvBandeja.PageCount - 1))
+            {
+                this.gvBandeja.PageIndex = this.gvBandeja.PageCount - 1;
+                ListarCategoria();
+
+                this.imgbtnStart.Enabled = true;
+                this.imgbtnBack.Enabled = true;
+                this.imgbtnEnd.Enabled = false;
+                this.imgbtnNext.Enabled = false;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    void imgbtnBack_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex > 0)
+            {
+                this.gvBandeja.PageIndex = (this.gvBandeja.PageIndex - 1);
+                ListarCategoria();
+
+                if (this.gvBandeja.PageIndex > 0)
+                {
+                    this.imgbtnStart.Enabled = true;
+                    this.imgbtnBack.Enabled = true;
+                }
+                else
+                {
+                    this.imgbtnStart.Enabled = false;
+                    this.imgbtnBack.Enabled = false;
+                }
+
+                this.imgbtnEnd.Enabled = true;
+                this.imgbtnNext.Enabled = true;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    void imgbtnNext_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex < (this.gvBandeja.PageCount - 1))
+            {
+                this.gvBandeja.PageIndex = this.gvBandeja.PageIndex + 1;
+
+                ListarCategoria();
+
+                this.imgbtnStart.Enabled = true;
+                this.imgbtnBack.Enabled = true;
+
+                if (this.gvBandeja.PageIndex == (this.gvBandeja.PageCount - 1))
+                {
+                    this.imgbtnEnd.Enabled = false;
+                    this.imgbtnNext.Enabled = false;
+                }
+                else
+                {
+                    this.imgbtnEnd.Enabled = true;
+                    this.imgbtnNext.Enabled = true;
+                }
+
+            }
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    void imgbtnStart_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            if (this.gvBandeja.PageIndex > 0)
+            {
+                this.gvBandeja.PageIndex = 0;
+                ListarCategoria();
+
+                this.imgbtnStart.Enabled = false;
+                this.imgbtnBack.Enabled = false;
+                this.imgbtnNext.Enabled = true;
+                this.imgbtnEnd.Enabled = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            CScript.MessageBox(0, ex.Message);
+        }
+    }
+
+    #endregion
+
+    #region paginacion
+    /// <summary>
+    /// Metodo que permite paginar un GridView
+    /// </summary>
+    /// <param name="dtData"></param>
+    /// <param name="gvLista"></param>
+    /// <param name="litRowCount"></param>
+    /// <param name="litPage"></param>
+    /// <returns></returns>
+    /// <Empresa>Minera Laytaruma S.A.</Empresa>
+    /// <Creado por>Edgar Huarcaya C.</Creado>
+    /// <Fecha Crea>01 mar 2012</Fecha>
+    void Paginar(System.Data.DataTable dtData, System.Web.UI.WebControls.GridView gvLista, System.Web.UI.WebControls.Literal litRowCount, System.Web.UI.WebControls.Literal litPage)
+    {
+        try
+        {
+
+            Int16 pageSize = Int16.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["numeroRegistrosPorPagina"]);
+            if (dtData != null)
+            {
+                if (dtData.Rows.Count >= pageSize)
+                {
+                    //PaginacionVisible(true);
+                    this.imgbtnEnd.Enabled = true;
+                    this.imgbtnNext.Enabled = true;
+                }
+                else
+                {
+                    //Inicializar();
+                    //PaginacionVisible(false);
+                    PaginacionEnabled(false);
+                    litRowCount.Text = string.Format("Número de Registros encontrados : {0}", 0);
+                    litPage.Text = "Página: 0 de 0";
+                }
+
+                Int16 intPag;
+                try
+                {
+                    intPag = short.Parse(Math.Ceiling(Convert.ToDouble(dtData.Rows.Count) / pageSize).ToString());
+                    if (intPag == 0) intPag = 1;
+                }
+                catch (Exception e)
+                {
+                    intPag = 0;
+                }
+
+                litRowCount.Text = string.Format("Número de Registros encontrados : {0}", dtData.Rows.Count);
+                litPage.Text = "Página: " + Convert.ToString(this.gvBandeja.PageIndex + 1) + " de " + intPag.ToString();
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    /// <summary>
+    /// Metodo para paginacion en la grilla
+    /// </summary>
+    /// <param name="valor"></param>
+    void PaginacionVisible(bool valor)
+    {
+        try
+        {
+            imgbtnStart.Visible = valor;
+            imgbtnNext.Visible = valor;
+            imgbtnBack.Visible = valor;
+            imgbtnEnd.Visible = valor;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    /// <summary>
+    /// Metodo para paginacion en la grilla
+    /// </summary>
+    /// <param name="valor"></param>
+    void PaginacionEnabled(bool valor)
+    {
+        try
+        {
+            imgbtnStart.Enabled = valor;
+            imgbtnNext.Enabled = valor;
+            imgbtnBack.Enabled = valor;
+            imgbtnEnd.Enabled = valor;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    #endregion
+}

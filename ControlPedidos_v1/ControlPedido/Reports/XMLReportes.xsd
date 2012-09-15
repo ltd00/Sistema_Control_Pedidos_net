@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="XMLReportes"
+    targetNamespace="http://tempuri.org/XMLReportes.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/XMLReportes.xsd"
+    xmlns:mstns="http://tempuri.org/XMLReportes.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:element name="rptsolicitudcambio">
+    <xs:complexType>
+      <xs:attribute name="N_CODSOL" type="xs:integer"></xs:attribute>
+      <xs:attribute name="V_NUMSOL" type="xs:string"></xs:attribute>
+      <xs:attribute name="D_FECSOL" type="xs:string"></xs:attribute>
+      <xs:attribute name="V_TITULO" type="xs:string"></xs:attribute>
+      <xs:attribute name="V_ASUNTO" type="xs:string"></xs:attribute>
+      <xs:attribute name="V_DESCRIP" type="xs:string"></xs:attribute>
+      <xs:attribute name="V_MOTIVO" type="xs:string"></xs:attribute>
+      <xs:attribute name="V_ARCHIVO" type="xs:string"></xs:attribute>
+      <xs:attribute name="N_CODAREA" type="xs:integer"></xs:attribute>
+      <xs:attribute name="N_CODSEDE" type="xs:integer"></xs:attribute>
+      <xs:attribute name="N_CODTIPSOL" type="xs:integer"></xs:attribute>
+      <xs:attribute name="V_NOMTIPSOL" type="xs:string"></xs:attribute>
+      <xs:attribute name="V_OBSERV" type="xs:string"></xs:attribute>
+      <xs:attribute name="SEDE" type="xs:string"></xs:attribute>
+      <xs:attribute name="AREA" type="xs:string"></xs:attribute>
+      <xs:attribute name="USUARIO" type="xs:string"></xs:attribute>
+      <xs:attribute name="V_ESTADO" type="xs:string"></xs:attribute>
+      <xs:attribute name="DESESTADO" type="xs:string"></xs:attribute>
+      <xs:attribute name="V_USUAUTO" type="xs:string"></xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

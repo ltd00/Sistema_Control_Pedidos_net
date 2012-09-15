@@ -1,0 +1,90 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using ML.CAU.UIC;
+using MC.ControlPedido.Logica;
+using MC.ControlPedido.Model;
+using ML.Seguridad.Entidades;
+using ML.Seguridad.Logica;
+using ML.Comun.Entidades;
+using ML.Comun.Logica;
+using ML.CAU.Reportes;
+
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+
+public partial class Reports_VisorReports : UIPage
+{
+    #region Inicio
+    protected override void OnLoad(EventArgs e)
+    {
+        try
+        {
+
+            if (IsPostBack == false)
+            {
+                string id = Request.Params["id"];
+                this.hidCodSolicitud.Value = id;
+                ReportExport(int.Parse(id));
+                
+            }
+
+        }
+        catch (Exception)
+        {
+
+        }
+
+    }
+    #endregion
+
+    #region Metodos
+
+    /// <summary>
+    /// Exporta reporte Crystal Reports a Ms Word
+    /// </summary>
+    private void ReportExport(int vintCodigoSolicitud)
+    {
+        try
+        {
+
+            Response.Buffer = false;
+            Response.Clear();
+            Response.ClearContent();
+            Response.ClearHeaders();
+
+            DataTable dtData;
+            SolicitudCambio objSolicitudCambio = new SolicitudCambio();
+            objSolicitudCambio.CodigoSolicitud = vintCodigoSolicitud;
+            objSolicitudCambio.NumeroSolicitud = string.Empty;
+            objSolicitudCambio.FechaSolicitud = ML.Comun.Entidades.Util.ParseDateTime(string.Empty);
+            objSolicitudCambio.Estado = "0";
+
+            dtData = SolicitudCambioBLL.Instance.ListarReporteSolicitudCambio(objSolicitudCambio);
+
+            rptsolicitudcambio _rptsolicitudcambio = new rptsolicitudcambio();
+            _rptsolicitudcambio.SetDataSource(dtData);
+
+            
+            _rptsolicitudcambio.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, true, "Solicitud");
+
+            _rptsolicitudcambio.Close();
+            _rptsolicitudcambio.Dispose();
+            _rptsolicitudcambio = null;
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
+
+
+    #endregion
+ 
+}
