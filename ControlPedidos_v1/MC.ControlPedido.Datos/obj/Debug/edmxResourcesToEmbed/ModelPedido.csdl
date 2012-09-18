@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PedidosModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="PedidosEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="in01arti" EntityType="PedidosModel.in01arti" />
+    <EntitySet Name="In01LinArt" EntityType="PedidosModel.In01LinArt" />
+    <EntitySet Name="in23responsable" EntityType="PedidosModel.in23responsable" />
+    <EntitySet Name="In60detalle" EntityType="PedidosModel.In60detalle" />
+    <EntitySet Name="Menu" EntityType="PedidosModel.Menu" />
+    <EntitySet Name="Perfil" EntityType="PedidosModel.Perfil" />
+    <EntitySet Name="Usuario" EntityType="PedidosModel.Usuario" />
+    <AssociationSet Name="PerfilMenu" Association="PedidosModel.PerfilMenu">
+      <End Role="Menu" EntitySet="Menu" />
+      <End Role="Perfil" EntitySet="Perfil" />
+    </AssociationSet>
+    <AssociationSet Name="PerfilUsuario" Association="PedidosModel.PerfilUsuario">
+      <End Role="Perfil" EntitySet="Perfil" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <EntitySet Name="In04axal" EntityType="PedidosModel.In04axal" />
+    <EntitySet Name="In09Almacen" EntityType="PedidosModel.In09Almacen" />
+    <EntitySet Name="In60pedido" EntityType="PedidosModel.In60pedido" />
+    <EntitySet Name="In60detalleSeg" EntityType="PedidosModel.In60detalleSeg" />
+    <EntitySet Name="ccb03per" EntityType="PedidosModel.ccb03per" />
+  </EntityContainer>
+  <EntityType Name="in01arti">
+    <Key>
+      <PropertyRef Name="IN01CODEMP" />
+      <PropertyRef Name="IN01AA" />
+      <PropertyRef Name="IN01KEY" />
+    </Key>
+    <Property Name="IN01CODEMP" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="IN01AA" Type="String" Nullable="false" MaxLength="4" Unicode="false" FixedLength="false" />
+    <Property Name="IN01KEY" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="IN01DESLAR" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
+    <Property Name="IN01UNIMED" Type="String" MaxLength="4" Unicode="false" FixedLength="false" />
+    <Property Name="IN01UNIDADEQUI" Type="String" MaxLength="4" Unicode="false" FixedLength="false" />
+    <Property Name="IN01MONTOEQUI" Type="Double" />
+    <Property Name="IN01CODPRO" Type="String" MaxLength="11" Unicode="false" FixedLength="false" />
+    <Property Name="IN01FLAALM" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="IN01FLADES" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="IN01FLAFAB" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="IN01FECMAT" Type="DateTime" />
+    <Property Name="IN01CTAINGRESO" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="IN01CTAEGRESO" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="IN01MOV" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="IN01CTAGTO" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="IN01CTAING" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="In01UnidadMayor" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="IN01ESTADO" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+    <Property Name="IN01TIPO" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+    <Property Name="IN01ULTFECING" Type="DateTime" />
+    <Property Name="IN01NRODEPARTE" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+    <Property Name="IN01KEYANTERIOR" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="IN01CODCONSIGNACION" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="in01FlagStockDiario" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+  </EntityType>
+  <EntityType Name="In01LinArt">
+    <Key>
+      <PropertyRef Name="In01CodEmp" />
+      <PropertyRef Name="In01CodLinArt" />
+      <PropertyRef Name="in01aa" />
+    </Key>
+    <Property Name="In01CodEmp" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="In01CodLinArt" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="in01aa" Type="String" Nullable="false" MaxLength="4" Unicode="false" FixedLength="false" />
+    <Property Name="In01Descripcion" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="in23responsable">
+    <Key>
+      <PropertyRef Name="in23codemp" />
+      <PropertyRef Name="in23Codigo" />
+    </Key>
+    <Property Name="in23codemp" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="in23Codigo" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="In23Descri" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="in23tipo" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="in23SistemaUsuario" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="In60detalle">
+    <Key>
+      <PropertyRef Name="In60codemp" />
+      <PropertyRef Name="In60aa" />
+      <PropertyRef Name="In60numped" />
+      <PropertyRef Name="In60Item" />
+      <PropertyRef Name="In60Area" />
+      <PropertyRef Name="In60Id" />
+    </Key>
+    <Property Name="In60codemp" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="In60aa" Type="String" Nullable="false" MaxLength="4" Unicode="false" FixedLength="false" />
+    <Property Name="In60cencos" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+    <Property Name="In60numped" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
+    <Property Name="In60codalm" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="In60codart" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="In60Item" Type="Int32" Nullable="false" />
+    <Property Name="In60desart" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
+    <Property Name="In60unidad" Type="String" MaxLength="4" Unicode="false" FixedLength="false" />
+    <Property Name="In60cantidad" Type="Double" />
+    <Property Name="In60Estado" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+    <Property Name="In60Area" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
+    <Property Name="In60NameUser" Type="String" MaxLength="200" Unicode="false" FixedLength="true" />
+    <Property Name="In60NroParte" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="In60Prioridad" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="In60Equipo" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="in60mm" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
+    <Property Name="In60CantidadSug" Type="Double" />
+    <Property Name="In60Observacion" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="in60Anaperiodos" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+    <Property Name="in60AnaCantMeses" Type="Int32" />
+    <Property Name="in60AnaConConsumo" Type="Double" />
+    <Property Name="in60AnaConPromedio" Type="Double" />
+    <Property Name="in60AnaConRotacion" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+    <Property Name="in60AnaConDesvStandar" Type="Double" />
+    <Property Name="in60AnaConStock" Type="Double" />
+    <Property Name="in60AnaConNivelStock" Type="Double" />
+    <Property Name="in60AnaCantSugerida" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Type="Int32" Name="In60Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Menu">
+    <Key>
+      <PropertyRef Name="Sistema" />
+      <PropertyRef Name="Opcion" />
+      <PropertyRef Name="Nivel" />
+    </Key>
+    <Property Name="Sistema" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="Opcion" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="Nivel" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="SubNivel" Type="Boolean" Nullable="false" />
+    <Property Name="Ruta" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="IdMenu" Type="Int32" />
+    <Property Name="MenuPadre" Type="Int32" />
+    <NavigationProperty Name="Perfil" Relationship="PedidosModel.PerfilMenu" FromRole="Menu" ToRole="Perfil" />
+    <Property Type="String" Name="Ruta_1" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="IdMenu_1" />
+    <Property Type="Int32" Name="MenuPadre_1" />
+  </EntityType>
+  <EntityType Name="Perfil">
+    <Key>
+      <PropertyRef Name="IdPerfil" />
+    </Key>
+    <Property Name="IdPerfil" Type="Int32" Nullable="false" />
+    <Property Name="NombrePerfil" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Menu" Relationship="PedidosModel.PerfilMenu" FromRole="Perfil" ToRole="Menu" />
+    <NavigationProperty Name="Usuario" Relationship="PedidosModel.PerfilUsuario" FromRole="Perfil" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Sistema" />
+      <PropertyRef Name="Nombre" />
+    </Key>
+    <Property Name="Sistema" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="false" />
+    <Property Name="Clave" Type="String" MaxLength="8" Unicode="false" FixedLength="false" />
+    <Property Name="NombreComp" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
+    <Property Name="Cargo" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="AccPerCerr" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="Periodo" Type="String" MaxLength="6" Unicode="false" FixedLength="false" />
+    <Property Name="Moneda" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="Saldos" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="TipoImp" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="Ajuste" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="AccPerCon" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="VarImpChe" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+    <Property Name="CenCosto" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+    <Property Name="AccArea" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Perfil" Relationship="PedidosModel.PerfilUsuario" FromRole="Usuario" ToRole="Perfil" />
+  </EntityType>
+  <Association Name="PerfilMenu">
+    <End Role="Menu" Type="PedidosModel.Menu" Multiplicity="*" />
+    <End Role="Perfil" Type="PedidosModel.Perfil" Multiplicity="*" />
+  </Association>
+  <Association Name="PerfilUsuario">
+    <End Role="Perfil" Type="PedidosModel.Perfil" Multiplicity="*" />
+    <End Role="Usuario" Type="PedidosModel.Usuario" Multiplicity="*" />
+  </Association>
+  <EntityType Name="In04axal">
+    <Key>
+      <PropertyRef Name="IN04CODEMP" />
+      <PropertyRef Name="IN04AA" />
+      <PropertyRef Name="IN04MM" />
+      <PropertyRef Name="IN04KEY" />
+      <PropertyRef Name="IN04CODALM" />
+    </Key>
+    <Property Type="String" Name="IN04CODEMP" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="IN04AA" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="IN04MM" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="IN04KEY" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="IN04CODALM" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="IN04UBICAC" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="IN04STOMIN" />
+    <Property Type="Double" Name="IN04STOSEG" />
+    <Property Type="Double" Name="IN04STOMAX" />
+    <Property Type="Double" Name="IN04STOREP" />
+    <Property Type="DateTime" Name="IN04FECINI" />
+    <Property Type="Double" Name="IN04STOCK" />
+    <Property Type="Double" Name="IN04CANTINGRE" />
+    <Property Type="Double" Name="IN04CANTSALID" />
+    <Property Type="Double" Name="IN04IMPINGSOL" />
+    <Property Type="Double" Name="IN04IMPSALSOL" />
+    <Property Type="Double" Name="IN04IMPINGDOL" />
+    <Property Type="Double" Name="IN04IMPSALDOL" />
+    <Property Type="Double" Name="IN04PROMSOL" />
+    <Property Type="Double" Name="IN04PROMDOL" />
+    <Property Type="DateTime" Name="IN04FECHAING" />
+    <Property Type="DateTime" Name="IN04FECHASAL" />
+    <Property Type="Double" Name="IN04COSTOSOL" />
+    <Property Type="Double" Name="IN04COSTODOL" />
+    <Property Type="Double" Name="IN04ULTCOSSOL" />
+    <Property Type="Double" Name="IN04ULTCOSDOL" />
+    <Property Type="Double" Name="IN04ULTCANING" />
+    <Property Type="Double" Name="IN04ULTCANSAL" />
+    <Property Type="DateTime" Name="IN04FEINFI" />
+    <Property Type="Double" Name="IN04STINFI" />
+    <Property Type="String" Name="IN04TMP" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="IN04STOCKMES" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="IN04STOCKINICIALMES" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="IN04CANTINGINI" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="IN04CANTSALINI" Precision="18" Scale="2" />
+    <Property Type="Double" Name="IN04IMPINGINISOL" />
+    <Property Type="Double" Name="IN04IMPSALINISOL" />
+    <Property Type="Double" Name="IN04IMPINGINIDOL" />
+    <Property Type="Double" Name="IN04IMPSALINIDOL" />
+    <Property Type="Double" Name="IN04PROMINISOL" />
+    <Property Type="Double" Name="IN04PROMINIDOL" />
+    <Property Type="String" Name="IN04CATEXCONSUMO" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="IN04CATEXPRODUCCION" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Type="Double" Name="IN04NIVELDESTOCK" />
+  </EntityType>
+  <EntityType Name="In09Almacen">
+    <Key>
+      <PropertyRef Name="in09codemp" />
+      <PropertyRef Name="in09codigo" />
+    </Key>
+    <Property Type="String" Name="in09codemp" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="in09codigo" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="in09descripcion" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="In60pedido">
+    <Key>
+      <PropertyRef Name="In60codemp" />
+      <PropertyRef Name="In60aa" />
+      <PropertyRef Name="In60numped" />
+      <PropertyRef Name="In60Area" />
+    </Key>
+    <Property Type="String" Name="In60codemp" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="In60aa" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="In60cencos" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="In60numped" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="In60codcli" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="In60fecha" />
+    <Property Type="String" Name="In60codres" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="In60EspTec" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="In60Obser" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="In60Estado" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Type="Double" Name="In60Aprobado" />
+    <Property Type="String" Name="In60Expor" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="In60Area" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="In60DestinoOrigen" MaxLength="200" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="In60TipoPedido" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="In60NameUser" MaxLength="200" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="in60mm" MaxLength="2" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="in60tipo" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="in60mmProv" MaxLength="2" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="in60aaProv" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Type="Int32" Name="in60nivelflujo" />
+  </EntityType>
+  <EntityType Name="In60detalleSeg">
+    <Key>
+      <PropertyRef Name="In60codemp" />
+      <PropertyRef Name="In60aa" />
+      <PropertyRef Name="In60numped" />
+      <PropertyRef Name="In60Area" />
+      <PropertyRef Name="In60Item" />
+      <PropertyRef Name="In60NroIntento" />
+    </Key>
+    <Property Type="String" Name="In60codemp" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="In60aa" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="In60numped" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="In60Area" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="Int32" Name="In60Item" Nullable="false" />
+    <Property Type="Int32" Name="In60NroIntento" Nullable="false" />
+    <Property Type="Int32" Name="in60FlujoProceso" />
+    <Property Type="String" Name="In60EstadoAprob" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Type="Double" Name="In60CantidadNueva" />
+    <Property Type="String" Name="In60Observacion" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="in60flagultimoestado" />
+    <Property Type="Int32" Name="in60Cerrado" />
+    <Property Type="String" Name="in60UsuarioMod" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="in60FechaMod" />
+  </EntityType>
+  <EntityType Name="ccb03per">
+    <Key>
+      <PropertyRef Name="ccb03proc" />
+      <PropertyRef Name="ccb03conc" />
+    </Key>
+    <Property Type="String" Name="ccb03emp" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ccb03cod" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ccb03des" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="ccb03proc" Nullable="false" />
+    <Property Type="Boolean" Name="ccb03conc" Nullable="false" />
+    <Property Type="Double" Name="ccb03tc" />
+    <Property Type="Double" Name="ccb03ipm" />
+    <Property Type="Double" Name="ccb03cms" />
+    <Property Type="Double" Name="ccb03cmd" />
+    <Property Type="Double" Name="ccb03fa00" />
+    <Property Type="Double" Name="ccb03fa01" />
+    <Property Type="Double" Name="ccb03fa02" />
+    <Property Type="Double" Name="ccb03fa03" />
+    <Property Type="Double" Name="ccb03fa04" />
+    <Property Type="Double" Name="ccb03fa05" />
+    <Property Type="Double" Name="ccb03fa06" />
+    <Property Type="Double" Name="ccb03fa07" />
+    <Property Type="Double" Name="ccb03fa08" />
+    <Property Type="Double" Name="ccb03fa09" />
+    <Property Type="Double" Name="ccb03fa10" />
+    <Property Type="Double" Name="ccb03fa11" />
+    <Property Type="Double" Name="ccb03fa12" />
+    <Property Type="Double" Name="ccb03FacClose" />
+    <Property Type="Double" Name="ccb03InvClose" />
+    <Property Type="String" Name="ccb03CtaClose" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

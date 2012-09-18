@@ -1,0 +1,56 @@
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll.config
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.pdb
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.pdb
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\ResolveAssemblyReference.cache
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.pdb
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll.config
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.pdb
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.dll
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.pdb
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\ResolveAssemblyReference.cache
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.dll
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll.config
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\ResolveAssemblyReference.cache
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.pdb
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll.config
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.pdb
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.dll
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.pdb
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\ResolveAssemblyReference.cache
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.dll
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll.config
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\ResolveAssemblyReference.cache
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.pdb
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll.config
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.pdb
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.dll
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.pdb
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\ResolveAssemblyReference.cache
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.dll
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.pdb
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll.config
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.dll
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Datos.pdb
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.dll
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Datos\bin\Debug\MC.ControlPedido.Model.pdb
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\ResolveAssemblyReference.cache
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.dll
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Datos\obj\Debug\MC.ControlPedido.Datos.pdb

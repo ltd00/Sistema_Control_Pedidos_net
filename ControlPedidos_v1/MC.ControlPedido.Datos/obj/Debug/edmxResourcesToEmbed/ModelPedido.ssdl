@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PedidosModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="PedidosModelStoreContainer">
+    <EntitySet Name="ccb03per" EntityType="PedidosModel.Store.ccb03per" store:Type="Tables" store:Schema="dbo" store:Name="ccb03per">
+      <DefiningQuery>SELECT 
+      [ccb03per].[ccb03emp] AS [ccb03emp], 
+      [ccb03per].[ccb03cod] AS [ccb03cod], 
+      [ccb03per].[ccb03des] AS [ccb03des], 
+      [ccb03per].[ccb03proc] AS [ccb03proc], 
+      [ccb03per].[ccb03conc] AS [ccb03conc], 
+      [ccb03per].[ccb03tc] AS [ccb03tc], 
+      [ccb03per].[ccb03ipm] AS [ccb03ipm], 
+      [ccb03per].[ccb03cms] AS [ccb03cms], 
+      [ccb03per].[ccb03cmd] AS [ccb03cmd], 
+      [ccb03per].[ccb03fa00] AS [ccb03fa00], 
+      [ccb03per].[ccb03fa01] AS [ccb03fa01], 
+      [ccb03per].[ccb03fa02] AS [ccb03fa02], 
+      [ccb03per].[ccb03fa03] AS [ccb03fa03], 
+      [ccb03per].[ccb03fa04] AS [ccb03fa04], 
+      [ccb03per].[ccb03fa05] AS [ccb03fa05], 
+      [ccb03per].[ccb03fa06] AS [ccb03fa06], 
+      [ccb03per].[ccb03fa07] AS [ccb03fa07], 
+      [ccb03per].[ccb03fa08] AS [ccb03fa08], 
+      [ccb03per].[ccb03fa09] AS [ccb03fa09], 
+      [ccb03per].[ccb03fa10] AS [ccb03fa10], 
+      [ccb03per].[ccb03fa11] AS [ccb03fa11], 
+      [ccb03per].[ccb03fa12] AS [ccb03fa12], 
+      [ccb03per].[ccb03FacClose] AS [ccb03FacClose], 
+      [ccb03per].[ccb03InvClose] AS [ccb03InvClose], 
+      [ccb03per].[ccb03CtaClose] AS [ccb03CtaClose]
+      FROM [dbo].[ccb03per] AS [ccb03per]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="in01arti" EntityType="PedidosModel.Store.in01arti" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="In01LinArt" EntityType="PedidosModel.Store.In01LinArt" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="In04axal" EntityType="PedidosModel.Store.In04axal" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="in23responsable" EntityType="PedidosModel.Store.in23responsable" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="In60detalle" EntityType="PedidosModel.Store.In60detalle" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="In60detalleSeg" EntityType="PedidosModel.Store.In60detalleSeg" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="In60pedido" EntityType="PedidosModel.Store.In60pedido" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Menu" EntityType="PedidosModel.Store.Menu" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Usuario" EntityType="PedidosModel.Store.Usuario" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'premium.dbo.ccb03per' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="ccb03per">
+    <Key>
+      <PropertyRef Name="ccb03proc" />
+      <PropertyRef Name="ccb03conc" />
+    </Key>
+    <Property Name="ccb03emp" Type="varchar" MaxLength="2" />
+    <Property Name="ccb03cod" Type="varchar" MaxLength="6" />
+    <Property Name="ccb03des" Type="varchar" MaxLength="15" />
+    <Property Name="ccb03proc" Type="bit" Nullable="false" />
+    <Property Name="ccb03conc" Type="bit" Nullable="false" />
+    <Property Name="ccb03tc" Type="float" />
+    <Property Name="ccb03ipm" Type="float" />
+    <Property Name="ccb03cms" Type="float" />
+    <Property Name="ccb03cmd" Type="float" />
+    <Property Name="ccb03fa00" Type="float" />
+    <Property Name="ccb03fa01" Type="float" />
+    <Property Name="ccb03fa02" Type="float" />
+    <Property Name="ccb03fa03" Type="float" />
+    <Property Name="ccb03fa04" Type="float" />
+    <Property Name="ccb03fa05" Type="float" />
+    <Property Name="ccb03fa06" Type="float" />
+    <Property Name="ccb03fa07" Type="float" />
+    <Property Name="ccb03fa08" Type="float" />
+    <Property Name="ccb03fa09" Type="float" />
+    <Property Name="ccb03fa10" Type="float" />
+    <Property Name="ccb03fa11" Type="float" />
+    <Property Name="ccb03fa12" Type="float" />
+    <Property Name="ccb03FacClose" Type="float" />
+    <Property Name="ccb03InvClose" Type="float" />
+    <Property Name="ccb03CtaClose" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="in01arti">
+    <Key>
+      <PropertyRef Name="IN01CODEMP" />
+      <PropertyRef Name="IN01AA" />
+      <PropertyRef Name="IN01KEY" />
+    </Key>
+    <Property Name="IN01CODEMP" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="IN01AA" Type="varchar" Nullable="false" MaxLength="4" />
+    <Property Name="IN01KEY" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="IN01DESLAR" Type="varchar" MaxLength="250" />
+    <Property Name="IN01UNIMED" Type="varchar" MaxLength="4" />
+    <Property Name="IN01UNIDADEQUI" Type="varchar" MaxLength="4" />
+    <Property Name="IN01MONTOEQUI" Type="float" />
+    <Property Name="IN01CODPRO" Type="varchar" MaxLength="11" />
+    <Property Name="IN01FLAALM" Type="varchar" MaxLength="1" />
+    <Property Name="IN01FLADES" Type="varchar" MaxLength="1" />
+    <Property Name="IN01FLAFAB" Type="varchar" MaxLength="1" />
+    <Property Name="IN01FECMAT" Type="datetime" />
+    <Property Name="IN01CTAINGRESO" Type="varchar" MaxLength="20" />
+    <Property Name="IN01CTAEGRESO" Type="varchar" MaxLength="20" />
+    <Property Name="IN01MOV" Type="varchar" MaxLength="1" />
+    <Property Name="IN01CTAGTO" Type="varchar" MaxLength="20" />
+    <Property Name="IN01CTAING" Type="varchar" MaxLength="20" />
+    <Property Name="In01UnidadMayor" Type="varchar" MaxLength="1" />
+    <Property Name="IN01ESTADO" Type="char" MaxLength="1" />
+    <Property Name="IN01TIPO" Type="char" MaxLength="1" />
+    <Property Name="IN01ULTFECING" Type="datetime" />
+    <Property Name="IN01NRODEPARTE" Type="varchar" MaxLength="15" />
+    <Property Name="IN01KEYANTERIOR" Type="varchar" MaxLength="20" />
+    <Property Name="IN01CODCONSIGNACION" Type="varchar" MaxLength="20" />
+    <Property Name="in01FlagStockDiario" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="In01LinArt">
+    <Key>
+      <PropertyRef Name="In01CodEmp" />
+      <PropertyRef Name="In01CodLinArt" />
+      <PropertyRef Name="in01aa" />
+    </Key>
+    <Property Name="In01CodEmp" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="In01CodLinArt" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="in01aa" Type="varchar" Nullable="false" MaxLength="4" />
+    <Property Name="In01Descripcion" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="In04axal">
+    <Key>
+      <PropertyRef Name="IN04CODEMP" />
+      <PropertyRef Name="IN04AA" />
+      <PropertyRef Name="IN04MM" />
+      <PropertyRef Name="IN04KEY" />
+      <PropertyRef Name="IN04CODALM" />
+    </Key>
+    <Property Name="IN04CODEMP" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="IN04AA" Type="varchar" Nullable="false" MaxLength="4" />
+    <Property Name="IN04MM" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="IN04KEY" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="IN04CODALM" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="IN04UBICAC" Type="varchar" MaxLength="80" />
+    <Property Name="IN04STOMIN" Type="float" />
+    <Property Name="IN04STOSEG" Type="float" />
+    <Property Name="IN04STOMAX" Type="float" />
+    <Property Name="IN04STOREP" Type="float" />
+    <Property Name="IN04FECINI" Type="datetime" />
+    <Property Name="IN04STOCK" Type="float" />
+    <Property Name="IN04CANTINGRE" Type="float" />
+    <Property Name="IN04CANTSALID" Type="float" />
+    <Property Name="IN04IMPINGSOL" Type="float" />
+    <Property Name="IN04IMPSALSOL" Type="float" />
+    <Property Name="IN04IMPINGDOL" Type="float" />
+    <Property Name="IN04IMPSALDOL" Type="float" />
+    <Property Name="IN04PROMSOL" Type="float" />
+    <Property Name="IN04PROMDOL" Type="float" />
+    <Property Name="IN04FECHAING" Type="datetime" />
+    <Property Name="IN04FECHASAL" Type="datetime" />
+    <Property Name="IN04COSTOSOL" Type="float" />
+    <Property Name="IN04COSTODOL" Type="float" />
+    <Property Name="IN04ULTCOSSOL" Type="float" />
+    <Property Name="IN04ULTCOSDOL" Type="float" />
+    <Property Name="IN04ULTCANING" Type="float" />
+    <Property Name="IN04ULTCANSAL" Type="float" />
+    <Property Name="IN04FEINFI" Type="datetime" />
+    <Property Name="IN04STINFI" Type="float" />
+    <Property Name="IN04TMP" Type="varchar" MaxLength="1" />
+    <Property Name="IN04STOCKMES" Type="decimal" Scale="2" />
+    <Property Name="IN04STOCKINICIALMES" Type="decimal" Scale="2" />
+    <Property Name="IN04CANTINGINI" Type="decimal" Scale="2" />
+    <Property Name="IN04CANTSALINI" Type="decimal" Scale="2" />
+    <Property Name="IN04IMPINGINISOL" Type="float" />
+    <Property Name="IN04IMPSALINISOL" Type="float" />
+    <Property Name="IN04IMPINGINIDOL" Type="float" />
+    <Property Name="IN04IMPSALINIDOL" Type="float" />
+    <Property Name="IN04PROMINISOL" Type="float" />
+    <Property Name="IN04PROMINIDOL" Type="float" />
+    <Property Name="IN04CATEXCONSUMO" Type="char" MaxLength="1" />
+    <Property Name="IN04CATEXPRODUCCION" Type="char" MaxLength="1" />
+    <Property Name="IN04NIVELDESTOCK" Type="float" />
+  </EntityType>
+  <EntityType Name="in23responsable">
+    <Key>
+      <PropertyRef Name="in23codemp" />
+      <PropertyRef Name="in23Codigo" />
+    </Key>
+    <Property Name="in23codemp" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="in23Codigo" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="In23Descri" Type="varchar" MaxLength="50" />
+    <Property Name="in23tipo" Type="varchar" MaxLength="1" />
+    <Property Name="in23SistemaUsuario" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="In60detalle">
+    <Key>
+      <PropertyRef Name="In60codemp" />
+      <PropertyRef Name="In60aa" />
+      <PropertyRef Name="In60numped" />
+      <PropertyRef Name="In60Item" />
+      <PropertyRef Name="In60Area" />
+    </Key>
+    <Property Name="In60codemp" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="In60aa" Type="varchar" Nullable="false" MaxLength="4" />
+    <Property Name="In60cencos" Type="varchar" MaxLength="12" />
+    <Property Name="In60numped" Type="varchar" Nullable="false" MaxLength="5" />
+    <Property Name="In60codalm" Type="varchar" MaxLength="2" />
+    <Property Name="In60codart" Type="varchar" MaxLength="20" />
+    <Property Name="In60Item" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="In60desart" Type="varchar" MaxLength="250" />
+    <Property Name="In60unidad" Type="varchar" MaxLength="4" />
+    <Property Name="In60cantidad" Type="float" />
+    <Property Name="In60Estado" Type="char" MaxLength="1" />
+    <Property Name="In60Area" Type="char" Nullable="false" MaxLength="10" />
+    <Property Name="In60NameUser" Type="char" MaxLength="200" />
+    <Property Name="In60NroParte" Type="varchar" MaxLength="50" />
+    <Property Name="In60Prioridad" Type="varchar" MaxLength="50" />
+    <Property Name="In60Equipo" Type="varchar" MaxLength="50" />
+    <Property Name="in60mm" Type="char" MaxLength="2" />
+    <Property Name="In60CantidadSug" Type="float" />
+    <Property Name="In60Observacion" Type="varchar" MaxLength="100" />
+    <Property Name="in60Anaperiodos" Type="varchar" MaxLength="12" />
+    <Property Name="in60AnaCantMeses" Type="int" />
+    <Property Name="in60AnaConConsumo" Type="float" />
+    <Property Name="in60AnaConPromedio" Type="float" />
+    <Property Name="in60AnaConRotacion" Type="varchar" MaxLength="12" />
+    <Property Name="in60AnaConDesvStandar" Type="float" />
+    <Property Name="in60AnaConStock" Type="float" />
+    <Property Name="in60AnaConNivelStock" Type="float" />
+    <Property Name="in60AnaCantSugerida" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="In60detalleSeg">
+    <Key>
+      <PropertyRef Name="In60codemp" />
+      <PropertyRef Name="In60aa" />
+      <PropertyRef Name="In60numped" />
+      <PropertyRef Name="In60Area" />
+      <PropertyRef Name="In60Item" />
+      <PropertyRef Name="In60NroIntento" />
+    </Key>
+    <Property Name="In60codemp" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="In60aa" Type="varchar" Nullable="false" MaxLength="4" />
+    <Property Name="In60numped" Type="varchar" Nullable="false" MaxLength="5" />
+    <Property Name="In60Area" Type="char" Nullable="false" MaxLength="10" />
+    <Property Name="In60Item" Type="int" Nullable="false" />
+    <Property Name="In60NroIntento" Type="int" Nullable="false" />
+    <Property Name="in60FlujoProceso" Type="int" />
+    <Property Name="In60EstadoAprob" Type="char" MaxLength="1" />
+    <Property Name="In60CantidadNueva" Type="float" />
+    <Property Name="In60Observacion" Type="varchar" MaxLength="100" />
+    <Property Name="in60flagultimoestado" Type="int" />
+    <Property Name="in60Cerrado" Type="int" />
+    <Property Name="in60UsuarioMod" Type="varchar" MaxLength="20" />
+    <Property Name="in60FechaMod" Type="datetime" />
+  </EntityType>
+  <EntityType Name="In60pedido">
+    <Key>
+      <PropertyRef Name="In60codemp" />
+      <PropertyRef Name="In60aa" />
+      <PropertyRef Name="In60numped" />
+      <PropertyRef Name="In60Area" />
+    </Key>
+    <Property Name="In60codemp" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="In60aa" Type="varchar" Nullable="false" MaxLength="4" />
+    <Property Name="In60cencos" Type="varchar" MaxLength="12" />
+    <Property Name="In60numped" Type="varchar" Nullable="false" MaxLength="5" />
+    <Property Name="In60codcli" Type="varchar" MaxLength="11" />
+    <Property Name="In60fecha" Type="datetime" />
+    <Property Name="In60codres" Type="varchar" MaxLength="2" />
+    <Property Name="In60EspTec" Type="varchar" MaxLength="80" />
+    <Property Name="In60Obser" Type="varchar" MaxLength="80" />
+    <Property Name="In60Estado" Type="char" MaxLength="1" />
+    <Property Name="In60Aprobado" Type="float" />
+    <Property Name="In60Expor" Type="char" MaxLength="10" />
+    <Property Name="In60Area" Type="char" Nullable="false" MaxLength="10" />
+    <Property Name="In60DestinoOrigen" Type="char" MaxLength="200" />
+    <Property Name="In60TipoPedido" Type="char" MaxLength="10" />
+    <Property Name="In60NameUser" Type="char" MaxLength="200" />
+    <Property Name="in60mm" Type="char" MaxLength="2" />
+    <Property Name="in60tipo" Type="char" MaxLength="1" />
+    <Property Name="in60mmProv" Type="char" MaxLength="2" />
+    <Property Name="in60aaProv" Type="char" MaxLength="4" />
+    <Property Name="in60nivelflujo" Type="int" />
+  </EntityType>
+  <EntityType Name="Menu">
+    <Key>
+      <PropertyRef Name="Sistema" />
+      <PropertyRef Name="Opcion" />
+      <PropertyRef Name="Nivel" />
+    </Key>
+    <Property Name="Sistema" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="Opcion" Type="varchar" Nullable="false" MaxLength="1" />
+    <Property Name="Nivel" Type="varchar" Nullable="false" MaxLength="2" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="SubNivel" Type="bit" Nullable="false" />
+    <Property Name="Ruta" Type="varchar" MaxLength="100" />
+    <Property Name="IdMenu" Type="int" />
+    <Property Name="MenuPadre" Type="int" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Sistema" />
+      <PropertyRef Name="Nombre" />
+    </Key>
+    <Property Name="Sistema" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="Nombre" Type="varchar" Nullable="false" MaxLength="8" />
+    <Property Name="Clave" Type="varchar" MaxLength="8" />
+    <Property Name="NombreComp" Type="varchar" MaxLength="40" />
+    <Property Name="Cargo" Type="varchar" MaxLength="20" />
+    <Property Name="AccPerCerr" Type="varchar" MaxLength="1" />
+    <Property Name="Periodo" Type="varchar" MaxLength="6" />
+    <Property Name="Moneda" Type="varchar" MaxLength="1" />
+    <Property Name="Saldos" Type="varchar" MaxLength="1" />
+    <Property Name="TipoImp" Type="varchar" MaxLength="1" />
+    <Property Name="Ajuste" Type="varchar" MaxLength="1" />
+    <Property Name="AccPerCon" Type="varchar" MaxLength="1" />
+    <Property Name="VarImpChe" Type="varchar" MaxLength="1" />
+    <Property Name="CenCosto" Type="varchar" MaxLength="12" />
+    <Property Name="AccArea" Type="varchar" MaxLength="12" />
+  </EntityType>
+</Schema>

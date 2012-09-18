@@ -1,0 +1,77 @@
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.pdb
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.pdb
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.pdb
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\ResolveAssemblyReference.cache
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.pdb
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.dll
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.pdb
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.dll
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.dll
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.pdb
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.pdb
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\ResolveAssemblyReference.cache
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.dll
+D:\MINEDU\Edgar\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\ResolveAssemblyReference.cache
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.pdb
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.dll
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.pdb
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.dll
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.dll
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.pdb
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.pdb
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\ResolveAssemblyReference.cache
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.dll
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\ResolveAssemblyReference.cache
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.pdb
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.dll
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.pdb
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.dll
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.dll
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.pdb
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.pdb
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\ResolveAssemblyReference.cache
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.dll
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.pdb
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.dll
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Logica.pdb
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.dll
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.dll
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Datos.pdb
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Logica\bin\Debug\MC.ControlPedido.Model.pdb
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\ResolveAssemblyReference.cache
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.dll
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Logica\obj\Debug\MC.ControlPedido.Logica.pdb

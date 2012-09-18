@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="XMLSchema"
+    targetNamespace="http://tempuri.org/XMLSchema.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/XMLSchema.xsd"
+    xmlns:mstns="http://tempuri.org/XMLSchema.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+    <xs:element name="rptpedidoestado">
+        <xs:complexType>
+            <xs:attribute name="In60codemp" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60aa" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60numped" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60Item" type="xs:integer"></xs:attribute>
+            <xs:attribute name="In60Area" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60Correlativo" type="xs:integer"></xs:attribute>
+            <xs:attribute name="In60cencos" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60codalm" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60codart" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60Id" type="xs:integer"></xs:attribute>
+            <xs:attribute name="In60desart" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60unidad" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60cantidad" type="xs:decimal"></xs:attribute>
+            <xs:attribute name="In60Estado1" type="xs:string"></xs:attribute>
+            <xs:attribute name="DesIn60Estado1" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60CantidadNueva1" type="xs:decimal"></xs:attribute>
+            <xs:attribute name="In60FechaEstado1" type="xs:dateTime"></xs:attribute>
+            <xs:attribute name="In60Sustento1" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60Estado2" type="xs:string"></xs:attribute>
+            <xs:attribute name="DesIn60Estado2" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60CantidadNueva2" type="xs:decimal"></xs:attribute>
+            <xs:attribute name="In60FechaEstado2" type="xs:dateTime"></xs:attribute>
+            <xs:attribute name="In60Sustento2" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60Estado3" type="xs:string"></xs:attribute>
+            <xs:attribute name="DesIn60Estado3" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60CantidadNueva3" type="xs:decimal"></xs:attribute>
+            <xs:attribute name="In60FechaEstado3" type="xs:dateTime"></xs:attribute>
+            <xs:attribute name="In60Sustento3" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60Estado4" type="xs:string"></xs:attribute>
+            <xs:attribute name="DesIn60Estado4" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60CantidadNueva4" type="xs:decimal"></xs:attribute>
+            <xs:attribute name="In60FechaEstado4" type="xs:dateTime"></xs:attribute>
+            <xs:attribute name="In60Sustento4" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60Estado5" type="xs:string"></xs:attribute>
+            <xs:attribute name="DesIn60Estado5" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60CantidadNueva5" type="xs:decimal"></xs:attribute>
+            <xs:attribute name="In60FechaEstado5" type="xs:dateTime"></xs:attribute>
+            <xs:attribute name="In60Sustento5" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60fecha" type="xs:dateTime"></xs:attribute>
+            <xs:attribute name="In60NroParte" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60Prioridad" type="xs:string"></xs:attribute>
+            <xs:attribute name="In60Equipo" type="xs:string"></xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

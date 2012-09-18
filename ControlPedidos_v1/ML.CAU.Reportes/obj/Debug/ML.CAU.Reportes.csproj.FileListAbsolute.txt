@@ -1,0 +1,13 @@
+D:\LAYTARUMA\01.Proyectos\01.SD\04.Implementacion\02.Aplicacion\CAU\ML.CAU.Reportes\bin\Debug\ML.CAU.Reportes.dll
+D:\LAYTARUMA\01.Proyectos\01.SD\04.Implementacion\02.Aplicacion\CAU\ML.CAU.Reportes\bin\Debug\ML.CAU.Reportes.pdb
+D:\LAYTARUMA\01.Proyectos\01.SD\04.Implementacion\02.Aplicacion\CAU\ML.CAU.Reportes\obj\Debug\ResolveAssemblyReference.cache
+D:\LAYTARUMA\01.Proyectos\01.SD\04.Implementacion\02.Aplicacion\CAU\ML.CAU.Reportes\obj\Debug\ML.CAU.Reportes.dll
+D:\LAYTARUMA\01.Proyectos\01.SD\04.Implementacion\02.Aplicacion\CAU\ML.CAU.Reportes\obj\Debug\ML.CAU.Reportes.pdb
+C:\PortatilHP\Sistemas\Externo\CAU\CAU\ML.CAU.Reportes\bin\Debug\ML.CAU.Reportes.dll
+C:\PortatilHP\Sistemas\Externo\CAU\CAU\ML.CAU.Reportes\bin\Debug\ML.CAU.Reportes.pdb
+C:\PortatilHP\Sistemas\Externo\CAU\CAU\ML.CAU.Reportes\obj\Debug\ResolveAssemblyReference.cache
+C:\PortatilHP\Sistemas\Externo\CAU\CAU\ML.CAU.Reportes\obj\Debug\ML.CAU.Reportes.dll
+C:\PortatilHP\Sistemas\Externo\CAU\CAU\ML.CAU.Reportes\obj\Debug\ML.CAU.Reportes.pdb
+C:\ProyectoColquisiri\ControlPedidos\ML.CAU.Reportes\obj\Debug\ResolveAssemblyReference.cache
+C:\ProyectoColquisiri\ControlPedidos\ML.CAU.Reportes\obj\Debug\ML.CAU.Reportes.dll
+C:\ProyectoColquisiri\ControlPedidos\ML.CAU.Reportes\obj\Debug\ML.CAU.Reportes.pdb

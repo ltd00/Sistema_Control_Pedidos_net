@@ -1,0 +1,7 @@
+<Modules>
+  <Module PersistentId="9430F6F9-C455-42DC-BD83-85F4D70BC48B" ModuleId="ControlPedido" />
+  <Module PersistentId="9404E3E5-1884-47E7-83AF-BCD6ED119CCE" ModuleId="MC.ControlPedido.Logica" />
+  <Module PersistentId="6264EB06-6887-4097-986B-D83B4D2515D8" ModuleId="MC.ControlPedido.Model" />
+  <Module PersistentId="032E3327-9DA0-4810-A751-C5D76AFF70D7" ModuleId="MC.ControlPedido.Datos" />
+  <Module PersistentId="9C79AC88-7F24-470D-B403-0E0396488EF6" ModuleId="MC.Comun" />
+</Modules>

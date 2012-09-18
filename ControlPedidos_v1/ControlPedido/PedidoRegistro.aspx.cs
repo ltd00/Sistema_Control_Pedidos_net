@@ -8,9 +8,52 @@ using System.Web.UI.WebControls;
 using MC.ControlPedido.Logica;
 using MC.ControlPedido.Model;
 using System.Data;
+using WebServiceMelchor;
+using System.Reflection;
+using System.ComponentModel;
 
 public partial class PedidoRegistro : UIPage
 {
+    [Serializable]
+    public class Producto
+    {
+        string _IN01KEY;
+        string _IN01DESLAR;
+        string _IN01UNIMED;
+        string _IN04CODALM;
+        string _IN04STOCK;
+
+        public String IN01KEY
+        {
+            get;
+            set;
+        }
+
+        public String IN01DESLAR
+        {
+            get;
+            set;
+        }
+
+        public String IN01UNIMED
+        {
+            get;
+            set;
+        }
+
+        public String IN04CODALM
+        {
+            get;
+            set;
+        }
+
+        public String IN04STOCK
+        {
+            get;
+            set;
+        }
+    }
+
     #region Inicio
     protected override void OnLoad(EventArgs e)
     {
@@ -43,7 +86,8 @@ public partial class PedidoRegistro : UIPage
                 PaginacionEnabled(false);
                 ListarPedido();
             }
-            else {
+            else
+            {
                 this.lblEstado.Text = "PENDIENTE";
             }
 
@@ -117,7 +161,7 @@ public partial class PedidoRegistro : UIPage
         }
         catch (Exception)
         {
-            
+
             throw;
         }
     }
@@ -160,18 +204,18 @@ public partial class PedidoRegistro : UIPage
 
                 this.btnGrabar.Visible = false;
 
-               // if (Convert.ToString(dtData.Rows[0]["In60Estado"]).CompareTo(UIConstante.EstadoPedido.Pendiente) == 0)
-               // {
-               //     this.btnGuardarDetalle.Visible = true;
-               //     this.btnAgregar.Visible = true;
-               // }
+                // if (Convert.ToString(dtData.Rows[0]["In60Estado"]).CompareTo(UIConstante.EstadoPedido.Pendiente) == 0)
+                // {
+                //     this.btnGuardarDetalle.Visible = true;
+                //     this.btnAgregar.Visible = true;
+                // }
                 // else
-               // {
+                // {
                 //    this.btnGuardarDetalle.Visible = false;
                 //    this.btnAgregar.Visible = false;
                 //}
             }
-            
+
         }
         catch (Exception)
         {
@@ -332,26 +376,38 @@ public partial class PedidoRegistro : UIPage
     {
         try
         {
+            List<producto> lst = new List<producto>();
+            List<Producto> lista = new List<Producto>();
+            DataTable dt = new DataTable();
+            using (MelchorServiceClient servicio = new MelchorServiceClient())
+            {
+                producto[] array = servicio.ObtenerListaProductos(_auditoria.CodigoEmpresa, _auditoria.Periodo, this.txtCodArti.Text, this.txtDesArti.Text, this.ddlAlmacen.SelectedValue, _auditoria.Mes);
+                if (array != null)
+                    lst = array.ToList();
+            }
 
-            in01arti oin01arti = new in01arti();
-            oin01arti.IN01CODEMP = _auditoria.CodigoEmpresa;
-            oin01arti.IN01AA = _auditoria.Periodo;
-            oin01arti.IN01KEY = this.txtCodArti.Text;
-            oin01arti.IN01DESLAR = this.txtDesArti.Text;
-            //oin01arti.In04axal.IN04CODALM = this.ddlAlmacen.SelectedValue;
+            if (lst.Count > 0)
+            {
+                foreach (var item in lst)
+                {
+                    Producto entidad = new Producto();
+                    entidad.IN01KEY = item.IN01KEY.ToString();
+                    entidad.IN01DESLAR = item.IN01DESLAR.ToString();
+                    entidad.IN01UNIMED = item.IN01UNIMED.ToString();
+                    entidad.IN04CODALM = item.IN04CODALM.ToString();
+                    entidad.IN04STOCK = item.IN04STOCK.ToString();
+                    lista.Add(entidad);
+                }
+                dt = ToDataTable(lista);
+            }
 
-            DataTable dtData;
-            dtData = new ArticuloBLL().ListarArticulo(oin01arti, this.ddlAlmacen.SelectedValue, _auditoria.Mes);
-
-            this.gvBandejaArticulo.DataSource = dtData;
+            this.gvBandejaArticulo.DataSource = dt;
             this.gvBandejaArticulo.DataBind();
-
-
         }
-        catch (Exception)
+        catch (Exception ex)
         {
 
-            throw;
+            throw ex;
         }
     }
 
@@ -404,10 +460,10 @@ public partial class PedidoRegistro : UIPage
         try
         {
 
-            In60detalle oIn60detalle = new In60detalle();            
+            In60detalle oIn60detalle = new In60detalle();
             LinkButton lnkSeleccione = (LinkButton)sender;
 
-            char[] delimitador = {'|'};
+            char[] delimitador = { '|' };
             string[] args = lnkSeleccione.CommandArgument.Split(delimitador);
 
             string In60codart = args[0];
@@ -780,7 +836,7 @@ public partial class PedidoRegistro : UIPage
 
                 if (lblIn60codart.Text.CompareTo(UIConstante.Articulo.CodigoVarios) != 0)
                 {
-                    txtIn60desart.Enabled = false; 
+                    txtIn60desart.Enabled = false;
                 }
 
                 //try
@@ -879,7 +935,7 @@ public partial class PedidoRegistro : UIPage
         }
         catch (Exception)
         {
-            
+
             throw;
         }
     }
@@ -896,7 +952,7 @@ public partial class PedidoRegistro : UIPage
         }
         catch (Exception)
         {
-            
+
             throw;
         }
     }
@@ -922,4 +978,32 @@ public partial class PedidoRegistro : UIPage
     {
 
     }
+
+    #region Metodos Agregados Consumo
+
+    public DataTable ToDataTable<T>(List<T> items)
+    {
+        DataTable dataTable = new DataTable(typeof(T).Name);
+        //Get all the properties
+        PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        foreach (PropertyInfo prop in Props)
+        {
+            //Setting column names as Property names
+            dataTable.Columns.Add(prop.Name);
+        }
+        foreach (T item in items)
+        {
+            var values = new object[Props.Length];
+            for (int i = 0; i < Props.Length; i++)
+            {
+                //inserting property values to datatable rows
+                values[i] = Props[i].GetValue(item, null);
+            }
+            dataTable.Rows.Add(values);
+        }
+        //put a breakpoint here and check datatable
+        return dataTable;
+    }
+
+    #endregion
 }

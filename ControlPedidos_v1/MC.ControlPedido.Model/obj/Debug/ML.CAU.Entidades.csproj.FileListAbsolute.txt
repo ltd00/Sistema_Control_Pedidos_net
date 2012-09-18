@@ -1,0 +1,12 @@
+D:\LAYTARUMA\01.Proyectos\01.SD\04.Implementacion\02.Aplicacion\CAU\ML.CAU.Entidades\bin\Debug\ML.CAU.Entidades.dll
+D:\LAYTARUMA\01.Proyectos\01.SD\04.Implementacion\02.Aplicacion\CAU\ML.CAU.Entidades\bin\Debug\ML.CAU.Entidades.pdb
+D:\LAYTARUMA\01.Proyectos\01.SD\04.Implementacion\02.Aplicacion\CAU\ML.CAU.Entidades\bin\Debug\ML.Comun.Entidades.dll
+D:\LAYTARUMA\01.Proyectos\01.SD\04.Implementacion\02.Aplicacion\CAU\ML.CAU.Entidades\bin\Debug\ML.Seguridad.Entidades.dll
+D:\LAYTARUMA\01.Proyectos\01.SD\04.Implementacion\02.Aplicacion\CAU\ML.CAU.Entidades\obj\Debug\ResolveAssemblyReference.cache
+D:\LAYTARUMA\01.Proyectos\01.SD\04.Implementacion\02.Aplicacion\CAU\ML.CAU.Entidades\obj\Debug\ML.CAU.Entidades.dll
+D:\LAYTARUMA\01.Proyectos\01.SD\04.Implementacion\02.Aplicacion\CAU\ML.CAU.Entidades\obj\Debug\ML.CAU.Entidades.pdb
+C:\PortatilHP\Sistemas\Externo\CAU\CAU\ML.CAU.Entidades\bin\Debug\ML.CAU.Entidades.dll
+C:\PortatilHP\Sistemas\Externo\CAU\CAU\ML.CAU.Entidades\bin\Debug\ML.CAU.Entidades.pdb
+C:\PortatilHP\Sistemas\Externo\CAU\CAU\ML.CAU.Entidades\obj\Debug\ResolveAssemblyReference.cache
+C:\PortatilHP\Sistemas\Externo\CAU\CAU\ML.CAU.Entidades\obj\Debug\ML.CAU.Entidades.dll
+C:\PortatilHP\Sistemas\Externo\CAU\CAU\ML.CAU.Entidades\obj\Debug\ML.CAU.Entidades.pdb

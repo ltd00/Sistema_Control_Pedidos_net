@@ -1,0 +1,40 @@
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.Comun\obj\Debug\ResolveAssemblyReference.cache
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.Comun\obj\Debug\GenerateResource.read.1.tlog
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.Comun\obj\Debug\GenerateResource.write.1.tlog
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.Comun\bin\Debug\MC.Comun.dll
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.Comun\bin\Debug\MC.Comun.pdb
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.Comun\bin\Debug\MC.Comun.xml
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.Comun\obj\Debug\Resources.resources
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.Comun\obj\Debug\MC.Comun.dll
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.Comun\obj\Debug\MC.Comun.xml
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.Comun\obj\Debug\MC.Comun.pdb
+C:\Documents and Settings\sistemas\Escritorio\webAl27082012\webAl27082012\ControlPedidos\MC.Comun\bin\Debug\MC.Comun.dll
+C:\Documents and Settings\sistemas\Escritorio\webAl27082012\webAl27082012\ControlPedidos\MC.Comun\bin\Debug\MC.Comun.pdb
+C:\Documents and Settings\sistemas\Escritorio\webAl27082012\webAl27082012\ControlPedidos\MC.Comun\bin\Debug\MC.Comun.xml
+C:\Documents and Settings\sistemas\Escritorio\webAl27082012\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\sistemas\Escritorio\webAl27082012\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\Resources.resources
+C:\Documents and Settings\sistemas\Escritorio\webAl27082012\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\sistemas\Escritorio\webAl27082012\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\GenerateResource.write.1.tlog
+C:\Documents and Settings\sistemas\Escritorio\webAl27082012\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\MC.Comun.dll
+C:\Documents and Settings\sistemas\Escritorio\webAl27082012\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\MC.Comun.xml
+C:\Documents and Settings\sistemas\Escritorio\webAl27082012\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\MC.Comun.pdb
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.Comun\bin\Debug\MC.Comun.dll
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.Comun\bin\Debug\MC.Comun.pdb
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.Comun\bin\Debug\MC.Comun.xml
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\ResolveAssemblyReference.cache
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\Resources.resources
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\GenerateResource.read.1.tlog
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\GenerateResource.write.1.tlog
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\MC.Comun.dll
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\MC.Comun.xml
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.Comun\obj\Debug\MC.Comun.pdb
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.Comun\bin\Debug\MC.Comun.dll
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.Comun\bin\Debug\MC.Comun.pdb
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.Comun\bin\Debug\MC.Comun.xml
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.Comun\obj\Debug\ResolveAssemblyReference.cache
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.Comun\obj\Debug\Resources.resources
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.Comun\obj\Debug\GenerateResource.read.1.tlog
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.Comun\obj\Debug\GenerateResource.write.1.tlog
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.Comun\obj\Debug\MC.Comun.dll
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.Comun\obj\Debug\MC.Comun.xml
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.Comun\obj\Debug\MC.Comun.pdb

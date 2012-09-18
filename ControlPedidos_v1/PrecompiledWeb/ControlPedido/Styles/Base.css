@@ -1,0 +1,151 @@
+﻿p              {font-size:12px; color:#003448; line-height:120%;}
+hr             {display:none;}
+h1             {font-size:25px; text-align:center; color:#003448; margin:0;}
+h2             {font-size:20px; font:normal 20px Tahoma; text-align:left; color:#3C71CE; line-height:120%;}
+h3             {font-size:18px; text-align:center; color:#3A4F63;}
+h4             {font-size:15px; text-align:left; color:#666666;}
+h5             {font-size:13px; text-align:left; color:#666666;}
+h6             {font-size:12px; text-align:left; color:#666666;}
+td             {font:normal 12px Tahoma; color:#003399;
+    margin-left: 160px;
+}/*text-align:left;*/
+th             {font:bold   11px Tahoma; color:#FFFFFF; background-color:#0066CC; text-align:center;}
+select         {font:normal 12px Tahoma; background-color:#FFFFFF; color:#003399; margin-left: 0px;}
+.title         {font:bold   16px Tahoma; color:#003399;}
+.title_center  {font:bold   16px Tahoma; color:#003399; text-align:center;}
+.boton         {font:normal 12px Tahoma; color:#003399; cursor:hand; width:101px; margin-left:0px;}
+.boton_rojo    {font:normal 12px Tahoma; color:#FF0000; cursor:hand;}
+.buton         {font:bold   12px Tahoma; color:#003399; cursor:hand; }
+.buton_rojo    {font:bold   12px Tahoma; color:#FF0000;}
+.text_label    {font:normal 12px Tahoma; background-color:#FFFFFF; color:#003399; border:1px inset #EEEEEE; margin-bottom:0px;}
+.text          {font:normal 12px Tahoma; background-color:#FFFFFF; color:#003399; border:1px inset #EEEEEE;}
+.text_right    {font:normal 12px Tahoma; background-color:#FFFFFF; color:#003399; border:1px inset #EEEEEE; text-align:right;}
+.text_center   {font:normal 12px Tahoma; background-color:#FFFFFF; color:#003399; border:1px inset #EEEEEE; text-align:center;}
+.text_upper    {font:normal 12px Tahoma; background-color:#FFFFFF; color:#003399; border:1px inset #EEEEEE; text-transform:uppercase;}
+.text_lower    {font:normal 12px Tahoma; background-color:#FFFFFF; color:#003399; border:1px inset #EEEEEE; text-transform:lowercase;}
+.text_capital  {font:normal 12px Tahoma; background-color:#FFFFFF; color:#003399; border:1px inset #EEEEEE; text-transform:capitalize;}
+.text_combo    {font:normal 12px Tahoma; background-color:#FFFFFF; color:#003399; border:1px inset #EEEEEE; }
+.label         {font:normal 12px Tahoma; color:#003399; margin-left:0px;}
+.label_left    {font:normal 12px Tahoma; color:#003399; text-align:left;}
+.label_right   {font:normal 12px Tahoma; color:#003399; text-align:right;}
+.label_center  {font:normal 12px Tahoma; color:#003399; text-align:center;}
+.label_error   {font:bold   12px Tahoma; color:#CC0000;}
+
+.label_verde        {font:normal 12px Tahoma; color:#009900; margin-left:0px;}
+.label_left_verde   {font:normal 12px Tahoma; color:#009900; text-align:left;}
+.label_right_verde  {font:normal 12px Tahoma; color:#009900; text-align:right;}
+.label_center_verde {font:normal 12px Tahoma; color:#009900; text-align:center;}
+
+.label_rojo         {font:normal 12px Tahoma; color:#FF0000; margin-left:0px;}
+.label_left_rojo    {font:normal 12px Tahoma; color:#FF0000; text-align:left;}
+.label_right_rojo   {font:normal 12px Tahoma; color:#FF0000; text-align:right;}
+.label_center_rojo  {font:normal 12px Tahoma; color:#FF0000; text-align:center;}
+
+.parrafo            {font:normal 12px Tahoma; color:#3C71CE;}
+.parrafo_titulo     {font:bold   12px Tahoma; background-color:#EBF3FB; color:#325FA0; text-align:center; border-color:Navy; border-style:solid; border-width:1px;}
+
+.grid_cabecera      {font:bold   11px Tahoma; background-color:#EBF3FB; color:#325FA0; text-align:center; border-color:Navy; border-style:solid; border-width:1px;}
+.grid_label         {font:normal 11px Tahoma; color:#003399; margin-left:0px;}
+.grid_label_left    {font:normal 11px Tahoma; color:#003399; text-align:left;}
+.grid_label_right   {font:normal 11px Tahoma; color:#003399; text-align:right;}
+.grid_label_center  {font:normal 11px Tahoma; color:#003399; text-align:center;}
+.grid_paginacion    {font:bold   10px Tahoma; background-color:#EBF3FB; color:#325FA0; text-align:center; border-color:Navy; border-style:solid; border-width:1px;}
+
+.label11            {font:normal 11px Tahoma; color:#003399; margin-left:0px;}
+.label_left11       {font:normal 11px Tahoma; color:#003399; text-align:left;}
+.label_right11      {font:normal 11px Tahoma; color:#003399; text-align:right;}
+.label_center11     {font:normal 11px Tahoma; color:#003399; text-align:center;}
+.label_error11      {font:bold   11px Tahoma; color:#CC0000;}
+.parrafo_titulo11   {font:bold   11px Tahoma; background-color:#EBF3FB; color:#003399; text-align:center; border:1px solid Navy;}
+.celda_11           {font-size:11px}
+.celda_12           {font-size:12px}
+.text11             {font:normal 11px Tahoma; background-color:#FFFFFF; color:#003399; border:1px inset #EEEEEE;}
+
+.inventario_label_left    {font:normal 11px Arial Narrow; color:#003399; text-align:left;}
+.inventario_label_right   {font:normal 11px Arial Narrow; color:#003399; text-align:right;}
+.inventario_label_center  {font:normal 11px Arial Narrow; color:#003399; text-align:center;}
+.inventario_label_capital {font:normal 11px Arial Narrow; color:#003399; text-transform:capitalize;}
+.inventario_text_left     {font:normal 10px Arial; background-color:#FFFFFF; color:#003399; border:1px inset #EEEEEE;}
+.inventario_text_upper    {font:normal 10px Arial; background-color:#FFFFFF; color:#003399; border:1px inset #EEEEEE; text-transform:uppercase;}
+.inventario_text_capital  {font:normal 10px Arial; background-color:#FFFFFF; color:#003399; border:1px inset #EEEEEE; text-transform:capitalize;}
+.inventario_text_combo    {font:normal 10px Arial; background-color:#FFFFFF; color:#003399;}
+.inventario_fila_seleccion{font:normal 11px Arial Narrow; background-color:#DDEEFF; color:#660000;}
+
+a           {font:normal 12px Tahoma;}
+a:link      {font-weight:bold; text-decoration:none;}
+a:visited   {text-decoration:none;}
+a:hover     {text-decoration:underline;}
+a:active    {text-decoration:none;}
+
+#container {
+       border-color:Navy; 
+       margin:01 auto; 
+       width:1200px; 
+       height:auto; 
+}
+#container2 {
+       background-color:#DDE6AC; 
+       border-style:solid; 
+       border-color:Navy; 
+       margin:01 auto; 
+       width:1200px; 
+       height:auto; 
+}
+
+.izquierda{
+       width:198px; 
+       height:500px; 
+       background-color:#EBF3FB; 
+       border-style:solid; 
+       border-width:01px; 
+       border-color:#003399; 
+       margin:0 0 0 0; 
+       float:left; 
+       padding:0px; 
+}
+.izquierda ul {
+       font:bold   10px Verdana, Arial, Helvetica, sans-serif; 
+       color:#586885; 
+       line-height:200%; 
+       text-transform:capitalize; 
+}
+.derecha{
+       width:196px; 
+       height:500px; 
+       background-color:#EBF3FB; 
+       border-style:solid; 
+       border-width:01px; 
+       border-color:#003399; 
+       margin:0 0 0 0; 
+       float:right; 
+       padding:0px; 
+       
+}
+.principal{
+       width:1200px; 
+       height:500px; 
+       background-color:#EBF3FB; 
+       border-style:solid; 
+       border-width:01px; 
+       border-color:#003399; 
+       margin:0 0 0 0px; 
+       padding:0px; 
+}
+
+.modalPopup {
+	background-color:#ffffdd; 
+	border-width:3px; 
+	border-style:solid; 
+	border-color:Gray; 
+	padding:3px; 
+	width:250px; 
+}
+.modalBackground {
+	background-color:Gray; 
+/*	filter:alpha(opacity=70); 
+	opacity:0.7; */
+}
+.Background {	
+/*filter:alpha(opacity=70); 
+	opacity:0.7;*/
+}

@@ -1,0 +1,138 @@
+﻿<%@ master language="C#" autoeventwireup="true" inherits="SiteMaster, App_Web_l3i1ks1a" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="AjaxToolKit" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title>
+        <%=System.Configuration.ConfigurationManager.AppSettings["title"]%></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Styles/sd.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+    <script language="JavaScript" type="text/javascript">
+        function conMayusculas(field) {
+            field.value = field.value.toUpperCase()
+        }
+
+        function cambia(obj, ImgC) {
+            var v = document.all(obj.id);
+            obj.src = ImgC;
+        }
+
+        function goAttach(file) {
+            // alert(file);
+            height = '600';
+            width = '800';
+            url = "VerSolicitudAdjunto.aspx?fileName=" + file;
+            xpos = (window.screen.width / 2) - (width / 2);
+            ypos = (window.screen.height / 2) - (height / 2);
+            name = ''
+
+            window.open(url, name, 'height=' + height + ',width=' + width + ',toolbar=yes,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,modal=yes,top=' + ypos + ',left=' + xpos);
+        }
+
+        function goAttach1(file) {
+            // alert(file);
+            height = '600';
+            width = '800';
+            url = "../Request/VerSolicitudAdjunto.aspx?fileName=" + file;
+            xpos = (window.screen.width / 2) - (width / 2);
+            ypos = (window.screen.height / 2) - (height / 2);
+            name = ''
+
+            window.open(url, name, 'height=' + height + ',width=' + width + ',toolbar=yes,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,modal=yes,top=' + ypos + ',left=' + xpos);
+        }
+
+        function goSolicitudFicha(id) {
+            // alert(file);
+            height = '600';
+            width = '800';
+            url = "VisorReports.aspx?id=" + id;
+            xpos = (window.screen.width / 2) - (width / 2);
+            ypos = (window.screen.height / 2) - (height / 2);
+            name = ''
+
+            window.open(url, name, 'height=' + height + ',width=' + width + ',toolbar=yes,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,modal=yes,top=' + ypos + ',left=' + xpos);
+            return false;
+
+        }
+        function textboxMultilineMaxNumber(txt, maxLen) {
+            try {
+                if (txt.value.length > (maxLen - 1)) return false;
+            } catch (e) {
+            }
+        }
+
+        function solonumerosypunto(e) {
+            var target = (e.target ? e.target : e.srcElement);
+            var key = (e ? e.keyCode || e.which : window.event.keyCode);
+            if (key == 46) return (target.value.length > 0 && target.value.indexOf(".") == -1);
+            return (key <= 12 || (key >= 48 && key <= 57));
+        }
+    </script>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+    <AjaxToolKit:ToolkitScriptManager EnablePartialRendering="true" runat="server" ID="SM1" />
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    Sistema de Control de pedidos
+                </h1>
+            </div>
+            <div class="loginDisplay">
+                &nbsp;<asp:Literal ID="litUsuario" runat="server" Text="José Luis Sanchez->Arequipa->Logística"></asp:Literal>
+                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                    <AnonymousTemplate>
+                        <asp:LinkButton ID="lnkCerrarSesion" runat="server" ForeColor="#FFC75C" OnClick="lnkCerrarSesion_Click">[Cerrar Sesión]</asp:LinkButton>
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Welcome <span class="bold">
+                            <asp:LoginName ID="HeadLoginName" runat="server" />
+                        </span>! [
+                        <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out"
+                            LogoutPageUrl="~/" />
+                        ]
+                    </LoggedInTemplate>
+                </asp:LoginView>
+            </div>
+            <div class="clear hideSkiplink">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false"
+                    IncludeStyleBlock="false" Orientation="Horizontal">
+                    <Items>
+                        <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Inicio" Value="Inicio"></asp:MenuItem>
+                        <asp:MenuItem Text="Operaciones" Value="SDM03">
+                            <asp:MenuItem Text="Registrar pedidos" Value="SDM0301" 
+                                NavigateUrl="~/FormListaPedido.aspx">
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Aprobar Jefe de Área" Value="SDM0302" 
+                                NavigateUrl="~/FormListaPedidoAproba1.aspx">
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Seguimiento de Pedidos" Value="SDM0303" 
+                                NavigateUrl="~/FormPedidoAproba.aspx">
+                            </asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/About.aspx" Text="Reportes" Value="SDM04" />
+                    </Items>
+                </asp:Menu>
+            </div>
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+    </div>
+    </form>
+</body>
+</html>

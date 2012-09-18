@@ -1,0 +1,25 @@
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Model\bin\Debug\MC.ControlPedido.Model.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Model\bin\Debug\MC.ControlPedido.Model.pdb
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Model\obj\Debug\ResolveAssemblyReference.cache
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Model\obj\Debug\MC.ControlPedido.Model.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.ControlPedido.Model\obj\Debug\MC.ControlPedido.Model.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Model\bin\Debug\MC.ControlPedido.Model.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Model\bin\Debug\MC.ControlPedido.Model.pdb
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Model\obj\Debug\ResolveAssemblyReference.cache
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Model\obj\Debug\MC.ControlPedido.Model.dll
+D:\Mis documentos\My SQL\GestionPedidos\webAl14062012\ControlPedidos\MC.ControlPedido.Model\obj\Debug\MC.ControlPedido.Model.pdb
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Model\bin\Debug\MC.ControlPedido.Model.dll
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Model\bin\Debug\MC.ControlPedido.Model.pdb
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Model\obj\Debug\ResolveAssemblyReference.cache
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Model\obj\Debug\MC.ControlPedido.Model.dll
+C:\ProyectoColquisiri\webAl14062012\ControlPedidos\MC.ControlPedido.Model\obj\Debug\MC.ControlPedido.Model.pdb
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Model\bin\Debug\MC.ControlPedido.Model.dll
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Model\bin\Debug\MC.ControlPedido.Model.pdb
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Model\obj\Debug\ResolveAssemblyReference.cache
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Model\obj\Debug\MC.ControlPedido.Model.dll
+F:\Sistemas\ProyectoSOA\webAl27082012\ControlPedidos\MC.ControlPedido.Model\obj\Debug\MC.ControlPedido.Model.pdb
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Model\bin\Debug\MC.ControlPedido.Model.dll
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Model\bin\Debug\MC.ControlPedido.Model.pdb
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Model\obj\Debug\ResolveAssemblyReference.cache
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Model\obj\Debug\MC.ControlPedido.Model.dll
+F:\Sistemas\ProyectoSOA\SistemasDistribuidos\ControlPedidos\MC.ControlPedido.Model\obj\Debug\MC.ControlPedido.Model.pdb

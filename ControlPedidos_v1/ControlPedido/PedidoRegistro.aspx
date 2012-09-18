@@ -173,8 +173,7 @@
                             <asp:GridView ID="gvBandeja" SkinID="Principal" runat="server" AutoGenerateColumns="False"
                                 BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px"
                                 CellPadding="4" Font-Size="Small" Width="100%" AllowPaging="True" EmptyDataText="No se encontraron registros."
-                                ShowHeaderWhenEmpty="True" OnRowDataBound="gvBandeja_RowDataBound" 
-                                onselectedindexchanged="gvBandeja_SelectedIndexChanged">
+                                ShowHeaderWhenEmpty="True" OnRowDataBound="gvBandeja_RowDataBound" OnSelectedIndexChanged="gvBandeja_SelectedIndexChanged">
                                 <Columns>
                                     <asp:TemplateField HeaderText="Item">
                                         <EditItemTemplate>
@@ -220,13 +219,11 @@
                                         <HeaderStyle CssClass="GrdHeader" />
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Equipo">
-                                        <ItemTemplate>                                            
-                                            <asp:ImageButton ID="imbBuscarEquipo" runat="server" 
-                                                ImageUrl="~/images/icons/buscar.gif" 
-                                                CommandArgument='<%# Eval("In60Item") %>' onclick="imbBuscarEquipo_Click" 
-                                                style="height: 15px" />
+                                        <ItemTemplate>
+                                            <asp:ImageButton ID="imbBuscarEquipo" runat="server" ImageUrl="~/images/icons/buscar.gif"
+                                                CommandArgument='<%# Eval("In60Item") %>' OnClick="imbBuscarEquipo_Click" Style="height: 15px" />
                                             &nbsp;<asp:Label ID="lblEquipo" runat="server" Text='<%# Eval("ccmc03des") %>'></asp:Label>
-                                            <asp:HiddenField ID="hidIdEquipo" runat="server" Value='<%# Eval("In60Equipo") %>'/>
+                                            <asp:HiddenField ID="hidIdEquipo" runat="server" Value='<%# Eval("In60Equipo") %>' />
                                         </ItemTemplate>
                                         <HeaderStyle CssClass="GrdHeader" />
                                     </asp:TemplateField>
@@ -242,8 +239,8 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Observación">
                                         <ItemTemplate>
-                                            <asp:TextBox ID="txtObservacion" runat="server" TextMode="MultiLine"
-                                                Width="150px" BorderStyle="None" Text='<%# Eval("In60Observacion") %>'></asp:TextBox>
+                                            <asp:TextBox ID="txtObservacion" runat="server" TextMode="MultiLine" Width="150px"
+                                                BorderStyle="None" Text='<%# Eval("In60Observacion") %>'></asp:TextBox>
                                         </ItemTemplate>
                                         <HeaderStyle CssClass="GrdHeader" />
                                     </asp:TemplateField>
@@ -324,7 +321,7 @@
     <act:ModalPopupExtender ID="mpeArticulo" runat="server" BackgroundCssClass="BackgroundPopup"
         PopupControlID="pnArticulo" DropShadow="False" TargetControlID="btnArticulo" />
     <asp:Panel ID="pnArticulo" runat="server" CssClass="CajaDialogoGeneral" Width="800px"
-        Height="500px" Style="display: block">
+        Height="500px" Style="display: none">
         <ajax:UpdatePanel ID="upArticulo" runat="server">
             <ContentTemplate>
                 <div style="position: absolute; top: 5px; left: 770px;">
@@ -503,7 +500,7 @@
             <ContentTemplate>
                 <div style="position: absolute; top: 5px; left: 570px;">
                     <asp:ImageButton runat="server" ToolTip="cerrar ventana" ImageUrl="~/images/icons/close.png"
-                        ID="imbCerrarEquipo" onclick="imbCerrarEquipo_Click" />
+                        ID="imbCerrarEquipo" OnClick="imbCerrarEquipo_Click" />
                 </div>
                 <table width="100%" class="bg_fondo_tabla">
                     <tr>
@@ -520,8 +517,8 @@
                             <asp:HiddenField ID="hidItem" runat="server" />
                         </td>
                         <td>
-                            <asp:Button ID="btnBuscarEquipo" runat="server" CssClass="boton" Text="Buscar" 
-                                Width="100px" onclick="btnBuscarEquipo_Click" />
+                            <asp:Button ID="btnBuscarEquipo" runat="server" CssClass="boton" Text="Buscar" Width="100px"
+                                OnClick="btnBuscarEquipo_Click" />
                         </td>
                         <td>
                             &nbsp;
@@ -533,8 +530,7 @@
                                 <asp:GridView ID="gvEquipo" runat="server" AllowPaging="True" AutoGenerateColumns="False"
                                     BackColor="White" BorderColor="#3366CC" BorderStyle="None" BorderWidth="1px"
                                     CellPadding="4" EmptyDataText="No se encontraron registros." Font-Size="Small"
-                                    ShowFooter="false" ShowHeaderWhenEmpty="true" Width="100%" 
-                                    onpageindexchanging="gvEquipo_PageIndexChanging">
+                                    ShowFooter="false" ShowHeaderWhenEmpty="true" Width="100%" OnPageIndexChanging="gvEquipo_PageIndexChanging">
                                     <HeaderStyle CssClass="GrdHeader" />
                                     <AlternatingRowStyle CssClass="GrdAlternativeItem" />
                                     <Columns>
@@ -551,7 +547,7 @@
                                             <ItemTemplate>
                                                 <div>
                                                     <asp:LinkButton ID="lnkSeleccioneEquipo" runat="server" CommandArgument='<%# Eval("ccmc03CodBarra") %>'
-                                                        CommandName='<%# Eval("ccmc03des") %>' onclick="lnkSeleccioneEquipo_Click">Seleccione</asp:LinkButton>
+                                                        CommandName='<%# Eval("ccmc03des") %>' OnClick="lnkSeleccioneEquipo_Click">Seleccione</asp:LinkButton>
                                                 </div>
                                             </ItemTemplate>
                                             <ItemStyle HorizontalAlign="Center" />
@@ -585,7 +581,7 @@
                     <tr>
                         <td align="center" colspan="6">
                             <asp:Button ID="btnCancelarEquipo" runat="server" CssClass="boton" Text="Cerrar"
-                                Width="100px" onclick="btnCancelarEquipo_Click" />
+                                Width="100px" OnClick="btnCancelarEquipo_Click" />
                         </td>
                     </tr>
                     <tr>

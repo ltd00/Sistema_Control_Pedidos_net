@@ -1,0 +1,13 @@
+C:\ProyectoColquisiri\ControlPedidos\MC.CAU.UIC\bin\Debug\MC.CAU.UIC.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.CAU.UIC\bin\Debug\MC.CAU.UIC.pdb
+C:\ProyectoColquisiri\ControlPedidos\MC.CAU.UIC\bin\Debug\MC.ControlPedido.Logica.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.CAU.UIC\bin\Debug\MC.ControlPedido.Model.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.CAU.UIC\bin\Debug\MC.ControlPedido.Datos.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.CAU.UIC\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.CAU.UIC\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.CAU.UIC\bin\Debug\MC.ControlPedido.Model.pdb
+C:\ProyectoColquisiri\ControlPedidos\MC.CAU.UIC\bin\Debug\MC.ControlPedido.Logica.pdb
+C:\ProyectoColquisiri\ControlPedidos\MC.CAU.UIC\bin\Debug\MC.ControlPedido.Datos.pdb
+C:\ProyectoColquisiri\ControlPedidos\MC.CAU.UIC\obj\Debug\ResolveAssemblyReference.cache
+C:\ProyectoColquisiri\ControlPedidos\MC.CAU.UIC\obj\Debug\MC.CAU.UIC.dll
+C:\ProyectoColquisiri\ControlPedidos\MC.CAU.UIC\obj\Debug\MC.CAU.UIC.pdb

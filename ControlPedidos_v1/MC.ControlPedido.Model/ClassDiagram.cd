@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MC.ControlPedido.Model.MetodoSolucion">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAEIAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>MetodoSolucion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MC.ControlPedido.Model.Prioridad">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAQAAAAEAAAACAAAAAAIAAAEAAAAABAAAAAg=</HashCode>
+      <FileName>Prioridad.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MC.ControlPedido.Model.Elemento">
+    <Position X="5" Y="0.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAEAAAAAAACQABAAAAAAAAAAgAAAAAEo=</HashCode>
+      <FileName>Elemento.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MC.ControlPedido.Model.Atencion">
+    <Position X="5" Y="4" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAABBAAoCCAAAYAAAAIAAAAABAQJBAhACAIABAAAUAg=</HashCode>
+      <FileName>Atencion.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MetodoSolucion" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MC.ControlPedido.Model.Incidente">
+    <Position X="7.25" Y="1.5" Width="6" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="TipoIncidente" Type="MC.ControlPedido.Model.TipoIncidente">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.088" Y="0.389" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>gVAB5CQANiAoAAYggSNmAAAAYIIhEgAAigUIB0QxIhk=</HashCode>
+      <FileName>Incidente.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TipoIncidente" />
+      <Property Name="Elemento" />
+      <Property Name="Impacto" />
+      <Property Name="Plataforma" />
+      <Property Name="Prioridad" />
+      <Property Name="SolicitudCambio" />
+      <Property Name="Categoria" />
+      <Property Name="SubCategoria" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MC.ControlPedido.Model.SolicitudCambio">
+    <Position X="7.25" Y="0.5" Width="6" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>gERCBABAACKAAKAEACAAACEBIAAAQAAACAAoCUAAAAs=</HashCode>
+      <FileName>SolicitudCambio.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TipoSolicitud" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MC.ControlPedido.Model.Plataforma">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAhAAgAAQAAAAAAAEAAAAAEAIAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Plataforma.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MC.ControlPedido.Model.TipoIncidente">
+    <Position X="1" Y="5.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIABAAAAAAABAAAAAAAAAAAAACAAABQAAA=</HashCode>
+      <FileName>TipoIncidente.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MC.ControlPedido.Model.Auditoria">
+    <Position X="9.75" Y="4" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAIAAAAAAAgAAAAAAAIAABhCAAAAAAAAA=</HashCode>
+      <FileName>Auditoria.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MC.ControlPedido.Model.Categoria">
+    <Position X="9.5" Y="6.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAABAIAABAAgQIAAAAAAAAAQAEg=</HashCode>
+      <FileName>Categoria.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MC.ControlPedido.Model.Impacto">
+    <Position X="7.5" Y="4" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAIABBAAAQAAAAAAAAAAIAAAAAAQAAAAAAAABAAAAAg=</HashCode>
+      <FileName>Impacto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MC.ControlPedido.Model.PlataformaList">
+    <Position X="2.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PlataformaList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MC.ControlPedido.Model.SubCategoria">
+    <Position X="7.5" Y="6.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAABBAABAAAgAAAAAIAAAAAABAAgQAAAAAAAAAAAAEg=</HashCode>
+      <FileName>SubCategoria.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MC.ControlPedido.Model.TipoSolicitud">
+    <Position X="2.75" Y="5.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAABAIAAAAAAEAAgAAAAEA=</HashCode>
+      <FileName>TipoSolicitud.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

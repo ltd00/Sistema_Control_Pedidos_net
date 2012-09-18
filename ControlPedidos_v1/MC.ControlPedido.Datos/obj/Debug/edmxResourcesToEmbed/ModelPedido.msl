@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PedidosModelStoreContainer" CdmEntityContainer="PedidosEntities">
+    <EntitySetMapping Name="in01arti">
+      <EntityTypeMapping TypeName="PedidosModel.in01arti">
+        <MappingFragment StoreEntitySet="in01arti">
+          <ScalarProperty Name="IN01CODEMP" ColumnName="IN01CODEMP" />
+          <ScalarProperty Name="IN01AA" ColumnName="IN01AA" />
+          <ScalarProperty Name="IN01KEY" ColumnName="IN01KEY" />
+          <ScalarProperty Name="IN01DESLAR" ColumnName="IN01DESLAR" />
+          <ScalarProperty Name="IN01UNIMED" ColumnName="IN01UNIMED" />
+          <ScalarProperty Name="IN01UNIDADEQUI" ColumnName="IN01UNIDADEQUI" />
+          <ScalarProperty Name="IN01MONTOEQUI" ColumnName="IN01MONTOEQUI" />
+          <ScalarProperty Name="IN01CODPRO" ColumnName="IN01CODPRO" />
+          <ScalarProperty Name="IN01FLAALM" ColumnName="IN01FLAALM" />
+          <ScalarProperty Name="IN01FLADES" ColumnName="IN01FLADES" />
+          <ScalarProperty Name="IN01FLAFAB" ColumnName="IN01FLAFAB" />
+          <ScalarProperty Name="IN01FECMAT" ColumnName="IN01FECMAT" />
+          <ScalarProperty Name="IN01CTAINGRESO" ColumnName="IN01CTAINGRESO" />
+          <ScalarProperty Name="IN01CTAEGRESO" ColumnName="IN01CTAEGRESO" />
+          <ScalarProperty Name="IN01MOV" ColumnName="IN01MOV" />
+          <ScalarProperty Name="IN01CTAGTO" ColumnName="IN01CTAGTO" />
+          <ScalarProperty Name="IN01CTAING" ColumnName="IN01CTAING" />
+          <ScalarProperty Name="In01UnidadMayor" ColumnName="In01UnidadMayor" />
+          <ScalarProperty Name="IN01ESTADO" ColumnName="IN01ESTADO" />
+          <ScalarProperty Name="IN01TIPO" ColumnName="IN01TIPO" />
+          <ScalarProperty Name="IN01ULTFECING" ColumnName="IN01ULTFECING" />
+          <ScalarProperty Name="IN01NRODEPARTE" ColumnName="IN01NRODEPARTE" />
+          <ScalarProperty Name="IN01KEYANTERIOR" ColumnName="IN01KEYANTERIOR" />
+          <ScalarProperty Name="IN01CODCONSIGNACION" ColumnName="IN01CODCONSIGNACION" />
+          <ScalarProperty Name="in01FlagStockDiario" ColumnName="in01FlagStockDiario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="In01LinArt">
+      <EntityTypeMapping TypeName="PedidosModel.In01LinArt">
+        <MappingFragment StoreEntitySet="In01LinArt">
+          <ScalarProperty Name="In01CodEmp" ColumnName="In01CodEmp" />
+          <ScalarProperty Name="In01CodLinArt" ColumnName="In01CodLinArt" />
+          <ScalarProperty Name="in01aa" ColumnName="in01aa" />
+          <ScalarProperty Name="In01Descripcion" ColumnName="In01Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="in23responsable">
+      <EntityTypeMapping TypeName="PedidosModel.in23responsable">
+        <MappingFragment StoreEntitySet="in23responsable">
+          <ScalarProperty Name="in23codemp" ColumnName="in23codemp" />
+          <ScalarProperty Name="in23Codigo" ColumnName="in23Codigo" />
+          <ScalarProperty Name="In23Descri" ColumnName="In23Descri" />
+          <ScalarProperty Name="in23tipo" ColumnName="in23tipo" />
+          <ScalarProperty Name="in23SistemaUsuario" ColumnName="in23SistemaUsuario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="In60detalle">
+      <EntityTypeMapping TypeName="PedidosModel.In60detalle">
+        <MappingFragment StoreEntitySet="In60detalle">
+          <ScalarProperty Name="In60codemp" ColumnName="In60codemp" />
+          <ScalarProperty Name="In60aa" ColumnName="In60aa" />
+          <ScalarProperty Name="In60cencos" ColumnName="In60cencos" />
+          <ScalarProperty Name="In60numped" ColumnName="In60numped" />
+          <ScalarProperty Name="In60codalm" ColumnName="In60codalm" />
+          <ScalarProperty Name="In60codart" ColumnName="In60codart" />
+          <ScalarProperty Name="In60Item" ColumnName="In60Item" />
+          <ScalarProperty Name="In60desart" ColumnName="In60desart" />
+          <ScalarProperty Name="In60unidad" ColumnName="In60unidad" />
+          <ScalarProperty Name="In60cantidad" ColumnName="In60cantidad" />
+          <ScalarProperty Name="In60Estado" ColumnName="In60Estado" />
+          <ScalarProperty Name="In60Area" ColumnName="In60Area" />
+          <ScalarProperty Name="In60NameUser" ColumnName="In60NameUser" />
+          <ScalarProperty Name="In60NroParte" ColumnName="In60NroParte" />
+          <ScalarProperty Name="In60Prioridad" ColumnName="In60Prioridad" />
+          <ScalarProperty Name="In60Equipo" ColumnName="In60Equipo" />
+          <ScalarProperty Name="in60mm" ColumnName="in60mm" />
+          <ScalarProperty Name="In60CantidadSug" ColumnName="In60CantidadSug" />
+          <ScalarProperty Name="In60Observacion" ColumnName="In60Observacion" />
+          <ScalarProperty Name="in60Anaperiodos" ColumnName="in60Anaperiodos" />
+          <ScalarProperty Name="in60AnaCantMeses" ColumnName="in60AnaCantMeses" />
+          <ScalarProperty Name="in60AnaConConsumo" ColumnName="in60AnaConConsumo" />
+          <ScalarProperty Name="in60AnaConPromedio" ColumnName="in60AnaConPromedio" />
+          <ScalarProperty Name="in60AnaConRotacion" ColumnName="in60AnaConRotacion" />
+          <ScalarProperty Name="in60AnaConDesvStandar" ColumnName="in60AnaConDesvStandar" />
+          <ScalarProperty Name="in60AnaConStock" ColumnName="in60AnaConStock" />
+          <ScalarProperty Name="in60AnaConNivelStock" ColumnName="in60AnaConNivelStock" />
+          <ScalarProperty Name="in60AnaCantSugerida" ColumnName="in60AnaCantSugerida" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Menu">
+      <EntityTypeMapping TypeName="PedidosModel.Menu">
+        <MappingFragment StoreEntitySet="Menu">
+          <ScalarProperty Name="MenuPadre_1" ColumnName="MenuPadre" />
+          <ScalarProperty Name="IdMenu_1" ColumnName="IdMenu" />
+          <ScalarProperty Name="Ruta_1" ColumnName="Ruta" />
+          <ScalarProperty Name="Sistema" ColumnName="Sistema" />
+          <ScalarProperty Name="Opcion" ColumnName="Opcion" />
+          <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="SubNivel" ColumnName="SubNivel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="PedidosModel.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="Sistema" ColumnName="Sistema" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Clave" ColumnName="Clave" />
+          <ScalarProperty Name="NombreComp" ColumnName="NombreComp" />
+          <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+          <ScalarProperty Name="AccPerCerr" ColumnName="AccPerCerr" />
+          <ScalarProperty Name="Periodo" ColumnName="Periodo" />
+          <ScalarProperty Name="Moneda" ColumnName="Moneda" />
+          <ScalarProperty Name="Saldos" ColumnName="Saldos" />
+          <ScalarProperty Name="TipoImp" ColumnName="TipoImp" />
+          <ScalarProperty Name="Ajuste" ColumnName="Ajuste" />
+          <ScalarProperty Name="AccPerCon" ColumnName="AccPerCon" />
+          <ScalarProperty Name="VarImpChe" ColumnName="VarImpChe" />
+          <ScalarProperty Name="CenCosto" ColumnName="CenCosto" />
+          <ScalarProperty Name="AccArea" ColumnName="AccArea" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="In04axal">
+      <EntityTypeMapping TypeName="PedidosModel.In04axal">
+        <MappingFragment StoreEntitySet="In04axal">
+          <ScalarProperty Name="IN04NIVELDESTOCK" ColumnName="IN04NIVELDESTOCK" />
+          <ScalarProperty Name="IN04CATEXPRODUCCION" ColumnName="IN04CATEXPRODUCCION" />
+          <ScalarProperty Name="IN04CATEXCONSUMO" ColumnName="IN04CATEXCONSUMO" />
+          <ScalarProperty Name="IN04PROMINIDOL" ColumnName="IN04PROMINIDOL" />
+          <ScalarProperty Name="IN04PROMINISOL" ColumnName="IN04PROMINISOL" />
+          <ScalarProperty Name="IN04IMPSALINIDOL" ColumnName="IN04IMPSALINIDOL" />
+          <ScalarProperty Name="IN04IMPINGINIDOL" ColumnName="IN04IMPINGINIDOL" />
+          <ScalarProperty Name="IN04IMPSALINISOL" ColumnName="IN04IMPSALINISOL" />
+          <ScalarProperty Name="IN04IMPINGINISOL" ColumnName="IN04IMPINGINISOL" />
+          <ScalarProperty Name="IN04CANTSALINI" ColumnName="IN04CANTSALINI" />
+          <ScalarProperty Name="IN04CANTINGINI" ColumnName="IN04CANTINGINI" />
+          <ScalarProperty Name="IN04STOCKINICIALMES" ColumnName="IN04STOCKINICIALMES" />
+          <ScalarProperty Name="IN04STOCKMES" ColumnName="IN04STOCKMES" />
+          <ScalarProperty Name="IN04TMP" ColumnName="IN04TMP" />
+          <ScalarProperty Name="IN04STINFI" ColumnName="IN04STINFI" />
+          <ScalarProperty Name="IN04FEINFI" ColumnName="IN04FEINFI" />
+          <ScalarProperty Name="IN04ULTCANSAL" ColumnName="IN04ULTCANSAL" />
+          <ScalarProperty Name="IN04ULTCANING" ColumnName="IN04ULTCANING" />
+          <ScalarProperty Name="IN04ULTCOSDOL" ColumnName="IN04ULTCOSDOL" />
+          <ScalarProperty Name="IN04ULTCOSSOL" ColumnName="IN04ULTCOSSOL" />
+          <ScalarProperty Name="IN04COSTODOL" ColumnName="IN04COSTODOL" />
+          <ScalarProperty Name="IN04COSTOSOL" ColumnName="IN04COSTOSOL" />
+          <ScalarProperty Name="IN04FECHASAL" ColumnName="IN04FECHASAL" />
+          <ScalarProperty Name="IN04FECHAING" ColumnName="IN04FECHAING" />
+          <ScalarProperty Name="IN04PROMDOL" ColumnName="IN04PROMDOL" />
+          <ScalarProperty Name="IN04PROMSOL" ColumnName="IN04PROMSOL" />
+          <ScalarProperty Name="IN04IMPSALDOL" ColumnName="IN04IMPSALDOL" />
+          <ScalarProperty Name="IN04IMPINGDOL" ColumnName="IN04IMPINGDOL" />
+          <ScalarProperty Name="IN04IMPSALSOL" ColumnName="IN04IMPSALSOL" />
+          <ScalarProperty Name="IN04IMPINGSOL" ColumnName="IN04IMPINGSOL" />
+          <ScalarProperty Name="IN04CANTSALID" ColumnName="IN04CANTSALID" />
+          <ScalarProperty Name="IN04CANTINGRE" ColumnName="IN04CANTINGRE" />
+          <ScalarProperty Name="IN04STOCK" ColumnName="IN04STOCK" />
+          <ScalarProperty Name="IN04FECINI" ColumnName="IN04FECINI" />
+          <ScalarProperty Name="IN04STOREP" ColumnName="IN04STOREP" />
+          <ScalarProperty Name="IN04STOMAX" ColumnName="IN04STOMAX" />
+          <ScalarProperty Name="IN04STOSEG" ColumnName="IN04STOSEG" />
+          <ScalarProperty Name="IN04STOMIN" ColumnName="IN04STOMIN" />
+          <ScalarProperty Name="IN04UBICAC" ColumnName="IN04UBICAC" />
+          <ScalarProperty Name="IN04CODALM" ColumnName="IN04CODALM" />
+          <ScalarProperty Name="IN04KEY" ColumnName="IN04KEY" />
+          <ScalarProperty Name="IN04MM" ColumnName="IN04MM" />
+          <ScalarProperty Name="IN04AA" ColumnName="IN04AA" />
+          <ScalarProperty Name="IN04CODEMP" ColumnName="IN04CODEMP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="In60pedido">
+      <EntityTypeMapping TypeName="PedidosModel.In60pedido">
+        <MappingFragment StoreEntitySet="In60pedido">
+          <ScalarProperty Name="in60nivelflujo" ColumnName="in60nivelflujo" />
+          <ScalarProperty Name="in60aaProv" ColumnName="in60aaProv" />
+          <ScalarProperty Name="in60mmProv" ColumnName="in60mmProv" />
+          <ScalarProperty Name="in60tipo" ColumnName="in60tipo" />
+          <ScalarProperty Name="in60mm" ColumnName="in60mm" />
+          <ScalarProperty Name="In60NameUser" ColumnName="In60NameUser" />
+          <ScalarProperty Name="In60TipoPedido" ColumnName="In60TipoPedido" />
+          <ScalarProperty Name="In60DestinoOrigen" ColumnName="In60DestinoOrigen" />
+          <ScalarProperty Name="In60Area" ColumnName="In60Area" />
+          <ScalarProperty Name="In60Expor" ColumnName="In60Expor" />
+          <ScalarProperty Name="In60Aprobado" ColumnName="In60Aprobado" />
+          <ScalarProperty Name="In60Estado" ColumnName="In60Estado" />
+          <ScalarProperty Name="In60Obser" ColumnName="In60Obser" />
+          <ScalarProperty Name="In60EspTec" ColumnName="In60EspTec" />
+          <ScalarProperty Name="In60codres" ColumnName="In60codres" />
+          <ScalarProperty Name="In60fecha" ColumnName="In60fecha" />
+          <ScalarProperty Name="In60codcli" ColumnName="In60codcli" />
+          <ScalarProperty Name="In60numped" ColumnName="In60numped" />
+          <ScalarProperty Name="In60cencos" ColumnName="In60cencos" />
+          <ScalarProperty Name="In60aa" ColumnName="In60aa" />
+          <ScalarProperty Name="In60codemp" ColumnName="In60codemp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="In60detalleSeg">
+      <EntityTypeMapping TypeName="PedidosModel.In60detalleSeg">
+        <MappingFragment StoreEntitySet="In60detalleSeg">
+          <ScalarProperty Name="in60FechaMod" ColumnName="in60FechaMod" />
+          <ScalarProperty Name="in60UsuarioMod" ColumnName="in60UsuarioMod" />
+          <ScalarProperty Name="in60Cerrado" ColumnName="in60Cerrado" />
+          <ScalarProperty Name="in60flagultimoestado" ColumnName="in60flagultimoestado" />
+          <ScalarProperty Name="In60Observacion" ColumnName="In60Observacion" />
+          <ScalarProperty Name="In60CantidadNueva" ColumnName="In60CantidadNueva" />
+          <ScalarProperty Name="In60EstadoAprob" ColumnName="In60EstadoAprob" />
+          <ScalarProperty Name="in60FlujoProceso" ColumnName="in60FlujoProceso" />
+          <ScalarProperty Name="In60NroIntento" ColumnName="In60NroIntento" />
+          <ScalarProperty Name="In60Item" ColumnName="In60Item" />
+          <ScalarProperty Name="In60Area" ColumnName="In60Area" />
+          <ScalarProperty Name="In60numped" ColumnName="In60numped" />
+          <ScalarProperty Name="In60aa" ColumnName="In60aa" />
+          <ScalarProperty Name="In60codemp" ColumnName="In60codemp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ccb03per">
+      <EntityTypeMapping TypeName="PedidosModel.ccb03per">
+        <MappingFragment StoreEntitySet="ccb03per">
+          <ScalarProperty Name="ccb03CtaClose" ColumnName="ccb03CtaClose" />
+          <ScalarProperty Name="ccb03InvClose" ColumnName="ccb03InvClose" />
+          <ScalarProperty Name="ccb03FacClose" ColumnName="ccb03FacClose" />
+          <ScalarProperty Name="ccb03fa12" ColumnName="ccb03fa12" />
+          <ScalarProperty Name="ccb03fa11" ColumnName="ccb03fa11" />
+          <ScalarProperty Name="ccb03fa10" ColumnName="ccb03fa10" />
+          <ScalarProperty Name="ccb03fa09" ColumnName="ccb03fa09" />
+          <ScalarProperty Name="ccb03fa08" ColumnName="ccb03fa08" />
+          <ScalarProperty Name="ccb03fa07" ColumnName="ccb03fa07" />
+          <ScalarProperty Name="ccb03fa06" ColumnName="ccb03fa06" />
+          <ScalarProperty Name="ccb03fa05" ColumnName="ccb03fa05" />
+          <ScalarProperty Name="ccb03fa04" ColumnName="ccb03fa04" />
+          <ScalarProperty Name="ccb03fa03" ColumnName="ccb03fa03" />
+          <ScalarProperty Name="ccb03fa02" ColumnName="ccb03fa02" />
+          <ScalarProperty Name="ccb03fa01" ColumnName="ccb03fa01" />
+          <ScalarProperty Name="ccb03fa00" ColumnName="ccb03fa00" />
+          <ScalarProperty Name="ccb03cmd" ColumnName="ccb03cmd" />
+          <ScalarProperty Name="ccb03cms" ColumnName="ccb03cms" />
+          <ScalarProperty Name="ccb03ipm" ColumnName="ccb03ipm" />
+          <ScalarProperty Name="ccb03tc" ColumnName="ccb03tc" />
+          <ScalarProperty Name="ccb03conc" ColumnName="ccb03conc" />
+          <ScalarProperty Name="ccb03proc" ColumnName="ccb03proc" />
+          <ScalarProperty Name="ccb03des" ColumnName="ccb03des" />
+          <ScalarProperty Name="ccb03cod" ColumnName="ccb03cod" />
+          <ScalarProperty Name="ccb03emp" ColumnName="ccb03emp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
