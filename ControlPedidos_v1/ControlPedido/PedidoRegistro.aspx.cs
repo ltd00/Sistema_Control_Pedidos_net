@@ -372,44 +372,72 @@ public partial class PedidoRegistro : UIPage
         }
     }
 
+
     private void ListarArticulo()
     {
         try
         {
-            List<producto> lst = new List<producto>();
-            List<Producto> lista = new List<Producto>();
-            DataTable dt = new DataTable();
-            using (MelchorServiceClient servicio = new MelchorServiceClient())
-            {
-                producto[] array = servicio.ObtenerListaProductos(_auditoria.CodigoEmpresa, _auditoria.Periodo, this.txtCodArti.Text, this.txtDesArti.Text, this.ddlAlmacen.SelectedValue, _auditoria.Mes);
-                if (array != null)
-                    lst = array.ToList();
-            }
 
-            if (lst.Count > 0)
-            {
-                foreach (var item in lst)
-                {
-                    Producto entidad = new Producto();
-                    entidad.IN01KEY = item.IN01KEY.ToString();
-                    entidad.IN01DESLAR = item.IN01DESLAR.ToString();
-                    entidad.IN01UNIMED = item.IN01UNIMED.ToString();
-                    entidad.IN04CODALM = item.IN04CODALM.ToString();
-                    entidad.IN04STOCK = item.IN04STOCK.ToString();
-                    lista.Add(entidad);
-                }
-                dt = ToDataTable(lista);
-            }
+            in01arti oin01arti = new in01arti();
+            oin01arti.IN01CODEMP = _auditoria.CodigoEmpresa;
+            oin01arti.IN01AA = _auditoria.Periodo;
+            oin01arti.IN01KEY = this.txtCodArti.Text;
+            oin01arti.IN01DESLAR = this.txtDesArti.Text;
+            //oin01arti.In04axal.IN04CODALM = this.ddlAlmacen.SelectedValue;
 
-            this.gvBandejaArticulo.DataSource = dt;
+            DataTable dtData;
+            dtData = new ArticuloBLL().ListarArticulo(oin01arti, this.ddlAlmacen.SelectedValue, _auditoria.Mes);
+
+            this.gvBandejaArticulo.DataSource = dtData;
             this.gvBandejaArticulo.DataBind();
+
+
         }
-        catch (Exception ex)
+        catch (Exception)
         {
 
-            throw ex;
+            throw;
         }
     }
+
+    //private void ListarArticulo()
+    //{
+    //    try
+    //    {
+    //        List<producto> lst = new List<producto>();
+    //        List<Producto> lista = new List<Producto>();
+    //        DataTable dt = new DataTable();
+    //        using (MelchorServiceClient servicio = new MelchorServiceClient())
+    //        {
+    //            producto[] array = servicio.ObtenerListaProductos(_auditoria.CodigoEmpresa, _auditoria.Periodo, this.txtCodArti.Text, this.txtDesArti.Text, this.ddlAlmacen.SelectedValue, _auditoria.Mes);
+    //            if (array != null)
+    //                lst = array.ToList();
+    //        }
+
+    //        if (lst.Count > 0)
+    //        {
+    //            foreach (var item in lst)
+    //            {
+    //                Producto entidad = new Producto();
+    //                entidad.IN01KEY = item.IN01KEY.ToString();
+    //                entidad.IN01DESLAR = item.IN01DESLAR.ToString();
+    //                entidad.IN01UNIMED = item.IN01UNIMED.ToString();
+    //                entidad.IN04CODALM = item.IN04CODALM.ToString();
+    //                entidad.IN04STOCK = item.IN04STOCK.ToString();
+    //                lista.Add(entidad);
+    //            }
+    //            dt = ToDataTable(lista);
+    //        }
+
+    //        this.gvBandejaArticulo.DataSource = dt;
+    //        this.gvBandejaArticulo.DataBind();
+    //    }
+    //    catch (Exception ex)
+    //    {
+
+    //        throw ex;
+    //    }
+    //}
 
     private void AgregarItem()
     {
@@ -455,6 +483,7 @@ public partial class PedidoRegistro : UIPage
         ListarArticulo();
         mpeArticulo.Show();
     }
+
     protected void lnkSeleccione_Click(object sender, EventArgs e)
     {
         try

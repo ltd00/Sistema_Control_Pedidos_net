@@ -154,15 +154,15 @@
                                     <asp:BoundField DataField="NombreResponsable" HeaderText="Responsable" HeaderStyle-CssClass="GrdHeader">
                                         <HeaderStyle CssClass="GrdHeader" />
                                     </asp:BoundField>
-                                    <asp:BoundField DataField="NombreArea" HeaderText="Área" HeaderStyle-CssClass="GrdHeader">
+                                    <asp:BoundField DataField="In60Area" HeaderText="Área" HeaderStyle-CssClass="GrdHeader">
                                         <HeaderStyle CssClass="GrdHeader" />
                                     </asp:BoundField>
-                                    <asp:BoundField DataField="DesIn60TipoPedido" HeaderText="Tipo de pedido" HeaderStyle-CssClass="GrdHeader">
+                                    <asp:BoundField DataField="In60TipoPedido" HeaderText="Tipo de pedido" HeaderStyle-CssClass="GrdHeader">
                                         <HeaderStyle CssClass="GrdHeader" />
                                     </asp:BoundField>
                                     <asp:TemplateField HeaderText="Estado">
                                         <ItemTemplate>
-                                            <asp:Label ID="lblEstado" runat="server" Text='<%# Bind("DesIn60Estado") %>'></asp:Label>
+                                            <asp:Label ID="lblEstado" runat="server" Text='<%# Bind("In60Estado") %>'></asp:Label>
                                             <asp:HiddenField ID="hidEstado" runat="server" Value='<%# Bind("In60Estado") %>' />
                                         </ItemTemplate>
                                         <HeaderStyle CssClass="GrdHeader" />

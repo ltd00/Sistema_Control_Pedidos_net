@@ -321,7 +321,7 @@
     <act:ModalPopupExtender ID="mpeArticulo" runat="server" BackgroundCssClass="BackgroundPopup"
         PopupControlID="pnArticulo" DropShadow="False" TargetControlID="btnArticulo" />
     <asp:Panel ID="pnArticulo" runat="server" CssClass="CajaDialogoGeneral" Width="800px"
-        Height="500px" Style="display: none">
+        Height="500px" Style="display: block">
         <ajax:UpdatePanel ID="upArticulo" runat="server">
             <ContentTemplate>
                 <div style="position: absolute; top: 5px; left: 770px;">

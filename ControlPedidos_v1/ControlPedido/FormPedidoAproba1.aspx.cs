@@ -7,9 +7,17 @@ using System.Web.UI.WebControls;
 using MC.ControlPedido.Logica;
 using MC.ControlPedido.Model;
 using System.Data;
+using System.Net;
+using System.IO;
 
 public partial class FormPedidoAproba1 : UIPage
 {
+    #region Variables
+
+    static string NroPedido, FechaPedido, TipoPedido, Asunto;
+
+    #endregion
+
     #region Inicio
     protected override void OnLoad(EventArgs e)
     {
@@ -21,7 +29,12 @@ public partial class FormPedidoAproba1 : UIPage
 
         if (IsPostBack == false)
         {
+            NroPedido = string.Empty;
+            FechaPedido = string.Empty;
+            TipoPedido = string.Empty;
+            Asunto = string.Empty;
             this.txtFecha.Text = DateTime.Now.ToShortDateString();
+            txtAsunto.Enabled = false;
             ListarArea();
             ListarJefeArea();
             CargarTipoPedido();
@@ -48,9 +61,8 @@ public partial class FormPedidoAproba1 : UIPage
 
     #endregion
 
-    
     #region Metodos
-    
+
 
     /// <summary>
     /// Carga tipo de pedidos
@@ -83,7 +95,8 @@ public partial class FormPedidoAproba1 : UIPage
             {
                 oin23responsable.in23SistemaUsuario = _auditoria.usuario.Nombre;
             }
-            else {
+            else
+            {
                 oin23responsable.in23SistemaUsuario = string.Empty;
             }
 
@@ -106,10 +119,11 @@ public partial class FormPedidoAproba1 : UIPage
         {
             if (this.hidFlujoProceso.Value.CompareTo(UIConstante.FlujoProceso.JefeArea.ToString()) == 0)
             {
-                Bind(this.ddlArea, oAreaBLL.ListarArea(_auditoria.CodigoEmpresa, _auditoria.usuario.Nombre), "In20CodArea", "In20Descripcion");                
+                Bind(this.ddlArea, oAreaBLL.ListarArea(_auditoria.CodigoEmpresa, _auditoria.usuario.Nombre), "In20CodArea", "In20Descripcion");
             }
-            else {
-                Bind(this.ddlArea, oAreaBLL.ListarArea(_auditoria.CodigoEmpresa, string.Empty), "In20CodArea", "In20Descripcion");                
+            else
+            {
+                Bind(this.ddlArea, oAreaBLL.ListarArea(_auditoria.CodigoEmpresa, string.Empty), "In20CodArea", "In20Descripcion");
             }
             this.ddlArea.Items.Insert(0, new ListItem("--Seleccione--", "0"));
 
@@ -142,7 +156,7 @@ public partial class FormPedidoAproba1 : UIPage
             dtData = new PedidoBLL().ListarPedidoSeguimientoxarea(oIn60DetalleSeg, oIn60pedido);
 
 
-           if (dtData.Rows.Count > 0)
+            if (dtData.Rows.Count > 0)
             {
                 //this.txtFecha.Text = dtData.Rows[0]["In60fecha"].ToString();
                 this.ddlJefeArea.SelectedValue = dtData.Rows[0]["In60codres"].ToString();
@@ -152,11 +166,16 @@ public partial class FormPedidoAproba1 : UIPage
                 this.lblEstado.Text = dtData.Rows[0]["DesIn60Estado"].ToString();
                 this.lblSituacion.Text = dtData.Rows[0]["DescIn60Aprobado"].ToString();
                 this.hidSituacion.Value = dtData.Rows[0]["In60Aprobado"].ToString();
+
+                NroPedido = this.txtNroPedido.Text;
+                FechaPedido = DateTime.Now.ToShortDateString();
+                TipoPedido = dtData.Rows[0]["In60TipoPedido"].ToString().Trim();
+                Asunto = Convert.ToString(dtData.Rows[0]["In60Obser"]);
             }
 
             //if (int.Parse(this.hidSituacion.Value) > int.Parse(this.hidFlujoProceso.Value))
             //{
-             //   this.btnAceptar.Visible = false;
+            //   this.btnAceptar.Visible = false;
             //}
 
         }
@@ -238,8 +257,17 @@ public partial class FormPedidoAproba1 : UIPage
     /// <summary>
     /// Se registra estado
     /// </summary>
+    /// 
+
     private void RegistrarEstado()
     {
+        DataTable dt = new DataTable();
+        dt.TableName = "Detalle";
+        dt.Columns.Add("IdProducto", typeof(System.String));
+        dt.Columns.Add("Cantidad", typeof(System.String));
+        dt.Columns.Add("Prioridad", typeof(System.String));
+        dt.Columns.Add("Observacion", typeof(System.String));
+
         try
         {
             //NUEVO
@@ -254,6 +282,13 @@ public partial class FormPedidoAproba1 : UIPage
                 TextBox txtCantidadNueva = (TextBox)this.gvBandeja.Rows[i].FindControl("txtCantidadNueva");
                 DropDownList ddlEstado = (DropDownList)this.gvBandeja.Rows[i].FindControl("ddlEstado");
                 TextBox txtSustento = (TextBox)this.gvBandeja.Rows[i].FindControl("txtSustento");
+
+                int idProducto = int.Parse(lblItem.Text.ToString());
+                int CantidadAnt = int.Parse(((HiddenField)this.gvBandeja.Rows[i].FindControl("hidCantidad")).Value.ToString());
+                string Prioridad = ((HiddenField)this.gvBandeja.Rows[i].FindControl("hidPrioridad")).Value.ToString();
+                string Sustento = txtSustento.Text.ToString().Trim();
+
+                dt.Rows.Add(idProducto, CantidadAnt, Prioridad, Sustento);
 
                 oIn60detalleSeg.In60codemp = _auditoria.CodigoEmpresa;
                 oIn60detalleSeg.In60aa = _auditoria.Periodo;
@@ -272,11 +307,33 @@ public partial class FormPedidoAproba1 : UIPage
                 }
 
                 oIn60detalleSeg.In60Observacion = txtSustento.Text.Trim();
-                oIn60detalleSeg.in60UsuarioMod= _auditoria.usuario.Nombre;
-                
+                oIn60detalleSeg.in60UsuarioMod = _auditoria.usuario.Nombre;
+
                 oIn60detalleSegs.Add(oIn60detalleSeg);
                 oIn60detalleSeg = null;
             }
+
+            #region Call Rest Service
+
+            int rslt = 0;
+            string fecha = String.Format("{0:dd/MM/yyyy}", FechaPedido);
+            string FechaEnviar = fecha.Split('/')[0] + "-" + fecha.Split('/')[1] + "-" + fecha.Split('/')[2];
+
+            string URLHead = "http://localhost:28080/MelchorWebRestService/rs/pedido-service/insertPedido/" + NroPedido + "/" + FechaEnviar + "/" + TipoPedido + "/" + Asunto;
+            string URLDetail = "http://localhost:28080/MelchorWebRestService/rs/pedido-service/insertDetallePedido/";
+            rslt = GetData(URLHead, "JSON");
+
+            if (rslt > 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    string Observacion = dt.Rows[i]["Observacion"].ToString().Equals(string.Empty) ? "Envio Web Service" : dt.Rows[i]["Observacion"].ToString();
+                    string URL = URLDetail + dt.Rows[i]["IdProducto"].ToString() + "/" + dt.Rows[i]["Cantidad"] + "/" + dt.Rows[i]["Prioridad"] + "/" + Observacion;
+                    rslt = GetData(URL, "JSON");
+                }
+            }
+
+            #endregion
 
             PedidoBLL oPedido = new PedidoBLL();
             oPedido.RegistrarDetallePedidoSeguimientos(oIn60detalleSegs);
@@ -285,39 +342,6 @@ public partial class FormPedidoAproba1 : UIPage
 
             upBandeja.Update();
 
-            #region Envio Correo
-            string nombreJefeArea = string.Empty;
-            string correo = string.Empty;
-             
-            In60pedido pedido = new In60pedido();
-            pedido.In60codemp =  _auditoria.CodigoEmpresa;
-            pedido.In60aa = _auditoria.Periodo;
-            pedido.In60Area = this.ddlArea.SelectedValue.ToString();
-            pedido.In60numped = this.txtNroPedido.Text.Trim();
-            pedido.In60codres = this.ddlJefeArea.SelectedValue.Trim();
-
-            oPedido.ObtenerCorreoJefeArea(pedido, _auditoria.IdPerfil, ref nombreJefeArea, ref correo);
-
-            if (correo.Length > 0)
-            {
-                Correo ocorreo = new Correo();
-                ocorreo.Subject = "Pedido Nro. " + this.txtNroPedido.Text + " Aprobado";
-
-                ocorreo.Body = "El pedido ha sido aprobado";
-                ocorreo.To = correo;
-                try
-                {
-                    ocorreo.Enviar(); 
-                }
-                catch (Exception)
-                {
-                    
-                 
-                }                
-            }
-
-            #endregion
-
             oPedido = null;
 
             CScript.MessageBox(0, "Aprobación se registró satisfactoriamente.", upBandeja);
@@ -325,9 +349,27 @@ public partial class FormPedidoAproba1 : UIPage
         }
         catch (Exception ex)
         {
-
             throw;
         }
+    }
+
+    private int GetData(string URL, string ResponseType)
+    {
+        int rslt = 0;
+        WebClient client = new WebClient();
+        client.Headers["Content-type"] = @"application/" + ResponseType;
+        //client.Acc
+        Stream data = client.OpenRead(URL);
+        StreamReader reader = new StreamReader(data);
+        rslt = int.Parse(reader.ReadLine());
+        //while (str != null)
+        //{
+        //    Console.WriteLine(str);
+        //    str = reader.ReadLine();
+        //    rslt = str;
+        //}
+        data.Close();
+        return rslt;
     }
 
     #endregion
@@ -568,10 +610,12 @@ public partial class FormPedidoAproba1 : UIPage
     {
         RegistrarEstado();
     }
+
     protected void btnCancelar_Click(object sender, EventArgs e)
     {
         Response.Redirect("FormListaPedidoAproba1.aspx?p=" + this.hidFlujoProceso.Value, false);
     }
+
     protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e)
     {
         DropDownList ddlEstado = (DropDownList)sender;
@@ -614,7 +658,6 @@ public partial class FormPedidoAproba1 : UIPage
         }
         #endregion
     }
-
 
     protected void hidSituacion_ValueChanged(object sender, EventArgs e)
     {

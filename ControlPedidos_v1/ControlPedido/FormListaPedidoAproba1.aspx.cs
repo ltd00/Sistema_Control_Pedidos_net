@@ -124,8 +124,6 @@ public partial class FormListaPedidoAproba1 : UIPage
     {
         try
         {
-            
-
             In60pedido oIn60pedido = new In60pedido();
             In60detalleSeg oIn60DetalleSeg = new In60detalleSeg();
 
@@ -144,8 +142,6 @@ public partial class FormListaPedidoAproba1 : UIPage
 
             //Invoca al metodo para paginar la grilla
             Paginar(dtData, this.gvBandeja, this.litNumeroRegistros, this.litPagina);
-
-            
         }
         catch (Exception)
         {
@@ -388,6 +384,7 @@ public partial class FormListaPedidoAproba1 : UIPage
     {
         ListarPedido();
     }
+
     protected void lnkSeguimiento_Click(object sender, EventArgs e)
     {
         LinkButton lnkSeguimiento = (LinkButton)sender;
@@ -531,9 +528,9 @@ public partial class FormListaPedidoAproba1 : UIPage
             throw;
         }
     }
+
     protected void gvBandeja_SelectedIndexChanged(object sender, EventArgs e)
     {
 
     }
-   
 }

@@ -220,7 +220,7 @@
                                                         ValidationGroup='<%# Bind("In60Item") %>' OnSelectedIndexChanged="ddlEstado_SelectedIndexChanged">
                                                         <asp:ListItem Value="C">Conforme</asp:ListItem>
                                                         <asp:ListItem Value="R">Rechazado</asp:ListItem>
-                                                        <asp:ListItem Value="N">Nueva cantidad</asp:ListItem>
+                                                        <%--<asp:ListItem Value="N">Nueva cantidad</asp:ListItem>--%>
                                                     </asp:DropDownList>
                                                     <br />
                                                     <asp:Label ID="lblCantidadNueva" Text="Nueva cantidad" runat="server"></asp:Label>
@@ -231,13 +231,16 @@
                                             </ajax:UpdatePanel>
                                             <asp:HiddenField ID="hidEstado" runat="server" Value='<%# Bind("In60EstadoAprob") %>' />
                                             <asp:HiddenField ID="hidEstadoActual" runat="server" Value='<%# Bind("In60EstadoAprob") %>' />
+                                            <asp:HiddenField ID="hidCantidad" runat="server" Value='<%# Bind("In60cantidad") %>' />
+                                            <asp:HiddenField ID="hidPrioridad" runat="server" Value='<%# Bind("In60Prioridad") %>' />
+                                            
                                         </ItemTemplate>
                                         <HeaderStyle CssClass="GrdHeader" />
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Sustento" ControlStyle-Width="200px">
                                         <ItemTemplate>
                                             <asp:TextBox ID="txtSustento" runat="server" Width="100%" MaxLength="100"
-                                                TextMode="MultiLine" Text='<%# Bind("In60Observacion") %>'></asp:TextBox>
+                                                TextMode="MultiLine" Text='<%# Bind("Sustento") %>'></asp:TextBox>
                                         </ItemTemplate>
                                         <HeaderStyle CssClass="GrdHeader" />
                                     </asp:TemplateField>
